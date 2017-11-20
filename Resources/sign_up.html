@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>DSRL Sign Up</title>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<link href="CSS/DS_General_Layout.css" rel="stylesheet">
+		<link href="CSS/DS_Signup.css" rel="stylesheet">
+
+
+	</head>
+	<body>
+
+		<header>
+			<h3>Disaster Resource Locator Site</h3>
+			<div class='signup_bar'>
+				<ul>
+					<li><a href="log_in.html">Login</a></li>
+					<li><a href="sign_up.html">Sign up</a></li>
+				</ul>
+
+			</div>
+		</header>
+		<div class='toolbar'>
+			<ul>
+				<ul>
+				<li><a href="../DisasterSite.html">Home</a></li>
+				<li><a href="available_resources.html">Available Resources</a></li>
+				<li><a href="requested_resources.html">Requested Resources</a></li>
+				<li><a href="add_resources.html">Add/Request Resource</a></li>
+				<li><a href="daily_statistics.html">Daily Statistics</a></li>
+				<li><a href="seven_day_statistics.html">Weekly Statistics</a></li>
+				<li><a href="region_statistics.html">Regional Statistics</a></li>
+			</ul>
+			</ul>
+
+		</div>
+    <div id="sign_up">
+			<h2>Signup Form</h2>
+
+			<form name= "signUp_form" style="border:1px solid #ccc">
+			  <div class="container">
+					<!-- Ask for user's name-->
+					<label><b>First Name</b></label>
+			    <input type="text" placeholder="Enter Name" name="email" required>
+					<!-- Ask for user's last name-->
+					<label><b>Last Name</b></label>
+			    <input type="text" placeholder="Enter Last Name" name="email" required>
+					<!-- Ask for user's email -->
+			    <label><b>Email</b></label>
+			    <input type="text" placeholder="Enter Email" name="email" required>
+					<!-- Ask for a password-->
+			    <label><b>Password</b></label>
+			    <input type="password" placeholder="Enter Password" name="psw" required>
+					<!-- Confirm the password-->
+			    <label><b>Repeat Password</b></label>
+			    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+
+					<!-- Ask for user's phone number-->
+					<label><b>Phone Number</b><label>
+			    <input type="tel" placeholder="Phone Number" name="phone" required>
+					<!-- Ask what type of user they are-->
+					<label><b>Why do you want to sign up?</b><label>
+					<select name="user_type" id="user_type">
+						<option value="person_in_need" selected>Person in Need</option>
+						<option value="supplier">Supplier</option>
+						<option value="administrator">Administrator</option>
+					</select>
+					<div class=location_info>
+						<!-- Ask for user's address-->
+						<!-- Add script that will hid and show this textbox
+						depending on previous input-->
+						<label><b>Address</b></label>
+				    <input type="text" placeholder="Enter Address" name="address" required>
+					</div>
+			    <div>
+			      <button type="button" class="cancelbtn">Cancel</button>
+			      <button type="submit" class="signupbtn">Sign Up</button>
+			    </div>
+			  </div>
+			</form>
+    </div>
+
+	</body>
+</html>

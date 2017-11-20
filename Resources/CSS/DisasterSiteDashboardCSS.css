@@ -1,0 +1,74 @@
+header{
+	background-color:#F5F5F5;
+	border-style: solid;
+	border-color:#F5F5F5;
+	height: 50px;
+	
+}
+body{
+	
+	font-family: 'Arial', Sans-Serif;
+	text-align: center;
+	margin: 0;
+	background-color:#DCDCDC;
+	
+	
+}
+#toolbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #F5F5F5;
+    top: 0;
+	
+}
+#toolbar li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+	height: 27px;
+}
+#toolbar li a:hover {
+    background-color: #E0E0E0;
+}
+#site_name {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+	height: 27px;
+	background-color: #3E8EC0;
+}
+#dashbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #3E8EDE;
+	position: fixed;
+    top: 0;
+    width: 15%;
+	height: 100%;
+	
+}
+
+#dashbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+	height: 27px;
+}
+
+/* Change the link color to #111 (black) on hover */
+#dashbar li a:hover {
+    background-color: #FF8000;
+}
+.content h1{
+	color:white;
+}

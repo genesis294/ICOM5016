@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>DSRL Sign Up</title>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<link href="CSS/DS_General_Layout.css" rel="stylesheet">
+		<link href="CSS/DS_Signup.css" rel="stylesheet">
+
+
+	</head>
+	<body>
+
+		<header>
+			<h3>Disaster Resource Locator Site</h3>
+			<div class='signup_bar'>
+				<ul>
+					<li><a href="log_in.html">Login</a></li>
+					<li><a href="sign_up.html">Sign up</a></li>
+				</ul>
+
+			</div>
+		</header>
+		<div class='toolbar'>
+			<ul>
+				<ul>
+				<li><a href="../DisasterSite.html">Home</a></li>
+				<li><a href="available_resources.html">Available Resources</a></li>
+				<li><a href="requested_resources.html">Requested Resources</a></li>
+				<li><a href="add_resources.html">Add/Request Resource</a></li>
+				<li><a href="daily_statistics.html">Daily Statistics</a></li>
+				<li><a href="seven_day_statistics.html">Weekly Statistics</a></li>
+				<li><a href="region_statistics.html">Regional Statistics</a></li>
+			</ul>
+			</ul>
+
+		</div>
+    <div id="sign_up">
+			<h2>Resource Form</h2>
+
+			<form name= "signUp_form" style="border:1px solid #ccc">
+			  <div class="container">
+					<!-- Ask for products name-->
+					<label><b>Product</b></label>
+					<input type="text" placeholder="What product is it?" name="product" required>
+					<!-- Ask for amount they have of product-->
+					<label><b>Quantity</b></label>
+					<input type="number" placeholder="How much?" name="quantity" required>
+					<!-- Ask for user's email -->
+					<label><b>Price</b></label>
+					<input type="text" placeholder="Enter Price" name="price" required>
+					
+					<div>
+					  <button type="button" class="cancelbtn">Cancel</button>
+					  <button type="submit" class="signupbtn">Sign Up</button>
+					</div>
+			  </div>
+			</form>
+    </div>
+
+	</body>
+</html>
