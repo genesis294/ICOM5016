@@ -42,34 +42,41 @@
 			  <div class="container">
 					<!-- Ask for user's name-->
 					<label><b>First Name</b></label>
-			    <input type="text" placeholder="Enter Name" name="email" required>
+			    <input type="text" placeholder="Enter Name" name="first_name" required>
 					<!-- Ask for user's last name-->
 					<label><b>Last Name</b></label>
-			    <input type="text" placeholder="Enter Last Name" name="email" required>
+			    <input type="text" placeholder="Enter Last Name" name="last_name" required>
 					<!-- Ask for user's email -->
 			    <label><b>Email</b></label>
 			    <input type="text" placeholder="Enter Email" name="email" required>
 					<!-- Ask for a password-->
 			    <label><b>Password</b></label>
-			    <input type="password" placeholder="Enter Password" name="psw" required>
+			    <input type="password" id="psw" placeholder="Enter Password" name="psw" required>
+				<div id="psw_toggle">
+					<!-- An element to toggle between password visibility -->
+					<li>
+						<input type="checkbox" id="checkbox" onclick="passwordToggle()">
+						<label for="checkbox"><b>Show Password</b></label>
+					</li>
+				</div>
+				
 					<!-- Confirm the password-->
-			    <label><b>Repeat Password</b></label>
-			    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+			    <label><b>Re-enter Password</b></label>
+			    <input type="password" placeholder="Re-enter Password" name="psw-repeat" required>
 
-					<!-- Ask for user's phone number-->
-					<label><b>Phone Number</b><label>
+				<!-- Ask for user's phone number-->
+				<label><b>Phone Number</b><label>
 			    <input type="tel" placeholder="Phone Number" name="phone" required>
 					<!-- Ask what type of user they are-->
 					<label><b>Why do you want to sign up?</b><label>
-					<select name="user_type" id="user_type">
-						<option value="person_in_need" selected>Person in Need</option>
-						<option value="supplier">Supplier</option>
-						<option value="administrator">Administrator</option>
+					<select name="user_type" id="user_type" onchange="showAddress(this)">
+						<option value="0" selected>Person in Need</option>
+						<option value="1">Supplier</option>
+						<option value="2">Administrator</option>
 					</select>
-					<div class=location_info>
+					<!--Not necesary if user is an administrator-->
+					<div id="location_info">
 						<!-- Ask for user's address-->
-						<!-- Add script that will hid and show this textbox
-						depending on previous input-->
 						<label><b>Address</b></label>
 				    <input type="text" placeholder="Enter Address" name="address" required>
 					</div>
@@ -80,6 +87,40 @@
 			  </div>
 			</form>
     </div>
+	<!--Function for seeing password-->
+				<script>
+					//For showing password if user wants to see it.
+					function passwordToggle() {
+						//Get password input element
+						var x = document.getElementById("psw");
+						//If the elements type is password then change it to text so it may be seen by the user.
+						if (x.type === "password") {
+							x.type = "text";
+						} 
+						//If the input type is text, make it a password so it can be hidden.
+						else {
+							x.type = "password";
+						}
+					}
+					//Show or hide address input text
+					function showAddress(input){
+						//Get the selected value 
+						var x = input.options[input.selectedIndex].value;
+						//Get the element with the location info
+						var y = document.getElementById("location_info");
+						//If user is a administrator then address is not needed.
+						if(x === "2")
+						{
+							y.style.display = "none";
+							
+						}
+						//If user is person in need or supplier then ask for address
+						else{
+							y.style.display = "block";
+							
+						}
+					}
+				</script>
 
 	</body>
 </html>

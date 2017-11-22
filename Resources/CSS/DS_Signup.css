@@ -12,13 +12,15 @@ input {
     display: block;
     border: 1px solid #ccc;
     box-sizing: border-box;
-    align: center;
+	margin-bottom:10px;
 }
 /* Set style for dropdown */
 select {
     width: 30%;
     margin: 8px,0;
     padding: 6px 5px;
+	margin-top:10px;
+	margin-bottom:10px;
 }
 
 /* Set a style for all buttons */
@@ -33,6 +35,15 @@ button {
     display: inline-block;
 
 }
+#psw_toggle li{
+	display: inline-block;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	vertical-align: middle;
+}
+
 
 /* Extra styles for the cancel button */
 .cancelbtn {
@@ -55,3 +66,4 @@ button {
 
 
 }
+

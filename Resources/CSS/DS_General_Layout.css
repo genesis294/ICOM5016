@@ -13,6 +13,7 @@ header{
 
 header h3{
   vertical-align: bottom;
+  padding-left: 10px;
 }
 
 .signup_bar{
@@ -23,7 +24,7 @@ header h3{
     margin: 0;
     padding: 0;
     overflow: hidden;
-	  position: fixed;
+	position: fixed;
     width: 100%;
 
 }
