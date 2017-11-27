@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>DSRL</title>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<link href="{{url_for('static', filename='CSS/DS_General_Layout.css')}}" rel="stylesheet">
+		<link href="{{url_for('static', filename='CSS/CSS/DS_Available_Resources.css')}}" rel="stylesheet">
+
+	</head>
+	<body>
+
+		<header>
+			<h3>Disaster Resource Locator Site</h3>
+			<div class='signup_bar'>
+				<ul>
+					<li><a href="log_in.html">Login</a></li>
+					<li><a href="sign_up.html">Sign up</a></li>
+				</ul>
+
+			</div>
+		</header>
+		<div class='toolbar'>
+			<ul>
+				<li><a href="../DisasterSite.html">Home</a></li>
+				<li><a href="available_resources.html">Available Resources</a></li>
+				<li><a href="requested_resources.html">Requested Resources</a></li>
+				<li><a href="add_resources.html">Add/Request Resource</a></li>
+				<li><a href="daily_statistics.html">Daily Statistics</a></li>
+				<li><a href="seven_day_statistics.html">Weekly Statistics</a></li>
+				<li><a href="region_statistics.html">Regional Statistics</a></li>
+			</ul>
+
+		</div>
+		<div class="wrap">
+           <div class="search">
+              <input type="text" class="searchTerm" placeholder="Search">
+              <button type="submit" class="searchButton">
+                <i class="fa fa-search"></i>
+                    <img src="http://www.pvhc.net/img147/knesrozwwcmfiqsgizyl.png" width="28" height="28">
+             </button>
+           </div>
+		</div>
+		<div class='resources'>
+			<h1>No resources yet...</h1>
+		</div>
+		<footer>
+		</footer>
+
+	</body>
+</html>
