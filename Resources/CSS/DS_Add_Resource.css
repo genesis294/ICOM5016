@@ -58,7 +58,9 @@ button {
 
 
 }
-#ice_form, #food_form, #medication_form, #medical_devices_form, #clothes_form{
+#ice_form, #food_form, #medication_form, #medical_devices_form, #clothes_form,
+#fuel_form, #power_generators_form, #batteries_form, #tools_form,
+#heavy_equipment_form{
 	display: none;
 }
 #water_form {

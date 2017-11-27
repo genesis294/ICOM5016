@@ -53,13 +53,11 @@
 			    <label><b>Password</b></label>
 			    <input type="password" id="psw" placeholder="Enter Password" name="psw" required>
 				<div id="psw_toggle">
-					<!-- An element to toggle between password visibility -->
-					<li>
-						<input type="checkbox" id="checkbox" onclick="passwordToggle()">
-						<label for="checkbox"><b>Show Password</b></label>
-					</li>
+					<input type="checkbox" id="toggle_checkbox" onclick="passwordToggle()">
+					<!--The for causes the label to be clickable as well and toggle the checkbox-->
+					<label id="psw_msg" for=toggle_checkbox><b>Show Password</b></label>
 				</div>
-				
+
 					<!-- Confirm the password-->
 			    <label><b>Re-enter Password</b></label>
 			    <input type="password" placeholder="Re-enter Password" name="psw-repeat" required>
@@ -96,7 +94,7 @@
 						//If the elements type is password then change it to text so it may be seen by the user.
 						if (x.type === "password") {
 							x.type = "text";
-						} 
+						}
 						//If the input type is text, make it a password so it can be hidden.
 						else {
 							x.type = "password";
@@ -104,7 +102,7 @@
 					}
 					//Show or hide address input text
 					function showAddress(input){
-						//Get the selected value 
+						//Get the selected value
 						var x = input.options[input.selectedIndex].value;
 						//Get the element with the location info
 						var y = document.getElementById("location_info");
@@ -112,12 +110,12 @@
 						if(x === "2")
 						{
 							y.style.display = "none";
-							
+
 						}
 						//If user is person in need or supplier then ask for address
 						else{
 							y.style.display = "block";
-							
+
 						}
 					}
 				</script>
