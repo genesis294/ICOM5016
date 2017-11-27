@@ -1,0 +1,73 @@
+#sign_up {
+    padding-top: 40px;
+}
+h2{
+  padding-left: 20px;
+}
+/* Set style for input fields */
+input {
+    width: 100%;
+    padding: 12px 10px;
+    margin: 8px 0;
+    display: block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+	  margin-bottom:10px;
+}
+/* Set style for dropdown */
+select {
+    width: 30%;
+    margin: 8px,0;
+    padding: 6px 5px;
+	  margin-top:10px;
+	  margin-bottom:10px;
+}
+
+/* Set a style for all buttons */
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 10px;
+    margin: 8px -4px;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    display: inline-block;
+
+}
+#psw_toggle{
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	vertical-align: middle;
+}
+#toggle_checkbox {
+	float: left;
+	margin-top: 5px;
+}
+#psw_msg{
+	margin-left: 25px;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+    background-color: #f44336;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn,.signupbtn {
+    width: 50%;
+
+
+}
+
+/* Add padding to container elements */
+.container {
+    padding: 16px;
+    text-align: left;
+    margin: auto;
+    width: 50%;
+
+
+}

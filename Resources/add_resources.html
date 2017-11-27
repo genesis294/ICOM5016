@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>DSRL Sign Up</title>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<link href="CSS/DS_General_Layout.css" rel="stylesheet">
+		<link href="CSS/DS_Add_Resource.css" rel="stylesheet">
+
+
+	</head>
+	<body>
+
+		<header>
+			<h3>Disaster Resource Locator Site</h3>
+			<div class='signup_bar'>
+				<ul>
+					<li><a href="log_in.html">Login</a></li>
+					<li><a href="sign_up.html">Sign up</a></li>
+				</ul>
+
+			</div>
+		</header>
+		<div class='toolbar'>
+			<ul>
+				<ul>
+				<li><a href="../DisasterSite.html">Home</a></li>
+				<li><a href="available_resources.html">Available Resources</a></li>
+				<li><a href="requested_resources.html">Requested Resources</a></li>
+				<li><a href="add_resources.html">Add/Request Resource</a></li>
+				<li><a href="daily_statistics.html">Daily Statistics</a></li>
+				<li><a href="seven_day_statistics.html">Weekly Statistics</a></li>
+				<li><a href="region_statistics.html">Regional Statistics</a></li>
+			</ul>
+			</ul>
+
+		</div>
+    <div id="add_resource">
+			<h2>Resource Form</h2>
+
+			<form name= "signUp_form" style="border:1px solid #ccc">
+			  <div class="container">
+					<!-- Ask for products name-->
+					<label><b>Product</b></label>
+					<input type="text" placeholder="What product is it?" name="product" required>
+					<!--Ask what typeof resource it is-->
+					<label><b>What type of resource is it?</b><label>
+					<select name="product_type" id="product_type" onchange="showRestOfForm(this)">
+						<option value="water" selected>Water</option>
+						<option value="ice">Ice</option>
+						<option value="food">Food</option>
+						<option value="medication">Medication</option>
+						<option value="medical_devices">Medical Devices</option>
+						<option value="clothes">Clothes</option>
+						<option value="fuel">Fuel</option>
+						<option value="power_generators">Power Generators</option>
+						<option value="batteries">Batteries</option>
+						<option value="tools">Tools</option>
+						<option value="heavy_equipment">Heavy Equipment</option>
+					</select>
+					<!-- Ask for amount they have of product-->
+					<label><b>Quantity</b></label>
+					<input type="number" min="0" placeholder="How much?" name="quantity" required>
+					<!-- Ask for user's email -->
+					<label><b>Price</b></label>
+					<input type="text" placeholder="Enter Price" name="price" required>
+					<div id="hidden_forms">
+						<!--Water form-->
+						<div id="water_form">
+							<!-- It can be bottled water or a gallon-->
+							<label><b>What kind of water is it?</b></label>
+							<select name="water_type">
+								<option value="Water Bottles" selected>Water Bottles</option>
+							<option value="Water Gallon">Gallon</option>
+							</select>
+							<!-- Ask for products brand-->
+							<label><b>Brand</b></label>
+							<input type="text" placeholder="What brand is it?" name="brand">
+						</div>
+						<!--Ice form-->
+						<div id="ice_form">
+							<!-- Ask for products name-->
+							<label><b>Size</b></label>
+							<input type="text" placeholder="What size is it?" name="ice_size">
+						</div>
+						<!--Food form-->
+						<div id="food_form">
+							<!-- It can be dry, canned or baby food-->
+							<label><b>What type of food is it?</b></label>
+							<select name="food_type">
+								<option value="Dry Food" selected>Dry Food</option>
+							<option value="Canned Food">Canned Food</option>
+							<option value="Baby Food">Baby Food</option>
+							</select>
+							<!-- Ask for products brand-->
+							<label><b>Brand</b></label>
+							<input type="text" placeholder="What brand is it?" name="f_brand">
+							<!--Ask for food's amount-->
+							<label><b>Amount/Weight</b></label>
+							<input type="text" placeholder="What amount does it bring?" name="f_amount">
+							<!--Ask for food's expiration date-->
+							<label><b>Expiration Date</b></label>
+							<input type="date" placeholder="What is its expiration date?" name="f_exp_date">
+							
+						</div>
+						<!--Medication form-->
+						<div id="medication_form">
+							<!-- What type of medication-->
+							<label><b>Medication Type</b></label>
+							<select name="med_type">
+								<option value="Pills" selected>Pills</option>
+							<option value="Capsules">Capsules</option>
+							<option value="Syrup">Syrup</option>
+							</select>
+							<!-- Ask for products brand-->
+							<label><b>Brand</b></label>
+							<input type="text" placeholder="What brand is it?" name="med_brand">
+							<!--Ask for med's amount-->
+							<label><b>Amount</b></label>
+							<input type="text" placeholder="Number of pills or amount in oz" name="med_amount">
+							<!--Ask for meds dose-->
+							<label><b>Dose (for pills)</b></label>
+							<input type="text" placeholder="mg of the pills or capsules" name="med_dose">
+							
+						</div>
+						<!--Medical Devices form-->
+						<div id="medical_devices_form">
+							<!-- There exist too many medical devices for this to be a dropdown-->
+							<label><b>Type of device</b></label>
+							<input type="text" placeholder="Glucose meter, syringe, etc." name="med_dev_type">
+							<!-- Ask for products brand-->
+							<label><b>Brand</b></label>
+							<input type="text" placeholder="What brand is it?" name="med_dev_brand">
+							<!--Ask for medical devices power source type-->
+							<label><b>Power Source</b></label>
+							<input type="text" placeholder="Batteries, electric, etc." name="med_power_type">
+							<!--Ask for medical devices presicion-->
+							<label><b>Precision</b></label>
+							<input type="text" placeholder="How precise it it?" name="med_dev_presicion">
+							
+						</div>
+						<!--Clothes form-->
+						<div id="clothes_form">
+							<!-- For who is the clothes-->
+							<label><b>For who is the clothes for?</b></label>
+							<select name="clothes_type">
+								<option value="Male" selected>Male</option>
+							<option value="Female">Female</option>
+							<option value="Baby">Baby</option>
+							</select>
+							<!--Ask for clothes size-->
+							<label><b>Size</b></label>
+							<input type="text" placeholder="Small, Medium, Large..." name="clothes_amount">
+							<!-- Ask for products brand-->
+							<label><b>Brand</b></label>
+							<input type="text" placeholder="What brand is it?" name="clothes_brand">
+							
+							<!--Ask for clothe's material-->
+							<label><b>Materiale</b></label>
+							<input type="text" placeholder="Cotton, polyester, etc." name="clothes_material">
+							
+						</div>
+						<!--Fuel form-->
+						<div id="fuel_form">
+							<!-- What type of fuel is it-->
+							<label><b>Fuel type</b></label>
+							<select name="fuel_type">
+								<option value="Gasoline" selected>Gasoline</option>
+							<option value="Diesel">Diesel</option>
+							<option value="Gas">Gas</option>
+							</select>
+							<!--Ask for clothes size-->
+							<label><b>Octane</b></label>
+							<input type="number" min="0" name="fuel_octane">
+							<!-- Ask for products brand-->
+							<label><b>Brand</b></label>
+							<input type="text" placeholder="What brand is it?" name="fuel_brand">							
+						</div>
+						<!--Power Generator form-->
+						<div id="power_generators_form">
+							<!-- What fuel does it use-->
+							<label><b>What type of fuel does it use?</b></label>
+							<select name="power_generators_fuel_type">
+								<option value="Gasoline" selected>Gasoline</option>
+							<option value="Diesel">Diesel</option>
+							<option value="Gas">Gas</option>
+							</select>
+							<!-- Ask for products brand-->
+							<label><b>Brand</b></label>
+							<input type="text" placeholder="What brand is it?" name="power_generators_brand">
+							
+							<!--How many watts does it produce-->
+							<label><b>How many watts does it produce?</b></label>
+							<input type="number" min="0" name="power_generators_watts">
+							
+						</div>
+						<!--Batteries form-->
+						<div id="batteries_form">
+							<!-- What type of battery-->
+							<label><b>What type of battery is it?</b></label>
+							<input type="text" placeholder="AA, AAA, C, D..." name="battery_type">
+							<!-- Ask for products brand-->
+							<label><b>Brand</b></label>
+							<input type="text" placeholder="What brand is it?" name="battery_brand">
+							<!--Amount in battery pack-->
+							<label><b>How many batteries are in the battery pack?</b></label>
+							<input type="number" min="0" name="battery_amount">
+							
+						</div>
+						<!--Tools form-->
+						<div id="tools_form">
+							<!-- What type of battery-->
+							<label><b>What type of tools is it?</b></label>
+							<input type="text" placeholder="screwdriver, hammer..." name="tool_type">
+							<!-- Ask for products brand-->
+							<label><b>Brand</b></label>
+							<input type="text" placeholder="What brand is it?" name="tool_brand">
+						</div>
+						<!--Heavy Equipment form-->
+						<div id="heavy_equipment_form">
+							<!-- Type of heavy equipement-->
+							<label><b>Type of equipment</b></label>
+							<input type="text" placeholder="Digger, drill..." name="heavy_equipment_type">
+							<!-- Ask for products brand-->
+							<label><b>Brand</b></label>
+							<input type="text" placeholder="What brand is it?" name="heavy_equipment_brand">
+							<!--Size of equipment-->
+							<label><b>Size</b></label>
+							<input type="text" placeholder="How big is it?" name="heavy_equipment_type">
+							<!--Weight of equipment-->
+							<label><b>Weight</b></label>
+							<input type="text" placeholder="How heavy is it?" name="heavy_equipment_weight">
+							<!--Model of equipment-->
+							<label><b>Model</b></label>
+							<input type="text" placeholder="What's its model?" name="heavy_equipment_model">
+							
+						</div>
+					</div>
+					<div>
+					  <button type="button" class="cancelbtn">Cancel</button>
+					  <button type="submit" class="submitbtn">Submit</button>
+					</div>
+			  </div>
+			 
+			</form>
+    </div>
+	<script>
+		var prev_open_form = document.getElementById("water_form");
+		//Shows the form depeding on the selected product type
+		function showRestOfForm(input){
+			
+			//Hid previous elements
+			prev_open_form.style.display = "none";
+			//Get the selected element. Used to determine which form to show.
+			var selected_value = input.options[input.selectedIndex].value;
+			//Variable holds the forms name
+			var form_name = selected_value+"_form";
+			//Variable that holds the elements that must be shown
+			var show = document.getElementById(form_name);
+			//Save new previous form
+			prev_open_form=show;
+			//Shows the appropriate element
+			show.style.display = "block";
+		}
+	</script>
+	</body>
+</html>
