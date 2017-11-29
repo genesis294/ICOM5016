@@ -41,14 +41,14 @@ button {
 	padding: 0;
 	overflow: hidden;
 	vertical-align: middle;
+	width: 100%
 }
 #toggle_checkbox {
 	float: left;
 	margin-top: 5px;
+	width: 5%
 }
-#psw_msg{
-	margin-left: 25px;
-}
+
 
 /* Extra styles for the cancel button */
 .cancelbtn {
@@ -68,6 +68,4 @@ button {
     text-align: left;
     margin: auto;
     width: 50%;
-
-
 }

@@ -1,72 +1,42 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>DSRL Sign Up</title>
-		<meta charset="utf-8"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-		<link href="{{url_for('static', filename='CSS/DS_General_Layout.css')}}" rel="stylesheet">
-		<link href="{{url_for('static', filename='CSS/DS_Signup.css')}}" rel="stylesheet">
-		<script type="text/javascript" src="{{url_for('static', filename='Javascript/sign_up_functions.js')}}}}"></script>
-
-	</head>
-	<body>
-
-		<header>
-			<h3>Disaster Resource Locator Site</h3>
-			<div class='signup_bar'>
-				<ul>
-					<li><a href="log_in.html">Login</a></li>
-					<li><a href="sign_up.html">Sign up</a></li>
-				</ul>
-
-			</div>
-		</header>
-		<div class='toolbar'>
-			<ul>
-				<ul>
-				<li><a href="../DisasterSite.html">Home</a></li>
-				<li><a href="available_resources.html">Available Resources</a></li>
-				<li><a href="requested_resources.html">Requested Resources</a></li>
-				<li><a href="add_resources.html">Add/Request Resource</a></li>
-				<li><a href="daily_statistics.html">Daily Statistics</a></li>
-				<li><a href="seven_day_statistics.html">Weekly Statistics</a></li>
-				<li><a href="region_statistics.html">Regional Statistics</a></li>
-			</ul>
-			</ul>
-
-		</div>
+{% extends "layout.html" %}
+{% block pagestyle %}
+	<link href="{{url_for('static', filename='CSS/DS_Signup.css')}}" rel="stylesheet">
+	<script type="text/javascript" src="{{url_for('static', filename='Javascript/sign_up_functions.js')}}"></script>
+{% endblock %}
+{% block content %}
     <div id="sign_up">
-			<h2>Signup Form</h2>
+		<h2>Signup Form</h2>
 
-			<form name= "signUp_form" style="border:1px solid #ccc">
-			  <div class="container">
-					<!-- Ask for user's name-->
-					<label><b>First Name</b></label>
-			    <input type="text" placeholder="Enter Name" name="first_name" required>
+		<form name= "signUp_form" style="border:1px solid #ccc">
+		  <div class="container">
+				<!-- Ask for user's name-->
+				<label><b>First Name</b></label>
+				<input type="text" placeholder="Enter Name" name="first_name" required>
 					<!-- Ask for user's last name-->
 					<label><b>Last Name</b></label>
-			    <input type="text" placeholder="Enter Last Name" name="last_name" required>
+				<input type="text" placeholder="Enter Last Name" name="last_name" required>
 					<!-- Ask for user's email -->
-			    <label><b>Email</b></label>
-			    <input type="text" placeholder="Enter Email" name="email" required>
+				<label><b>Email</b></label>
+				<input type="text" placeholder="Enter Email" name="email" required>
 					<!-- Ask for a password-->
-			    <label><b>Password</b></label>
-			    <input type="password" id="psw" placeholder="Enter Password" name="psw" required>
+				<label><b>Password</b></label>
+				<input type="password" id="psw" placeholder="Enter Password" name="psw" required>
 				<div id="psw_toggle">
 					<input type="checkbox" id="toggle_checkbox" onclick="passwordToggle()">
 					<!--The for causes the label to be clickable as well and toggle the checkbox-->
 					<label id="psw_msg" for=toggle_checkbox><b>Show Password</b></label>
 				</div>
 
-					<!-- Confirm the password-->
-			    <label><b>Re-enter Password</b></label>
-			    <input type="password" placeholder="Re-enter Password" name="psw-repeat" required>
-
+			  	<!-- Confirm the password-->
+			  	<div id="re_psw">
+					<label><b>Re-enter Password</b></label>
+					<input type="password" placeholder="Re-enter Password" name="psw-repeat" required>
+				</div>
 				<!-- Ask for user's phone number-->
-				<label><b>Phone Number</b><label>
-			    <input type="tel" placeholder="Phone Number" name="phone" required>
+				<label><b>Phone Number</b></label>
+				<input type="tel" placeholder="Phone Number" name="phone" required>
 					<!-- Ask what type of user they are-->
-					<label><b>Why do you want to sign up?</b><label>
+					<label><b>Why do you want to sign up?</b></label>
 					<select name="user_type" id="user_type" onchange="showAddress(this)">
 						<option value="0" selected>Person in Need</option>
 						<option value="1">Supplier</option>
@@ -76,15 +46,13 @@
 					<div id="location_info">
 						<!-- Ask for user's address-->
 						<label><b>Address</b></label>
-				    <input type="text" placeholder="Enter Address" name="address" required>
+					<input type="text" placeholder="Enter Address" name="address" required>
 					</div>
-			    <div>
-			      <button type="button" class="cancelbtn">Cancel</button>
-			      <button type="submit" class="signupbtn">Sign Up</button>
-			    </div>
-			  </div>
-			</form>
+				<div>
+				  <button type="button" class="cancelbtn">Cancel</button>
+				  <button type="submit" class="signupbtn">Sign Up</button>
+				</div>
+		  </div>
+		</form>
     </div>
-
-	</body>
-</html>
+{% endblock %}

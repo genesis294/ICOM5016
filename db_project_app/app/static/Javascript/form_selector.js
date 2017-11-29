@@ -1,7 +1,6 @@
 var prev_open_form = document.getElementById("water_form");
-//Shows the form depeding on the selected product type
+//Shows the form depending on the selected product type
 function showRestOfForm(input){
-
   //Hid previous elements
   prev_open_form.style.display = "none";
   //Get the selected element. Used to determine which form to show.
