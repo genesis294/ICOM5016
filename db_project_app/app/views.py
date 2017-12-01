@@ -1,21 +1,39 @@
-from flask import render_template
+from flask import render_template, request
+from handler.resources import ResourcesHandler
+
 from app import app
 
 
 @app.route('/')
-def index():
-    return render_template('DisasterSite.html')
-
-
-@app.route('/home')
 def home():
     return render_template('DisasterSite.html')
 
 
 @app.route('/available')
 def available_res():
-    return render_template('available_resources.html')
+    if not request.args:
+        return ResourcesHandler().get_available_resources()
+    else:
+        return ResourcesHandler().search_for_request(request.args)
 
+
+@app.route('/available/<int:rid>')
+def getAvailableById(rid):
+    return ResourcesHandler().get_available_by_id(rid)
+
+@app.route('/requested')
+def requested_res():
+    #return render_template('requested_resources.html')
+    if not request.args:
+        return ResourcesHandler().get_requested_resources()
+    else:
+        return ResourcesHandler().search_for_request(request.args)
+
+
+
+@app.route('/requested/<int:rid>')
+def getRequestById(rid):
+    return ResourcesHandler().get_request_by_id(rid)
 
 @app.route('/add')
 def add_res():
@@ -35,11 +53,6 @@ def login():
 @app.route('/regionStats')
 def region_stats():
     return render_template('region_statistics.html')
-
-
-@app.route('/requested')
-def requested_res():
-    return render_template('requested_resources.html')
 
 
 @app.route('/weeklyStats')
