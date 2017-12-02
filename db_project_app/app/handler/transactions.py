@@ -28,18 +28,18 @@ class TransactionsHandler:
             result_list.append(result)
         return jsonify(Transactions = result_list)
 
-    def getTransactionByID(self):
+    def getTransactionByID(self, tid):
         dao = TransactionsDAO()
-        t = dao.getTransactionByID()
+        t = dao.getTransactionByID(tid)
         if not t:
             return jsonify(Error = "Transaction Not Found."), 404
         else:
             transaction = self.build_transactions_dict(t)
             return jsonify(Transaction = transaction)
 
-    def getTransactionsByUserID(self):
+    def getTransactionsByUserID(self, uid):
         dao = TransactionsDAO()
-        transaction_list = dao.getTransactionsByUserID()
+        transaction_list = dao.getTransactionsByUserID(uid)
         if not transaction_list:
             return jsonify(Error = "Transactions Not Found"), 404
         else:
@@ -49,9 +49,9 @@ class TransactionsHandler:
                 result_list.append(result)
             return jsonify(User_Transactions = result_list)
 
-    def getTransactionsByCartID(self):
+    def getTransactionsByCartID(self, cid):
         dao = TransactionsDAO()
-        transaction_list = dao.getTransactionsByCartID()
+        transaction_list = dao.getTransactionsByCartID(cid)
         if not transaction_list:
             return jsonify(Error = "Transactions Not Found"), 404
         else:
@@ -63,9 +63,8 @@ class TransactionsHandler:
 
     def searchTransactions(self, args):
         dao = TransactionsDAO()
-        payment_method = args.get("payments_method")
-        date = args.get("date_of_purchase")
-        transaction_list = []
+        payment_method = args.get("payment_method")
+        date = args.get("date")
 
         if payment_method:
             transaction_list = dao.getTransactionsByPaymentMethod(payment_method)

@@ -16,11 +16,6 @@
 	<div class='resources'>
 		{% if resources %}
     		<div>
-				<script>
-					var resource = "{{request.script_root | tojson | safe }}"
-					alert(resource)
-
-				</script>
 				<h3>{{ resources.rname }}</h3>
 				<label>Quantity:</label><p>{{ resources.rquantity }}</p>
 				<label>Price:</label><p>{{ resources.rprice }}</p>
@@ -31,4 +26,5 @@
 		<h1>No resources yet...</h1>
 		{% endif %}
 	</div>
+	<script src="{{url_for('static', filename='Javascript/available_resource_setter.js')}}"></script>
 {% endblock %}

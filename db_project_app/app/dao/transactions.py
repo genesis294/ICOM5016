@@ -1,6 +1,6 @@
 # Author: Genesis
 
-from config.dbconfig import pg_config
+#from config.dbconfig import pg_config
 import psycopg2
 
 # List of test transactions to be used in first phase of the project, before the db can be accessed
@@ -38,9 +38,9 @@ TRANSACTION_LIST = [{"tid": 1, "uid": 3, "cid": 4, "payment_method": "Credit Car
 class TransactionsDAO:
 
     #Initialization method
-    def __init__(self):
-        connection_url = "dbname=%s user=%s password=%s" % (pg_config['dbname'], pg_config['user'], pg_config['passwd'])
-        self.conn = psycopg2._connect(connection_url)
+    #def __init__(self):
+    #    connection_url = "dbname=%s user=%s password=%s" % (pg_config['dbname'], pg_config['user'], pg_config['passwd'])
+    #    self.conn = psycopg2._connect(connection_url)
 
     # Returns a list of all transactions.
     def getAllTransactions(self):
@@ -73,7 +73,7 @@ class TransactionsDAO:
     def getTransactionsByPaymentMethod(self, payment_method):
         transactions = []
         for row in TRANSACTION_LIST:
-            if row["payments_method"] == payment_method:
+            if row["payment_method"] == payment_method:
                 transactions.append(row)
         return transactions
 

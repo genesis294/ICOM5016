@@ -1,8 +1,10 @@
 from flask import render_template, request
 from handler.resources import ResourcesHandler
-from handler.transactions import TransactionsHandler
 
 from app import app
+
+# Route for home page
+from handler.transactions import TransactionsHandler
 
 
 @app.route('/')
@@ -10,17 +12,20 @@ def home():
     return render_template('DisasterSite.html')
 
 
+# Route for available resources page
 @app.route('/available')
 def available_res():
     if not request.args:
-        return ResourcesHandler().get_available_resources()
+        return render_template("available_resources.html",
+                               resources=ResourcesHandler().get_available_resources())
     else:
-        return ResourcesHandler().search_for_request(request.args)
+        return ResourcesHandler().search_for_available(request.args)
 
 
 @app.route('/available/<int:rid>')
-def getAvailableById(rid):
+def get_available_by_id(rid):
     return ResourcesHandler().get_available_by_id(rid)
+
 
 @app.route('/requested')
 def requested_res():
@@ -32,7 +37,7 @@ def requested_res():
 
 
 @app.route('/requested/<int:rid>')
-def getRequestById(rid):
+def get_request_by_id(rid):
     return ResourcesHandler().get_request_by_id(rid)
 
 
@@ -73,22 +78,21 @@ def signup():
 @app.route('/transactions')
 def getAllTransactions():
     if not request.args:
-        return TransactionsHandler.getAllTransactions()
+        return TransactionsHandler().getAllTransactions()
     else:
-        return TransactionsHandler.searchTransactions(request.args)
+        return TransactionsHandler().searchTransactions(request.args)
 
-@app.route('/transactions/<int:tid')
-def getTransactionByID(tid):
-    return TransactionsHandler.getTransactionByID(tid)
 
-@app.route('/transactions/<int:tid')
+@app.route('/transactions/<int:tid>')
 def getTransactionByID(tid):
-    return TransactionsHandler.getTransactionByID(tid)
+    return TransactionsHandler().getTransactionByID(tid)
+
 
 @app.route('/transactions/user/<int:uid>')
 def getTransactionsByUserID(uid):
-    return TransactionsHandler.getTransactionsByUserID(uid)
+    return TransactionsHandler().getTransactionsByUserID(uid)
 
-@app.route('/transactions/cart/<int:uid>')
+
+@app.route('/transactions/cart/<int:cid>')
 def getTransactionsByCartID(cid):
-    return TransactionsHandler.getTransactionsByCartID(cid)
+    return TransactionsHandler().getTransactionsByCartID(cid)

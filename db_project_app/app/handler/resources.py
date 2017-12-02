@@ -29,7 +29,7 @@ class ResourcesHandler:
         for row in resource_list:
             result = self.build_resource_dict(row)
             result_list.append(result)
-        return jsonify(Resources=result_list)
+        return jsonify(available=result_list)
 
     # Get an available resource by its id
     def get_available_by_id(self, rid):
@@ -42,15 +42,17 @@ class ResourcesHandler:
             return jsonify(Resource=resource)
 
     # Get a list of the available resources with a given name
-    def get_available_by_name(self, args):
-        name = args.get("name")
+    def get_available_by_name(self, name):
         dao = ResourcesDAO()
-        row = dao.getAvailableByName(name)
-        if not row:
-            return jsonify(Error="Resource Not Found. No resource with such name."), 404
+        resource_list = dao.getAvailableByName(name)
+        if not resource_list:
+            return jsonify(Error="No such request found."), 404
         else:
-            resource = self.build_resource_dict(row)
-            return jsonify(Resource=resource)
+            result_list = []
+            for row in resource_list:
+                result = self.build_resource_dict(row)
+                result_list.append(result)
+            return jsonify(Resources=result_list)
 
     # Searches for available resources that has the given parameters
     def search_for_available(self, args):
@@ -153,12 +155,15 @@ class ResourcesHandler:
     # Get a list of the requests with a given name
     def get_request_by_name(self, name):
         dao = ResourcesDAO()
-        row = dao.getRequestByName(name)
-        if not row:
-            return jsonify(Error="Resource Not Found. No resource with such name."), 404
+        resource_list = dao.getRequestByName(name)
+        if not resource_list:
+            return jsonify(Error="No such request found."), 404
         else:
-            resource = self.build_resource_dict(row)
-            return jsonify(Resource=resource)
+            result_list = []
+            for row in resource_list:
+                result = self.build_resource_dict(row)
+                result_list.append(result)
+            return jsonify(Resources=result_list)
 
     # Searches for request that has the given parameters
     def search_for_request(self, args):
