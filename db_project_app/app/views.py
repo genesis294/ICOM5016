@@ -1,5 +1,6 @@
 from flask import render_template, request
 from handler.resources import ResourcesHandler
+from handler.transactions import TransactionsHandler
 
 from app import app
 
@@ -30,10 +31,10 @@ def requested_res():
         return ResourcesHandler().search_for_request(request.args)
 
 
-
 @app.route('/requested/<int:rid>')
 def getRequestById(rid):
     return ResourcesHandler().get_request_by_id(rid)
+
 
 @app.route('/add')
 def add_res():
@@ -65,3 +66,29 @@ def signup():
     return render_template('sign_up.html')
 
 
+#####################################
+# Routes to search for transactions #
+#      (For testing purposes)       #
+#####################################
+@app.route('/transactions')
+def getAllTransactions():
+    if not request.args:
+        return TransactionsHandler.getAllTransactions()
+    else:
+        return TransactionsHandler.searchTransactions(request.args)
+
+@app.route('/transactions/<int:tid')
+def getTransactionByID(tid):
+    return TransactionsHandler.getTransactionByID(tid)
+
+@app.route('/transactions/<int:tid')
+def getTransactionByID(tid):
+    return TransactionsHandler.getTransactionByID(tid)
+
+@app.route('/transactions/user/<int:uid>')
+def getTransactionsByUserID(uid):
+    return TransactionsHandler.getTransactionsByUserID(uid)
+
+@app.route('/transactions/cart/<int:uid>')
+def getTransactionsByCartID(cid):
+    return TransactionsHandler.getTransactionsByCartID(cid)
