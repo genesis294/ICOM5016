@@ -1,8 +1,3 @@
-h1{
-	text-align: center;
-	padding-top: 80px;
-}
-
 .search {
     width: 100%;
     position: relative;
@@ -43,4 +38,11 @@ h1{
     left: 50%;
     transform: translate(-50%, -50%);
     padding-top: 40px;
+}
+h1{
+	text-align: center;
+	padding-top: 80px;
+}
+.resources{
+	padding-top: 40px;
 }
