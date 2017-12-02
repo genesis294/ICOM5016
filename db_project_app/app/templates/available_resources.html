@@ -14,7 +14,17 @@
 		</div>
 	</div>
 	<div class='resources'>
-		<h1>No resources yet...</h1>
-	</div>
-{% endblock %}
+		{% if resources %}
+    		<div>
+				<h3>{{ resources.rname }}</h3>
+				<label>Quantity:</label><p>{{ resources.rquantity }}</p>
+				<label>Price:</label><p>{{ resources.rprice }}</p>
+				<label>Owner:</label><p>{{ resources.rquantity }}</p>
 
+			</div>
+		{% else %}
+		<h1>No resources yet...</h1>
+		{% endif %}
+	</div>
+	<script src="{{url_for('static', filename='Javascript/available_resource_setter.js')}}"></script>
+{% endblock %}
