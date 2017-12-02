@@ -1,6 +1,6 @@
 // When the document has finished loading:
   $(document).ready(function(){
-    $.getJSON( "available", function( data ) {
+    $.getJSON( "available/all", function( data ) {
       alert("I actually got here.")
       var resources = [];
       $.each( data, function( key, val ) {
