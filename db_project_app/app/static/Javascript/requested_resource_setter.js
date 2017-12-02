@@ -1,12 +1,12 @@
 // When the document has finished loading:
   $(document).ready(function(){
-    $.getJSON( "available/all", function( data ) {
+    $.getJSON( "requested/all", function( data ) {
       var resources = [];
       var style="\"text-decoration: none; color : black;\""
       $.each( data, function( key, val ) {
         if(val.length==0)
         {
-            $("<h1>No resources available.</h1>").appendTo(".resources");
+            $("<h1>No requests at the moment.</h1>").appendTo(".resources");
         }
         else {
           $.each( val, function( index, val ) {
@@ -47,6 +47,6 @@
 
 function send_id(id)
 {
-  sessionStorage.setItem("req",0);
+  sessionStorage.setItem("req",1);
   sessionStorage.setItem("rid",id);
 }

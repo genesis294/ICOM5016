@@ -1,0 +1,19 @@
+.profile{
+  margin-top: 70px;
+  padding-left: 10px;
+  border: 2px solid #ccc;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 20px;
+}
+label {
+  display: block;
+  padding-left: 30px;
+}
+h1{
+  text-align: center;
+}
+#prof_price{
+  font-weight: bold;
+}

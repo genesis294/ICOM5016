@@ -1,20 +1,21 @@
 {% extends "layout.html" %}
 {% block pagestyle %}
-	<link href="{{url_for('static', filename='CSS/DS_Requested_Resources.css')}}" rel="stylesheet">
+	<link href="{{url_for('static', filename='CSS/DS_Resources_List.css')}}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 
     <div class="wrap">
         <div class="search">
             <input type="text" class="searchTerm" placeholder="Search">
-                <button type="submit" class="searchButton">
+                <button type="submit" class="searchButton" onclick="search()">
                     <i class="fa fa-search"></i>
                     <img src="http://www.pvhc.net/img147/knesrozwwcmfiqsgizyl.png" width="28" height="28">
                 </button>
         </div>
     </div>
     <div class='resources'>
-		<h1>Yay nobody needs resources</h1>
-	</div>
 
+	</div>
+	<script src="{{url_for('static', filename='Javascript/requested_resource_setter.js')}}"></script>
+	<script src="{{url_for('static', filename='Javascript/search_requested.js')}}"></script>
 {% endblock %}

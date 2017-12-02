@@ -160,6 +160,7 @@ class ResourcesHandler:
             return jsonify(Error="No such request found."), 404
         else:
             result_list = []
+            print("Res_list: ", resource_list)
             for row in resource_list:
                 result = self.build_resource_dict(row)
                 result_list.append(result)

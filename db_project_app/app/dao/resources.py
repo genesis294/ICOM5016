@@ -48,10 +48,11 @@ class ResourcesDAO:
         #for row in cursor:
         #    result.append(row)
         #return result
-        for row in supplies:
-            if row['rname'] == name:
-                return row
-        return None
+        result = []
+        for row in requests:
+            if row["rname"] == name:
+                result.append(row)
+        return result
 
     # Get request by name, quantity and price
     def getRequestByNameQuantityPrice(self, name, quantity, price):
@@ -150,7 +151,7 @@ class ResourcesDAO:
         #    result.append(row)
         #return result
         result = []
-        for row in requests:
+        for row in supplies:
             if row["rname"] == name:
                 result.append(row)
         return result

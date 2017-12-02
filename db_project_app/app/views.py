@@ -33,16 +33,25 @@ def get_available_by_id(rid):
 
 @app.route('/requested')
 def requested_res():
-    #return render_template('requested_resources.html')
     if not request.args:
-        return ResourcesHandler().get_requested_resources()
+        return render_template('requested_resources.html')
     else:
         return ResourcesHandler().search_for_request(request.args)
+
+
+@app.route('/requested/all')
+def get_all_req_resources():
+    return ResourcesHandler().get_requested_resources()
 
 
 @app.route('/requested/<int:rid>')
 def get_request_by_id(rid):
     return ResourcesHandler().get_request_by_id(rid)
+
+
+@app.route('/resource_profile')
+def resource_profile():
+    return render_template('resource_profile.html')
 
 
 @app.route('/add')

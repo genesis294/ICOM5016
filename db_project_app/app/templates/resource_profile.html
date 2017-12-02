@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block pagestyle %}
+		<link href="{{url_for('static', filename='CSS/DS_Resource_Profile.css')}}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+	<div class='profile'>
+      <h1 id="prof_name"></h1>
+      <label id="prof_id"><b>ID: </b></label>
+      <br>
+      <label id="prof_quantity"><b>In stock: </b></label>
+      <br>
+      <label id="prof_price">$ </label>
+
+	</div>
+	<script src="{{url_for('static', filename='Javascript/resource_profile_setter.js')}}"></script>
+{% endblock %}

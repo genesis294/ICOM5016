@@ -1,30 +1,21 @@
 {% extends "layout.html" %}
 {% block pagestyle %}
-		<link href="{{url_for('static', filename='CSS/DS_Available_Resources.css')}}" rel="stylesheet">
+		<link href="{{url_for('static', filename='CSS/DS_Resources_List.css')}}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 
 	<div class="wrap">
 		<div class="search">
 			<input type="text" class="searchTerm" placeholder="Search">
-			<button type="submit" class="searchButton">
+			<button type="submit" class="searchButton" onclick="search()">
 			<i class="fa fa-search"></i>
 				<img src="http://www.pvhc.net/img147/knesrozwwcmfiqsgizyl.png" width="28" height="28">
 			</button>
 		</div>
 	</div>
 	<div class='resources'>
-		{% if resources %}
-    		<div>
-				<h3>{{ resources.rname }}</h3>
-				<label>Quantity:</label><p>{{ resources.rquantity }}</p>
-				<label>Price:</label><p>{{ resources.rprice }}</p>
-				<label>Owner:</label><p>{{ resources.rquantity }}</p>
 
-			</div>
-		{% else %}
-		<h1>No resources yet...</h1>
-		{% endif %}
 	</div>
 	<script src="{{url_for('static', filename='Javascript/available_resource_setter.js')}}"></script>
+	<script src="{{url_for('static', filename='Javascript/search_available.js')}}"></script>
 {% endblock %}
