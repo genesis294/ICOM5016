@@ -2,6 +2,7 @@
   $(document).ready(function(){
     var req = sessionStorage.getItem("req");
     var id = sessionStorage.getItem("rid");
+    console.log(req);
     if(req==1)
     {
       $.getJSON( "requested/"+id, function( data ) {

@@ -96,7 +96,7 @@ class ResourcesDAO:
         # return result
         result = []
         for row in requests:
-            if row["rname"] == name and row["rquantity"] <= int(quantity):
+            if row["rname"] == name and row["rquantity"] >= int(quantity):
                 result.append(row)
         return result
 
@@ -112,6 +112,20 @@ class ResourcesDAO:
         result = []
         for row in requests:
             if row["rprice"] <= float(price):
+                result.append(row)
+        return result
+
+    def getRequestByQuantity(self, quantity):
+        # cursor = self.conn.cursor()
+        # query = "select * from requests where rquantity <= %s;"
+        # cursor.execute(query, (price, ))
+        # result = []
+        # for row in cursor:
+        #    result.append(row)
+        # return result
+        result = []
+        for row in requests:
+            if row["rquantity"] >= int(quantity):
                 result.append(row)
         return result
 
@@ -166,7 +180,7 @@ class ResourcesDAO:
         #    result.append(row)
         # return result
         result = []
-        for row in requests:
+        for row in supplies:
             if row["rname"] == name and row["rquantity"] >= int(quantity) \
                     and row["rprice"] <= float(price):
                 result.append(row)
@@ -198,7 +212,7 @@ class ResourcesDAO:
         # return result
         result = []
         for row in supplies:
-            if row["rname"] == name and row["rquantity"] <= int(quantity):
+            if row["rname"] == name and row["rquantity"] >= int(quantity):
                 result.append(row)
         return result
 
@@ -217,5 +231,18 @@ class ResourcesDAO:
                 result.append(row)
         return result
 
+    def getAvailableByQuantity(self, quantity):
+        # cursor = self.conn.cursor()
+        # query = "select * from requests where rquantity <= %s;"
+        # cursor.execute(query, (price, ))
+        # result = []
+        # for row in cursor:
+        #    result.append(row)
+        # return result
+        result = []
+        for row in supplies:
+            if row["rquantity"] >= int(quantity):
+                result.append(row)
+        return result
 
 

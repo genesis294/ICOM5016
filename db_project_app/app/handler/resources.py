@@ -18,6 +18,14 @@ class ResourcesHandler:
         result['sid'] = row['sid']
         return result
 
+    # Builds JSON to be sent
+    def json_builder(self, list):
+        result_list = []
+        for row in list:
+            result = self.build_resource_dict(row)
+            result_list.append(result)
+        return jsonify(Resources=result_list)
+
     ##################################################
     #           Available resources methods          #
     ##################################################
@@ -25,11 +33,7 @@ class ResourcesHandler:
     def get_available_resources(self):
         dao = ResourcesDAO()
         resource_list = dao.getAllAvailable()
-        result_list = []
-        for row in resource_list:
-            result = self.build_resource_dict(row)
-            result_list.append(result)
-        return jsonify(available=result_list)
+        return self.json_builder(resource_list)
 
     # Get an available resource by its id
     def get_available_by_id(self, rid):
@@ -48,11 +52,7 @@ class ResourcesHandler:
         if not resource_list:
             return jsonify(Error="No such request found."), 404
         else:
-            result_list = []
-            for row in resource_list:
-                result = self.build_resource_dict(row)
-                result_list.append(result)
-            return jsonify(Resources=result_list)
+            return self.json_builder(resource_list)
 
     # Searches for available resources that has the given parameters
     def search_for_available(self, args):
@@ -60,6 +60,9 @@ class ResourcesHandler:
         quantity = args.get("quantity")
         price = args.get("price")
 
+        print(name)
+        print(quantity)
+        print(price)
         if name and quantity and price:
             return self.get_available_by_name_quantity_price(name, quantity, price)
         elif name and price:
@@ -70,6 +73,8 @@ class ResourcesHandler:
             return self.get_available_by_name(name)
         elif price:
             return self.get_available_by_price(price)
+        elif quantity:
+            return self.get_available_by_quantity(quantity)
         else:
             return jsonify(Error="Bad request."), 400
 
@@ -81,11 +86,7 @@ class ResourcesHandler:
         if not resource_list:
             return jsonify(Error="No such request found."), 404
         else:
-            result_list = []
-            for row in resource_list:
-                result = self.build_resource_dict(row)
-                result_list.append(result)
-            return jsonify(Resources=result_list)
+            return self.json_builder(resource_list)
 
     # Get available list by name and price
     def get_available_by_name_price(self, name, price):
@@ -95,11 +96,7 @@ class ResourcesHandler:
         if not resource_list:
             return jsonify(Error="No such request found."), 404
         else:
-            result_list = []
-            for row in resource_list:
-                result = self.build_resource_dict(row)
-                result_list.append(result)
-            return jsonify(Resources=result_list)
+            return self.json_builder(resource_list)
 
     # Get available list by name and quantity
     def get_available_by_name_quantity(self, name, quantity):
@@ -109,11 +106,7 @@ class ResourcesHandler:
         if not resource_list:
             return jsonify(Error="No such request found."), 404
         else:
-            result_list = []
-            for row in resource_list:
-                result = self.build_resource_dict(row)
-                result_list.append(result)
-            return jsonify(Resources=result_list)
+            return self.json_builder(resource_list)
 
     # Get list of products based on price
     def get_available_by_price(self, price):
@@ -123,11 +116,17 @@ class ResourcesHandler:
         if not resource_list:
             return jsonify(Error="No such request found."), 404
         else:
-            result_list = []
-            for row in resource_list:
-                result = self.build_resource_dict(row)
-                result_list.append(result)
-            return jsonify(Resources=result_list)
+            return self.json_builder(resource_list)
+
+    # Get list of products based on price
+    def get_available_by_quantity(self, quantity):
+        dao = ResourcesDAO()
+        resource_list = dao.getAvailableByQuantity(quantity)
+
+        if not resource_list:
+            return jsonify(Error="No such request found."), 404
+        else:
+            return self.json_builder(resource_list)
 
     ##################################################
     #           Requested resources methods          #
@@ -136,11 +135,7 @@ class ResourcesHandler:
     def get_requested_resources(self):
         dao = ResourcesDAO()
         resource_list = dao.getAllRequests()
-        result_list = []
-        for row in resource_list:
-            result = self.build_resource_dict(row)
-            result_list.append(result)
-        return jsonify(Resources=result_list)
+        return self.json_builder(resource_list)
 
     # Get a request by its id
     def get_request_by_id(self, rid):
@@ -159,12 +154,7 @@ class ResourcesHandler:
         if not resource_list:
             return jsonify(Error="No such request found."), 404
         else:
-            result_list = []
-            print("Res_list: ", resource_list)
-            for row in resource_list:
-                result = self.build_resource_dict(row)
-                result_list.append(result)
-            return jsonify(Resources=result_list)
+            return self.json_builder(resource_list)
 
     # Searches for request that has the given parameters
     def search_for_request(self, args):
@@ -182,6 +172,8 @@ class ResourcesHandler:
             return self.get_request_by_name(name)
         elif price:
             return self.get_request_by_price(price)
+        elif quantity:
+            return self.get_request_by_quantity(quantity)
         else:
             return jsonify(Error="Bad request."), 400
 
@@ -193,11 +185,7 @@ class ResourcesHandler:
         if not resource_list:
             return jsonify(Error="No such request found."), 404
         else:
-            result_list = []
-            for row in resource_list:
-                result = self.build_resource_dict(row)
-                result_list.append(result)
-            return jsonify(Resources=result_list)
+            return self.json_builder(resource_list)
 
     # Get request list by name and price
     def get_request_by_name_price(self, name, price):
@@ -207,11 +195,7 @@ class ResourcesHandler:
         if not resource_list:
             return jsonify(Error="No such request found."), 404
         else:
-            result_list = []
-            for row in resource_list:
-                result = self.build_resource_dict(row)
-                result_list.append(result)
-            return jsonify(Resources=result_list)
+            return self.json_builder(resource_list)
 
     # Get request list by name and quantity
     def get_request_by_name_quantity(self, name, quantity):
@@ -221,11 +205,7 @@ class ResourcesHandler:
         if not resource_list:
             return jsonify(Error="No such request found."), 404
         else:
-            result_list = []
-            for row in resource_list:
-                result = self.build_resource_dict(row)
-                result_list.append(result)
-            return jsonify(Resources=result_list)
+            return self.json_builder(resource_list)
 
     # Get list of products based on price
     def get_request_by_price(self, price):
@@ -235,11 +215,17 @@ class ResourcesHandler:
         if not resource_list:
             return jsonify(Error="No such request found."), 404
         else:
-            result_list = []
-            for row in resource_list:
-                result = self.build_resource_dict(row)
-                result_list.append(result)
-            return jsonify(Resources=result_list)
+            return self.json_builder(resource_list)
+
+    # Get list of products based on price
+    def get_request_by_quantity(self, quantity):
+        dao = ResourcesDAO()
+        resource_list = dao.getRequestByQuantity(quantity)
+
+        if not resource_list:
+            return jsonify(Error="No such request found."), 404
+        else:
+            return self.json_builder(resource_list)
 
 
 
