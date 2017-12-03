@@ -16,7 +16,7 @@ def home():
 @app.route('/available')
 def available_res():
     if not request.args:
-        return render_template("available_resources.html")
+        return render_template('resource_list.html', resource_type="available")
     else:
         return ResourcesHandler().search_for_available(request.args)
 
@@ -34,7 +34,7 @@ def get_available_by_id(rid):
 @app.route('/requested')
 def requested_res():
     if not request.args:
-        return render_template('requested_resources.html')
+        return render_template('resource_list.html', resource_type="requested")
     else:
         return ResourcesHandler().search_for_request(request.args)
 

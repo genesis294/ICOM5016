@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block pagestyle %}
+	<link href="{{url_for('static', filename='CSS/DS_Resources_List.css')}}" rel="stylesheet">
+  <script src="{{url_for('static', filename='Javascript/json_extractor.js')}}"></script>
+	<script src="{{url_for('static', filename='Javascript/resource_setter.js')}}"></script>
+	<script src="{{url_for('static', filename='Javascript/search_resource.js')}}"></script>
+{% endblock %}
+{% block content %}
+
+    <div class="search">
+				<div id="r_name">
+        	<input type="text" class="searchTerm1" placeholder="Search Product">
+				</div>
+				<div id="r_price">
+					<label><b>,</b></label>
+        	<input type="text" class="searchTerm2" placeholder="Max price">
+				</div>
+				<div id="r_quantity">
+					<label><b>,</b></label>
+        	<input type="text" class="searchTerm3" placeholder="Amount">
+				</div>
+        <button type="submit" class="searchButton" onclick="search('{{resource_type}}')">
+						<!--URL of the image http://www.pvhc.net/img147/knesrozwwcmfiqsgizyl.png-->
+            <img src="{{url_for('static', filename='Images/search_glass.png')}}" width="28" height="28">
+        </button>
+
+    </div>
+    <div class='resources' id="{{resource_type}}">
+
+	</div>
+
+{% endblock %}
