@@ -84,3 +84,11 @@ class UsersDAO:
             if row['lname'] == lname:
                 users.append(row)
         return users
+
+
+# Method to get a user by their email address. (Added by Genesis. Need it for login)
+    def getUserByEmail(self, email):
+        for row in Users_List:
+            if row["email"] == email:
+                return row
+        return None

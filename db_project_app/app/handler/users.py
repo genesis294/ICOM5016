@@ -106,3 +106,14 @@ class UsersHandler:
                 result = self.build_users_dict(row)
                 result_list.append(result)
             return jsonify(Users=result_list)
+
+
+# Method to get a user by their email address. (Added by Genesis. Need it for login)
+    def getUserByEmail(self, email):
+        dao = UsersDAO()
+        row = dao.getUsersByEmail(email)
+        if not row:
+            return jsonify(Error = "User Not Found"), 404
+        else:
+            users = self.build_users_dict(row)
+            return jsonify(Users = users)

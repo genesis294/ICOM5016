@@ -5,7 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/db_project_app/app" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/db_project_app" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.6.3 virtualenv at ~/PycharmProjects/db_app_env" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.5 (icom5016f17) (2)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="PartsApp" />
     <orderEntry type="module" module-name="test" />

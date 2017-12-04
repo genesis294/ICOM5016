@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, flash, redirect, url_for
 from handler.resources import ResourcesHandler
 
 from app import app
@@ -54,9 +54,22 @@ def daily_stats():
     return render_template('daily_statistics.html')
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('log_in.html')
+    error = None
+    if request.method == 'POST':
+        if request.form['email'] != "test" or request.form['password'] != "test":
+            error = "Invalid parameters! Please try again."
+        else:
+            flash("LOGIN SUCCESSFUL")
+            return render_template('user_profile.html')
+
+        # email = request.form['email']
+        # user = UsersHandler().getUserByEmail(email)
+        # password = request.form['password']
+        # if user and if user
+
+    return render_template('log_in.html', error=error)
 
 
 @app.route('/regionStats')
