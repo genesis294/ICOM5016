@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>DSRL</title>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<link href="{{url_for('static', filename='CSS/DS_General_Layout.css')}}" rel="stylesheet">
+		<script src="{{url_for('static', filename='Javascript/jquery-3.2.1.min.js')}}"></script>
+
+    {% block pagestyle %}{% endblock %}
+
+	</head>
+	<body>
+		{% with messages = get_flashed_messages() %}
+  			{% if messages %}
+    			<ul class=flashes>
+    			{% for message in messages %}
+      				<li>{{ message }}</li>
+    			{% endfor %}
+    			</ul>
+   			{% endif %}
+ 		{% endwith %}
+
+		<header>
+			<h3>Disaster Resource Locator Site</h3>
+			<div class='signup_bar'>
+				<ul>
+					<li><a href="{{url_for('login')}}">Login</a></li>
+					<li><a href="{{url_for('signup')}}">Sign up</a></li>
+				</ul>
+
+			</div>
+		</header>
+		<div class='toolbar'>
+			<ul>
+				<li><a href="{{url_for('home')}}">Home</a></li>
+				<li><a href="{{url_for('available_res')}}">Available Resources</a></li>
+				<li><a href="{{url_for('requested_res')}}">Requested Resources</a></li>
+				<li><a href="{{url_for('add_res')}}">Add/Request Resource</a></li>
+				<li><a href="{{url_for('daily_stats')}}">Daily Statistics</a></li>
+				<li><a href="{{url_for('weekly_stats')}}">Weekly Statistics</a></li>
+				<li><a href="{{url_for('region_stats')}}">Regional Statistics</a></li>
+			</ul>
+
+		</div>
+        {% block content %}{% endblock %}
+
+
+	</body>
+</html>

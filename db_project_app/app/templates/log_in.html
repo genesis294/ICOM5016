@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block pagestyle %}
+    <link href="{{url_for('static', filename='CSS/DS_Login.css')}}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+    <div id="log_in">
+			<h2>Log In</h2>
+
+		    {% if error %}
+    			<p class=error><strong>Error:</strong> {{ error }}
+ 			{% endif %}
+
+			<form name= "logIn_form" style="border:1px solid #ccc" method="post">
+			  <div class="container">
+
+			    <label><b>Email</b></label>
+			    <input type="text" placeholder="Enter Email" name="email" value="{{request.form.email}}" required>
+					<!-- Ask for a password-->
+			    <label><b>Password</b></label>
+			    <input type="password" placeholder="Enter Password" name="password" vlaue="{{request.form.password}}" required>
+
+			    <div>
+			      <button type="button" class="cancelbtn">Cancel</button>
+			      <button type="submit" class="loginbtn">Log In</button>
+			    </div>
+			  </div>
+			</form>
+    </div>
+{% endblock %}

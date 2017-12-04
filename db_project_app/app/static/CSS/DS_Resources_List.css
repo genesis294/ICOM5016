@@ -1,0 +1,54 @@
+.search {
+		display: inline-block;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 55px;
+    width: 80%;
+    position: static;
+		height: 36px;
+		text-align: center;
+}
+input[type="text"] {
+    border: 3px solid #3E8EDE;
+    padding: 5px;
+    height: 20px;
+    border-radius: 7px;
+    outline: none;
+}
+
+
+.searchTerm:focus{
+  color: black;
+}
+
+.searchButton {
+    width: 45px;
+    height: 36px;
+    border: 3px solid #3E8EDE;
+    background: #fff;
+    border-radius: 7px;
+    cursor: pointer;
+		margin-left: 5px;
+		vertical-align: top;
+}
+
+#r_name{
+	display: inline-block;
+}
+#r_price{
+	display: inline-block;
+}
+#r_quantity{
+	display: inline-block;
+}
+h1{
+	text-align: center;
+	padding-top: 80px;
+}
+.resources{
+	padding-top: 60px;
+	margin: auto 0;
+	width: 100%;
+	display: inline-block;
+	text-align: center;
+}
