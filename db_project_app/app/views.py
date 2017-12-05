@@ -1,4 +1,4 @@
-from flask import render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, url_for, json
 from handler.resources import ResourcesHandler
 from flask_login import login_user, logout_user, login_required
 from login_form import LoginForm
@@ -6,11 +6,13 @@ from user import User
 from app import app, lm
 from handler.transactions import TransactionsHandler
 from handler.users import UsersHandler
-
 from dao.users import UsersDAO
-
+from dao.resources import ResourcesDAO
 
 # Route for home page
+from handler.transactions import TransactionsHandler
+
+
 @app.route('/')
 def home():
     return render_template('DisasterSite.html')
@@ -111,9 +113,9 @@ def get_weekly_stats():
 
 
 # Route that renders the sign up HTML template
-@app.route('/dailyStats')
-def daily_stats():
-    return render_template('daily_statistics.html')
+@app.route('/signup')
+def signup():
+    return render_template('sign_up.html')
 
 
 # Route to handle user login
@@ -150,21 +152,6 @@ def logout():
 def load_user(uid):
     udao = UsersDAO()
     return udao.getUsersById(uid)
-
-
-@app.route('/regionStats')
-def region_stats():
-    return render_template('region_statistics.html')
-
-
-@app.route('/weeklyStats')
-def weekly_stats():
-    return render_template('seven_day_statistics.html')
-
-
-@app.route('/signup')
-def signup():
-    return render_template('sign_up.html')
 
 
 # Renders purchase HTML template and accepts the amount bought
@@ -239,4 +226,3 @@ def getUsersBylName(lname):
 @app.route('/users/fname/<string:fname>/lname/<string:lname>')
 def getUsersByfNameAndlName(fname, lname):
     return UsersHandler().getUsersByfNameAndlName(fname,lname)
->>>>>>> origin/master
