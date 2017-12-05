@@ -134,6 +134,10 @@ class ResourcesHandler:
         res = dao.getUpdateAvailable(rid, resource)
         return
 
+    def add_available(self, resource):
+        dao = ResourcesDAO()
+        dao.addAvailable(resource)
+
     ##################################################
     #           Requested resources methods          #
     ##################################################
@@ -251,5 +255,7 @@ class ResourcesHandler:
     def get_regional_stats(self):
         dao = ResourcesDAO()
         return jsonify(stats=dao.getRegionalStats())
+
+
 
 
