@@ -227,6 +227,37 @@ def getUsersBylName(lname):
 def getUsersByfNameAndlName(fname, lname):
     return UsersHandler().getUsersByfNameAndlName(fname,lname)
 
+@app.route('/users/admins')
+def getAllAdmins():
+    if not request.args:
+        return UsersHandler().getAllAdmins()
+
 @app.route('/users/admins/<int:aid>')
 def getAdminsById(aid):
     return UsersHandler().getAdminsById(aid)
+
+@app.route('/users/suppliers')
+def getAllSuppliers():
+    if not request.args:
+        return UsersHandler().getAllSuppliers()
+
+@app.route('/users/suppliers/<int:sid>')
+def getSuppliersBySID(sid):
+    return UsersHandler().getSuppliersBySID(sid)
+
+@app.route('/users/personinneed')
+def getAllPInNeed():
+    if not request.args:
+        return UsersHandler().getAllPInNeed()
+
+@app.route('/users/personinneed/<int:nid>')
+def getPInNeedByNID(nid):
+    return UsersHandler().getPInNeedByNID(nid)
+
+##############################
+# Routes to search for Business #
+##############################
+
+@app.route('/business/<string:TBusiness>')
+def getBusiness(TBusiness):
+    return UsersHandler().getBusiness(TBusiness)
