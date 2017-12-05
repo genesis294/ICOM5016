@@ -1,4 +1,6 @@
-from flask import render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, url_for, json
+
+from dao.resources import ResourcesDAO
 from handler.resources import ResourcesHandler
 from handler.users import UsersHandler
 
@@ -131,6 +133,21 @@ def login():
 
     return render_template('log_in.html', error=error)
 
+
+# Renders purchase HTML template and accepts the amount bought
+@app.route('/purchase', methods=['GET', 'POST'])
+def purchase():
+    error = None
+    if request.method == 'POST':
+        res = ResourcesDAO().getAvailableResourceById(int(request.form["rid"]))
+        if int(request.form['amount']) < 0 or int(request.form['amount']) > res["rquantity"]:
+            error = "Invalid amount"
+        else:
+            flash("Purchase completed")
+            res["rquantity"] = res["rquantity"] - int(request.form["amount"])
+            ResourcesHandler().update_available(request.form["rid"], res)
+            return render_template('purchase.html', error=error, complete="complete", amount=request.form["amount"])
+    return render_template("purchase.html", error=error, complete="pending")
 
 
 #####################################

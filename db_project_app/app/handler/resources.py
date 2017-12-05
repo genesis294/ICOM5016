@@ -129,6 +129,11 @@ class ResourcesHandler:
         else:
             return self.json_builder(resource_list, 0)
 
+    def update_available(self, rid, resource):
+        dao = ResourcesDAO();
+        res = dao.getUpdateAvailable(rid, resource)
+        return
+
     ##################################################
     #           Requested resources methods          #
     ##################################################
@@ -246,3 +251,5 @@ class ResourcesHandler:
     def get_regional_stats(self):
         dao = ResourcesDAO()
         return jsonify(stats=dao.getRegionalStats())
+
+

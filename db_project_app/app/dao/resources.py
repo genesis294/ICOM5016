@@ -269,6 +269,14 @@ class ResourcesDAO:
                 result.append(row)
         return result
 
+    def getUpdateAvailable(self, rid, resource):
+        for res in available:
+            if res["rid"] == rid:
+                res["rname"] = resource["rname"]
+                res["rquantity"] = resource["rquantity"]
+                res["rprice"] = resource["rprice"]
+                return
+        return
     ##################################################
     #           Statistics methods                   #
     ##################################################
@@ -312,6 +320,8 @@ class ResourcesDAO:
         results['humacao'] = [1, 1, 0]
         results['carolina'] = [1, 0, 0]
         return results
+
+
 
 
 
