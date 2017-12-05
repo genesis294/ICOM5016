@@ -21,7 +21,29 @@
           $("#prof_name").append(val.rname);
           $("#prof_id").append(val.rid);
           $("#prof_quantity").append(val.rquantity);
-          $("#prof_price").append("$ "+val.rprice);
+          if(val.rprice == 0)
+          {
+            $("#prof_price").append("Free");
+            $(".profile").append("<input type='button' id='bttn' value='Reserve'></input>");
+          }
+          else {
+            $("#prof_price").append("$ "+val.rprice);
+            $(".profile").append("<input type='button' id='bttn' value='Purchase'></input>");
+          }
+          $(bttn).css({
+            "background-color": "#4CAF50",
+            "color": "white",
+            "padding" : "14px 10px",
+            "border": "none",
+            "cursor": "pointer",
+            "width": "50%",
+            "margin-left": "75px",
+            "font-size": "20px"
+          });
+          $(bttn).click(function () {
+              window.location.href="/purchase";
+          });
+
 
         });
 
