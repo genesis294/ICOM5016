@@ -7,7 +7,7 @@
 			<h2>Log In</h2>
 
 		    {% if error %}
-    			<p class=error><strong>Error:</strong> {{ error }}
+    			<p class=error><strong>Error:</strong> {{ error }}</p>
  			{% endif %}
 
 			<form name= "logIn_form" style="border:1px solid #ccc" method="post">
@@ -17,7 +17,7 @@
 			    <input type="text" placeholder="Enter Email" name="email" value="{{request.form.email}}" required>
 					<!-- Ask for a password-->
 			    <label><b>Password</b></label>
-			    <input type="password" placeholder="Enter Password" name="password" vlaue="{{request.form.password}}" required>
+			    <input type="password" placeholder="Enter Password" name="password" value="{{request.form.password}}" required>
 
 			    <div>
 			      <button type="button" class="cancelbtn">Cancel</button>

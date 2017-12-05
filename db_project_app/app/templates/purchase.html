@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block pagestyle %}
+		<link href="{{url_for('static', filename='CSS/DS_Purchase.css')}}" rel="stylesheet">
+    <script src="{{url_for('static', filename='Javascript/purchase.js')}}"></script>
+{% endblock %}
+{% block content %}
+  {% if error %}
+  <script>
+    alert("Error: {{error}}");
+  </script>
+  {% endif %}
+  {% if complete == "pending" %}
+  <div class="make_purchase">
+    <form name= "purchase_form"  method="post">
+      <h1 id="pname"></h1>
+      <p id="pprice"><b>Price:</b> </p>
+      <p id="pavailable"><b>Available amount:</b> </p>
+      <p id="pamount" for="amount">Amount to buy: </p>
+      <input type="number" name="rid" class="hidden" value="{{request.form.rid}}"></input>
+      <input type="number" name="amount" class="amount" placeholder="0" min="0" value="{{request.form.amount}}" required>
+      </input>
+      <br>
+      <input type="submit" class="bttn" value="Buy"></input>
+  </form>
+  </div>
+  {% else %}
+    <div class="receipt">
+      <h1>Purchase complete!</h1>
+      <p id="rname"><b>Item purchased:</b> </p>
+      <p id="rprice"><b>Price:</b> </p>
+      <p id="ramount"><b>Amount bought: {{amount}}</b> </p>
+    </div>
+  {% endif %}
+{% endblock %}

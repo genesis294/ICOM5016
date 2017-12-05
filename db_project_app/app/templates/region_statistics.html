@@ -1,9 +1,35 @@
 {% extends "layout.html" %}
 {% block pagestyle %}
 	<link href="{{url_for('static', filename='CSS/DS_Region_Statistics.css')}}" rel="stylesheet">
+	<script src="{{url_for('static', filename='Javascript/node_modules/chart.js/dist/Chart.min.js')}}"></script>
+	<script src="{{url_for('static', filename='Javascript/node_modules/chart.js/dist/Chart.js')}}"></script>
+	<script src="{{url_for('static', filename='Javascript/stats_getter.js')}}"></script>
 {% endblock %}
 {% block content %}
-    <div class='resources'>
-        <h1>No statistics yet...</h1>
-    </div>
+	<div class="stats"  id="{{stats}}">
+		<h1>Regional Statistics</h1>
+		<div class="numbers">
+			{% for i in range(0,8) %}
+			<div class="num_container">
+				<div class="num_stat_{{loop.index0}}">
+					<h2 style="font-size: 40px; text-align: center" id="region_name_{{loop.index0}}"></h2>
+					<h2>Requests:</h2>
+					<p><span id="req_num_{{loop.index0}}"></span> requests were made.</p>
+					<h2>Available supplies:</h2>
+					<p><span id="ava_num_{{loop.index0}}"></span> supplies were added.</p>
+					<p><span id="don_num_{{loop.index0}}"></span> of them were donated.</p>
+					<h2>Matches:</h2>
+					<p><span id="mat_num_{{loop.index0}}"></span> matches were found.</p>
+				</div>
+			</div>
+
+			{% endfor %}
+		</div>
+		<div id="charts">
+			<h1>Charts</h1>
+			<canvas id="resources_by_region_bar_chart" width="500" height="500">
+			</canvas>
+		</div>
+	</div>
+
 {% endblock %}

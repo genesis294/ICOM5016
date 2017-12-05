@@ -11,13 +11,15 @@
 				<div id="r_name">
         	<input type="text" class="searchTerm1" placeholder="Search Product">
 				</div>
-				<div id="r_price">
-					<label><b>,</b></label>
-        	<input type="text" class="searchTerm2" placeholder="Max price">
-				</div>
+				{% if resource_type == "available" %}
+					<div id="r_price">
+						<label><b>,</b></label>
+	        	<input type="text" class="searchTerm2" placeholder="Max price">
+					</div>
+				{% endif %}
 				<div id="r_quantity">
 					<label><b>,</b></label>
-        	<input type="text" class="searchTerm3" placeholder="Amount">
+        	<input type="text" class="searchTerm3" placeholder="Min quantity">
 				</div>
         <button type="submit" class="searchButton" onclick="search('{{resource_type}}')">
 						<!--URL of the image http://www.pvhc.net/img147/knesrozwwcmfiqsgizyl.png-->

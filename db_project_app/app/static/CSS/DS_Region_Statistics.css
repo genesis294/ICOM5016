@@ -2,3 +2,48 @@ h1{
 	text-align: center;
 	padding-top: 40px;
 }
+p{
+	font-size: 20px;;
+
+}
+span{
+	font-size: 60px;
+}
+.stats{
+	margin-left: 20px;
+	margin-top: 10px;
+}
+.numbers{
+	margin: auto 0;
+	width: 100%;
+}
+.num_container{
+	display: inline-block;
+	text-align: justify;
+	border-top: 5px solid #808B96;
+	border-bottom: 5px solid #808B96;
+	background-color: #D6EAF8;
+	width: 45%;
+	height: 100%;
+	padding-left: 20px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin: 10px 10px;
+}
+#charts{
+	clear: left;
+}
+canvas{
+
+	text-align: justify;
+	border-top: 5px solid #808B96;
+	border-bottom: 5px solid #808B96;
+	background-color: #D6EAF8;
+	vertical-align: top;
+
+}
+
+#resources_by_region_bar_chart{
+	height:400px;
+	width: 400px;
+}

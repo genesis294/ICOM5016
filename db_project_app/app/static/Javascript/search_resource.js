@@ -4,8 +4,14 @@ function search(resource_type)
   term="";
   // Name to search for
   s_name = $(".searchTerm1").val();
-  // Price to search for. Will look for prices <= to the one given.
-  s_price = $(".searchTerm2").val();
+  if(resource_type == "available"){
+    // Price to search for. Will look for prices <= to the one given.
+    s_price = $(".searchTerm2").val();
+  }
+  else {
+    s_price = ""
+  }
+
   // Will search for items with >= the quantity given
   s_quantity = $(".searchTerm3").val();
 

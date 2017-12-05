@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block pagestyle %}
+	<link href="{{url_for('static', filename='CSS/DS_Daily_Statistics.css')}}" rel="stylesheet">
+	<script src="{{url_for('static', filename='Javascript/node_modules/chart.js/dist/Chart.min.js')}}"></script>
+	<script src="{{url_for('static', filename='Javascript/node_modules/chart.js/dist/Chart.js')}}"></script>
+	<script src="{{url_for('static', filename='Javascript/stats_getter.js')}}"></script>
+{% endblock %}
+{% block content %}
+	<div class="stats"  id="{{stats}}">
+		{% if stats == "daily" %}
+			<h1>Daily Statistics</h1>
+		{% elif stats == "weekly" %}
+			<h1>Weekly Statistics</h1>
+		{% endif %}
+		<div class="numbers">
+			<div class="num_stat">
+				<h2>Requests:</h2>
+				<p><span id="req_num"></span> requests were made.</p>
+			</div><div class="num_stat">
+				<h2>Available supplies:</h2>
+				<p><span id="ava_num"></span> supplies were added.</p>
+				<p><span id="don_num"></span> of them were donated.</p>
+			</div><div class="num_stat">
+				<h2>Matches:</h2>
+				<p><span id="mat_num"></span> matches were found.</p>
+			</div>
+		</div>
+		<div id="charts">
+			<h1>Charts</h1>
+			<canvas id="submited_resources_pie_chart" width="500" height="500">
+			</canvas><canvas id="supplies_available_bar_chart" width="500" height="500">
+			</canvas><canvas id="resources_by_type_bar_chart" width="500" height="500">
+			</canvas>
+		</div>
+	</div>
+
+{% endblock %}
