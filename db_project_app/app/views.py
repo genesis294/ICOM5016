@@ -226,3 +226,7 @@ def getUsersBylName(lname):
 @app.route('/users/fname/<string:fname>/lname/<string:lname>')
 def getUsersByfNameAndlName(fname, lname):
     return UsersHandler().getUsersByfNameAndlName(fname,lname)
+
+@app.route('/users/admins/<int:aid>')
+def getAdminsById(aid):
+    return UsersHandler().getAdminsById(aid)
