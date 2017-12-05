@@ -1,0 +1,51 @@
+.make_purchase{
+
+  margin-top: 70px;
+  margin-left: 400px;
+  border-top: 3px solid #808B96;
+	border-bottom: 3px solid #808B96;
+  background-color: #E3F2FD;
+  width: 30%;
+}
+.receipt{
+  margin-top: 70px;
+  margin-left: 400px;
+  border-top: 3px solid #808B96;
+	border-bottom: 3px solid #808B96;
+  background-color: #B4E8EA;
+  width: 30%;
+
+}
+h1{
+  text-align: center;
+}
+
+p{
+  margin-left: 100px;
+  font-size: large;
+}
+
+.amount{
+  margin-left: 100px;
+  padding: 5px;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: #03A9F4;
+}
+
+.hidden{
+  display: none;
+}
+.bttn{
+  margin-left: 150px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  background-color: #4CAF50;
+  color: white;
+  padding : 14px 10px;
+  border: none;
+  cursor: pointer;
+  width: 15%;
+  font-size: 20px;
+  clear: both;
+}

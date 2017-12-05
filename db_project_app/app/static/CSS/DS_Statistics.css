@@ -1,0 +1,58 @@
+h1{
+	text-align: center;
+	padding-top: 40px;
+}
+p{
+	font-size: 20px;;
+
+}
+span{
+	font-size: 60px;
+}
+.stats{
+	margin-left: 20px;
+	margin-top: 10px;
+}
+.numbers{
+	display: flex;
+	margin: auto 0;
+	justify-content: center;
+	width: 100%;
+}
+.num_stat{
+	display: inline-block;
+	text-align: justify;
+	border-top: 5px solid #808B96;
+	border-bottom: 5px solid #808B96;
+	background-color: #D6EAF8;
+	width: 45%;
+	height: inherit;
+	padding-left: 20px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	vertical-align: top;
+}
+canvas{
+
+	text-align: justify;
+	border-top: 5px solid #808B96;
+	border-bottom: 5px solid #808B96;
+	background-color: #D6EAF8;
+	vertical-align: top;
+
+}
+#submited_resources_pie_chart{
+	float: left;
+	height:400px;
+	width: 400px;
+}
+#supplies_available_bar_chart{
+	float: left;
+	height:400px;
+	width: 400px;
+}
+#resources_by_type_bar_chart{
+	float: left;
+	height:400px;
+	width: 400px;
+}
