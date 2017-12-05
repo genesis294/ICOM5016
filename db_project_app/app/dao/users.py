@@ -49,9 +49,38 @@ Users_List = [{'uid': 1, 'fname': 'Juan', 'lname': 'Ruiz', 'email': 'juanruiz3@g
               {'uid': 16, 'fname': 'Carlitos', 'lname': 'Cruz', 'email': 'cruzCarlitos@hotmail.com',
                    'phone': '939-666-8753','password': 'cruzcruz'}]
 
-Admin_List = [{'uid': 1 ,'aid' : 1}]
+Admin_List = [{'uid': 1 ,'aid' : 1,'fname': 'Juan', 'lname': 'Ruiz', 'email': 'juanruiz3@gmail.com',
+                'phone': '787-743-4439' },
 
-#Users_List.extend(AdmiList)
+              {'uid': 5, 'aid':2, 'fname': 'Rosa', 'lname': 'Rivera', 'email': 'rrosa@gmail.com',
+                   'phone': '939-234-9832'},
+
+              {'uid': 14, 'aid':3, 'fname': 'Bebo', 'lname': 'Cuevas', 'email': 'BeboCuevas45@outlook.com',
+                   'phone': '787-485-4543'}]
+
+Supplier_List = [{'uid': 4, 'sid':1, 'fname': 'Carlos', 'lname': 'Colon', 'email': 'carloscolon3rd@gmail.com',
+                  'phone': '787-673-4834', 'location': '3,4', 'address': 'Mayaguez, Trastalleres',
+                  'TBusiness': 'SuperMarket'},
+
+                 {'uid': 7, 'sid': 2, 'fname': 'Pedro', 'lname': 'Lopez', 'email': 'pLopez@gmail.com',
+                   'phone': '939-748-2013','location': '98,32', 'address': 'San Juan', 'TBusiness': 'Walmart'},
+
+                 {'uid': 16, 'sid': 3,'fname': 'Carlitos', 'lname': 'Cruz', 'email': 'cruzCarlitos@hotmail.com',
+                   'phone': '939-666-8753','location': '67,31', 'address': 'Arecibo', 'TBusiness': 'Pharmacy'},
+
+                 {'uid': 11, 'sid':4, 'fname': 'Thalia', 'lname': 'Gonzalez', 'email': 'thalia34@gmail.com',
+                   'phone': '787-673-4932', 'location': '42,45', 'address': 'Humacao', 'TBusiness': 'HomeDepot'}]                 
+
+P_In_Need_List = [{'uid':13, 'nid': 1, 'fname': 'Milagros', 'lname': 'Ruiz', 'email': 'milagrosrr@gmail.com',
+                   'phone': '939-345-4567','location': '59,34', 'address': 'Rincon, Punta Del Monte'},
+
+                  {'uid':15, 'nid': 2, 'fname': 'Marie', 'lname': 'Clark', 'email': 'marieck2@gmail.com',
+                   'phone': '787-990-3456', 'location': '23,45', 'address': 'San Sebastian, Colinas Verdes'},
+
+                  {'uid':9, 'nid': 3, 'fname': 'Anthony', 'lname': 'Rivera', 'email': 'antrivera@gmail.com',
+                   'phone': '787-091-3572', 'location': '45,21', 'address': 'Ponce, Playa'}
+                  ]
+
 
 class UsersDAO:
 
@@ -93,8 +122,35 @@ class UsersDAO:
                 return row
         return None
 
+    def getAllAdmins(self):
+        return Admin_List
+
     def getAdminById(self, aid):
         for row in Admin_List:
             if row["aid"] == aid:
+                return row
+        return None
+
+    def getAllSuppliers(self):
+        return Supplier_List
+
+    def getSuppliersBySID(self,sid):
+        for row in Supplier_List:
+            if row["sid"] == sid:
+                return row
+        return None
+
+    def getBusiness(self,TBusiness):
+        for row in Supplier_List:
+            if row["TBusiness"] == TBusiness:
+                return row
+        return None
+
+    def getAllPInNeed(self):
+        return P_In_Need_List
+
+    def getPInNeedByNID(self,nid):
+        for row in P_In_Need_List:
+            if row["nid"] == nid:
                 return row
         return None
