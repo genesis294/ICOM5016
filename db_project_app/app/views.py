@@ -1,15 +1,20 @@
 from flask import render_template, request, flash, redirect, url_for
 from handler.resources import ResourcesHandler
-
-from app import app
-
-# Route for home page
+from flask_login import login_user, logout_user, login_required
+from login_form import LoginForm
+from user import User
+from app import app, lm
 from handler.transactions import TransactionsHandler
 from handler.users import UsersHandler
 
+from dao.users import UsersDAO
+
+
+# Route for home page
 @app.route('/')
 def home():
     return render_template('DisasterSite.html')
+
 
 # Route for available resources page
 @app.route('/available')
@@ -32,7 +37,7 @@ def get_available_by_id(rid):
 
 @app.route('/requested')
 def requested_res():
-    #return render_template('requested_resources.html')
+    # return render_template('requested_resources.html')
     if not request.args:
         return ResourcesHandler().get_requested_resources()
     else:
@@ -54,22 +59,40 @@ def daily_stats():
     return render_template('daily_statistics.html')
 
 
+# Route to handle user login
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
+
     if request.method == 'POST':
-        if request.form['email'] != "test" or request.form['password'] != "test":
-            error = "Invalid parameters! Please try again."
-        else:
+        email = request.form['email']
+        password = request.form['password']
+        form = LoginForm(email, password)
+        if form.validate_on_submit():       # returns: None if user does not exist; the user dictionary otherwise
+            user = User(form.validate_on_submit())
+            login_user(user)
             flash("LOGIN SUCCESSFUL")
             return render_template('user_profile.html')
-
-        # email = request.form['email']
-        # user = UsersHandler().getUserByEmail(email)
-        # password = request.form['password']
-        # if user and if user
+        else:
+            error = "Invalid parameters! Please try again."
 
     return render_template('log_in.html', error=error)
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("home"))
+
+
+# This callback is used to reload the user object from the user ID stored in the session.
+# It takes the unicode ID of a user, and returns the corresponding user object.
+# Returns None if the ID is not valid
+@lm.user_loader
+def load_user(uid):
+    udao = UsersDAO()
+    return udao.getUsersById(uid)
 
 
 @app.route('/regionStats')
