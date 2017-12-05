@@ -1,21 +1,22 @@
 {% extends "layout.html" %}
 {% block pagestyle %}
+	<!-- Css file for this page-->
 	<link href="{{url_for('static' ,filename='CSS/DS_Add_Resource.css')}}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 
+	{% if pending %}
 	<div id="add_resource">
 		<h2>Resource Form</h2>
 
-		<form name= "signUp_form" style="border:1px solid #ccc">
+		<form name= "signUp_form" style="border:1px solid #ccc" method="post">
 		  	<div class="container">
-
 				<!-- Ask for products name-->
 				<label><b>Product</b></label>
-				<input type="text" placeholder="What product is it?" name="product" required>
+				<input type="text" placeholder="What product is it?" name="product" value="{{request.form.product}}" required>
 				<!--Ask what typeof resource it is-->
 				<label><b>What type of resource is it?</b></label>
-				<select name="product_type" id="product_type" onchange="showRestOfForm(this)">
+				<select name="category" id="product_type" value="{{request.form.category}}" onchange="showRestOfForm(this)">
 					<option value="water" selected>Water</option>
 					<option value="ice">Ice</option>
 					<option value="food">Food</option>
@@ -30,182 +31,181 @@
 				</select>
 				<!-- Ask for amount they have of product-->
 				<label><b>Quantity</b></label>
-				<input type="number" min="0" placeholder="How much?" name="quantity" required>
+				<input type="number" min="0" placeholder="How much?" name="quantity" value="{{request.form.quantity}}" required>
 				<!-- Ask for user's email -->
 				<label><b>Price</b></label>
-				<input type="text" placeholder="Enter Price" name="price" required>
+				<input type="text" placeholder="Enter Price" name="price" value="{{request.form.price}}" required>
 				<div id="hidden_forms">
 					<!--Water form-->
 					<div id="water_form">
 						<!-- It can be bottled water or a gallon-->
 						<label><b>What kind of water is it?</b></label>
-						<select name="water_type">
+						<select name="water_type" value="{{request.form.water_type}}">
 							<option value="Water Bottles" selected>Water Bottles</option>
-						<option value="Water Gallon">Gallon</option>
+							<option value="Water Gallon">Gallon</option>
 						</select>
 						<!-- Ask for products brand-->
 						<label><b>Brand</b></label>
-						<input type="text" placeholder="What brand is it?" name="brand">
+						<input type="text" placeholder="What brand is it?" name="brand" value="{{request.form.brand}}">
 					</div>
 					<!--Ice form-->
 					<div id="ice_form">
 						<!-- Ask for products name-->
 						<label><b>Size</b></label>
-						<input type="text" placeholder="What size is it?" name="ice_size">
+						<input type="text" placeholder="What size is it?" name="ice_size" value="{{request.form.size}}">
 					</div>
 					<!--Food form-->
 					<div id="food_form">
 						<!-- It can be dry, canned or baby food-->
 						<label><b>What type of food is it?</b></label>
-						<select name="food_type">
+						<select name="food_type" value="{{request.form.food_type}}">
 							<option value="Dry Food" selected>Dry Food</option>
-						<option value="Canned Food">Canned Food</option>
-						<option value="Baby Food">Baby Food</option>
+							<option value="Canned Food">Canned Food</option>
+							<option value="Baby Food">Baby Food</option>
 						</select>
 						<!-- Ask for products brand-->
 						<label><b>Brand</b></label>
-						<input type="text" placeholder="What brand is it?" name="f_brand">
+						<input type="text" placeholder="What brand is it?" name="f_brand" value="{{request.form.f_brand}}">
 						<!--Ask for food's amount-->
 						<label><b>Amount/Weight</b></label>
-						<input type="text" placeholder="What amount does it bring?" name="f_amount">
+						<input type="text" placeholder="What amount does it bring?" name="f_amount" value="{{request.form.f_amount}}">
 						<!--Ask for food's expiration date-->
 						<label><b>Expiration Date</b></label>
-						<input type="date" placeholder="What is its expiration date?" name="f_exp_date">
+						<input type="date" placeholder="What is its expiration date?" name="f_exp_date" value="{{request.form.f_exp_date}}">
 
 					</div>
 					<!--Medication form-->
 					<div id="medication_form">
 						<!-- What type of medication-->
 						<label><b>Medication Type</b></label>
-						<select name="med_type">
+						<select name="med_type" value="{{request.form.med_type}}">
 							<option value="Pills" selected>Pills</option>
-						<option value="Capsules">Capsules</option>
-						<option value="Syrup">Syrup</option>
+							<option value="Capsules">Capsules</option>
+							<option value="Syrup">Syrup</option>
 						</select>
 						<!-- Ask for products brand-->
 						<label><b>Brand</b></label>
-						<input type="text" placeholder="What brand is it?" name="med_brand">
+						<input type="text" placeholder="What brand is it?" name="med_brand" value="{{request.form.med_brand}}">
 						<!--Ask for med's amount-->
 						<label><b>Amount</b></label>
-						<input type="text" placeholder="Number of pills or amount in oz" name="med_amount">
+						<input type="text" placeholder="Number of pills or amount in oz" name="med_amount" value="{{request.form.med_amount}}">
 						<!--Ask for meds dose-->
 						<label><b>Dose (for pills)</b></label>
-						<input type="text" placeholder="mg of the pills or capsules" name="med_dose">
+						<input type="text" placeholder="mg of the pills or capsules" name="med_dose" value="{{request.form.med_dose}}">
 
 					</div>
 					<!--Medical Devices form-->
 					<div id="medical_devices_form">
 						<!-- There exist too many medical devices for this to be a dropdown-->
 						<label><b>Type of device</b></label>
-						<input type="text" placeholder="Glucose meter, syringe, etc." name="med_dev_type">
+						<input type="text" placeholder="Glucose meter, syringe, etc." name="med_dev_type" value="{{request.form.med_dev_type}}">
 						<!-- Ask for products brand-->
 						<label><b>Brand</b></label>
-						<input type="text" placeholder="What brand is it?" name="med_dev_brand">
+						<input type="text" placeholder="What brand is it?" name="med_dev_brand" value="{{request.form.med_dev_brand}}">
 						<!--Ask for medical devices power source type-->
 						<label><b>Power Source</b></label>
-						<input type="text" placeholder="Batteries, electric, etc." name="med_power_type">
+						<input type="text" placeholder="Batteries, electric, etc." name="med_power_type" value="{{request.form.med_power_type}}">
 						<!--Ask for medical devices presicion-->
 						<label><b>Precision</b></label>
-						<input type="text" placeholder="How precise it it?" name="med_dev_presicion">
-
+						<input type="text" placeholder="How precise it it?" name="med_dev_presicion" value="{{request.form.med_dev_presicion}}">
 					</div>
 					<!--Clothes form-->
 					<div id="clothes_form">
 						<!-- For who is the clothes-->
 						<label><b>For who is the clothes for?</b></label>
-						<select name="clothes_type">
+						<select name="clothes_type" value="{{request.form.clothes_type}}">
 							<option value="Male" selected>Male</option>
-						<option value="Female">Female</option>
-						<option value="Baby">Baby</option>
+							<option value="Female">Female</option>
+							<option value="Baby">Baby</option>
 						</select>
 						<!--Ask for clothes size-->
 						<label><b>Size</b></label>
-						<input type="text" placeholder="Small, Medium, Large..." name="clothes_amount">
+						<input type="text" placeholder="Small, Medium, Large..." name="clothes_amount" value="{{request.form.clothes_amount}}">
 						<!-- Ask for products brand-->
 						<label><b>Brand</b></label>
-						<input type="text" placeholder="What brand is it?" name="clothes_brand">
+						<input type="text" placeholder="What brand is it?" name="clothes_brand" value="{{request.form.clothes_brand}}">
 
 						<!--Ask for clothe's material-->
 						<label><b>Materiale</b></label>
-						<input type="text" placeholder="Cotton, polyester, etc." name="clothes_material">
+						<input type="text" placeholder="Cotton, polyester, etc." name="clothes_material" value="{{request.form.clothes_material}}">
 
 					</div>
 					<!--Fuel form-->
 					<div id="fuel_form">
 						<!-- What type of fuel is it-->
 						<label><b>Fuel type</b></label>
-						<select name="fuel_type">
+						<select name="fuel_type" value="{{request.form.fuel_type}}">
 							<option value="Gasoline" selected>Gasoline</option>
-						<option value="Diesel">Diesel</option>
-						<option value="Gas">Gas</option>
+							<option value="Diesel">Diesel</option>
+							<option value="Gas">Gas</option>
 						</select>
 						<!--Ask for clothes size-->
 						<label><b>Octane</b></label>
-						<input type="number" min="0" name="fuel_octane">
+						<input type="number" min="0" name="fuel_octane" value="{{request.form.fuel_octane}}">
 						<!-- Ask for products brand-->
 						<label><b>Brand</b></label>
-						<input type="text" placeholder="What brand is it?" name="fuel_brand">
+						<input type="text" placeholder="What brand is it?" name="fuel_brand" value="{{request.form.fuel_brand}}">
 					</div>
 					<!--Power Generator form-->
 					<div id="power_generators_form">
 						<!-- What fuel does it use-->
 						<label><b>What type of fuel does it use?</b></label>
-						<select name="power_generators_fuel_type">
+						<select name="power_generators_fuel_type" value="{{request.form.power_generators_fuel_type}}">
 							<option value="Gasoline" selected>Gasoline</option>
-						<option value="Diesel">Diesel</option>
-						<option value="Gas">Gas</option>
+							<option value="Diesel">Diesel</option>
+							<option value="Gas">Gas</option>
 						</select>
 						<!-- Ask for products brand-->
 						<label><b>Brand</b></label>
-						<input type="text" placeholder="What brand is it?" name="power_generators_brand">
+						<input type="text" placeholder="What brand is it?" name="power_generators_brand" value="{{request.form.power_generators_brand}}">
 
 						<!--How many watts does it produce-->
 						<label><b>How many watts does it produce?</b></label>
-						<input type="number" min="0" name="power_generators_watts">
+						<input type="number" min="0" name="power_generators_watts" value="{{request.form.power_generators_watts}}">
 
 					</div>
 					<!--Batteries form-->
 					<div id="batteries_form">
 						<!-- What type of battery-->
 						<label><b>What type of battery is it?</b></label>
-						<input type="text" placeholder="AA, AAA, C, D..." name="battery_type">
+						<input type="text" placeholder="AA, AAA, C, D..." name="battery_type" value="{{request.form.battery_type}}">
 						<!-- Ask for products brand-->
 						<label><b>Brand</b></label>
-						<input type="text" placeholder="What brand is it?" name="battery_brand">
+						<input type="text" placeholder="What brand is it?" name="battery_brand" value="{{request.form.battery_brand}}">
 						<!--Amount in battery pack-->
 						<label><b>How many batteries are in the battery pack?</b></label>
-						<input type="number" min="0" name="battery_amount">
+						<input type="number" min="0" name="battery_amount" value="{{request.form.battery_amount}}">
 
 					</div>
 					<!--Tools form-->
 					<div id="tools_form">
 						<!-- What type of battery-->
 						<label><b>What type of tools is it?</b></label>
-						<input type="text" placeholder="screwdriver, hammer..." name="tool_type">
+						<input type="text" placeholder="screwdriver, hammer..." name="tool_type" value="{{request.form.tool_type}}">
 						<!-- Ask for products brand-->
 						<label><b>Brand</b></label>
-						<input type="text" placeholder="What brand is it?" name="tool_brand">
+						<input type="text" placeholder="What brand is it?" name="tool_brand" value="{{request.form.tool_brand}}">
 					</div>
 					<!--Heavy Equipment form-->
 					<div id="heavy_equipment_form">
 						<!-- Type of heavy equipement-->
 						<label><b>Type of equipment</b></label>
-						<input type="text" placeholder="Digger, drill..." name="heavy_equipment_type">
+						<input type="text" placeholder="Digger, drill..." name="heavy_equipment_type" value="{{request.form.heavy_equipment_type}}">
 						<!-- Ask for products brand-->
 						<label><b>Brand</b></label>
-						<input type="text" placeholder="What brand is it?" name="heavy_equipment_brand">
+						<input type="text" placeholder="What brand is it?" name="heavy_equipment_brand" value="{{request.form.heavy_equipment_brand}}">
 						<!--Size of equipment-->
 						<label><b>Size</b></label>
-						<input type="text" placeholder="How big is it?" name="heavy_equipment_type">
+						<input type="text" placeholder="How big is it?" name="heavy_equipment_size" value="{{request.form.heavy_equipment_size}}">
 						<!--Weight of equipment-->
 						<label><b>Weight</b></label>
-						<input type="text" placeholder="How heavy is it?" name="heavy_equipment_weight">
+						<input type="text" placeholder="How heavy is it?" name="heavy_equipment_weight" value="{{request.form.heavy_equipment_weight}}">
 						<!--Model of equipment-->
 						<label><b>Model</b></label>
-						<input type="text" placeholder="What's its model?" name="heavy_equipment_model">
+						<input type="text" placeholder="What's its model?" name="heavy_equipment_model" value="{{request.form.heavy_equipment_model}}">
 
-					</div>
 				</div>
+			</div>
 				<div>
 				  <button type="button" class="cancelbtn">Cancel</button>
 				  <button type="submit" class="submitbtn">Submit</button>
@@ -214,6 +214,10 @@
 
 		</form>
 	</div>
+	{% else %}
+	<div class="success">
+		<h1>Resource succesfully added!!!</h1>
+	</div>
+	{% endif %}
 	<script type="text/javascript" src="{{url_for('static', filename='Javascript/form_selector.js')}}"></script>
-
 {% endblock %}
