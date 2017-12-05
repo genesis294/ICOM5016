@@ -8,4 +8,3 @@ lm = login_manager.LoginManager()
 app.secret_key = "something_secret"
 
 from app import views  # NO BORRAR!
-

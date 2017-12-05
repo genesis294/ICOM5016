@@ -88,6 +88,11 @@ function displayCharts(val) {
                      stepValue: 5,
 
                  }
+        }],
+        xAxes: [{
+            ticks: {
+                fontSize: 20
+            }
         }]
       }
     }
@@ -115,7 +120,7 @@ function displayCharts(val) {
       responsive: false,
       maintainAspectRatio: true,
       legend: {
-        display: false
+        display: true
       },
       tooltips: {
         display: false
@@ -131,8 +136,13 @@ function displayCharts(val) {
                      beginAtZero: true,
                      steps: 10,
                      stepValue: 5,
-
+                     fontSize: 20
                  }
+        }],
+        xAxes: [{
+            ticks: {
+                fontSize: 10
+            }
         }]
       }
     }

@@ -47,9 +47,11 @@ function extractJSON(url){
         "background-color": "#F0F8FF",
         "margin-left": "10px",
         "margin-top" : "10px",
-        "border": "2px solid #89CFF0",
+        "border": "2px solid #808B96",
         "padding-bottom": "20px",
-        "border-radius": "5px"        
+        "border-radius": "5px",
+        "margin-bottom": "10px",
+        "background-color": "#D6EAF8"
       });
       // Place the name of the product in the middle
       $(rname).css({

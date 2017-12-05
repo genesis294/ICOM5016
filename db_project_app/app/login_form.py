@@ -15,6 +15,3 @@ class LoginForm:
         else:
             return usr
 
-
-
-

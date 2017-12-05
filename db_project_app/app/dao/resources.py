@@ -1,4 +1,6 @@
 #from config.dbconfig import pg_config
+from operator import itemgetter
+
 import psycopg2
 
 # List of stuff donated
@@ -34,6 +36,8 @@ resources = []
 resources.extend(requests)
 resources.extend(donations)
 resources.extend(supplies)
+
+index = 20
 
 
 class ResourcesDAO:
@@ -76,7 +80,7 @@ class ResourcesDAO:
         for row in requests:
             if row["rname"] == name:
                 result.append(row)
-        return result
+        return sorted(result, key=itemgetter('rname'))
 
     # Get request by name, quantity and price
     def getRequestByNameQuantityPrice(self, name, quantity, price):
@@ -92,7 +96,7 @@ class ResourcesDAO:
             if row["rname"] == name and row["rquantity"] >= int(quantity) \
                     and row["rprice"] <= float(price):
                 result.append(row)
-        return result
+        return sorted(result, key=itemgetter('rname'))
 
     # Get request by name and price
     def getRequestByNamePrice(self, name, price):
@@ -107,7 +111,7 @@ class ResourcesDAO:
         for row in requests:
             if row["rname"] == name and row["rprice"] <= float(price):
                 result.append(row)
-        return result
+        return sorted(result, key=itemgetter('rname'))
 
     # Get request by name and quantity
     def getRequestByNameQuantity(self, name, quantity):
@@ -122,7 +126,7 @@ class ResourcesDAO:
         for row in requests:
             if row["rname"] == name and row["rquantity"] >= int(quantity):
                 result.append(row)
-        return result
+        return sorted(result, key=itemgetter('rname'))
 
     # Get requests based on price
     def getRequestByPrice(self, price):
@@ -137,7 +141,7 @@ class ResourcesDAO:
         for row in requests:
             if row["rprice"] <= float(price):
                 result.append(row)
-        return result
+        return sorted(result, key=itemgetter('rname'))
 
     def getRequestByQuantity(self, quantity):
         # cursor = self.conn.cursor()
@@ -151,7 +155,7 @@ class ResourcesDAO:
         for row in requests:
             if row["rquantity"] >= int(quantity):
                 result.append(row)
-        return result
+        return sorted(result, key=itemgetter('rname'))
 
     ##################################################
     #           Available resources methods          #
@@ -192,7 +196,7 @@ class ResourcesDAO:
         for row in available:
             if row["rname"] == name:
                 result.append(row)
-        return result
+        return sorted(result, key=itemgetter('rname'))
 
     # Get available by name, quantity and price
     def getAvailableByNameQuantityPrice(self, name, quantity, price):
@@ -208,7 +212,7 @@ class ResourcesDAO:
             if row["rname"] == name and row["rquantity"] >= int(quantity) \
                     and row["rprice"] <= float(price):
                 result.append(row)
-        return result
+        return sorted(result, key=itemgetter('rname'))
 
     # Get available by name and price
     def getAvailableByNamePrice(self, name, price):
@@ -223,7 +227,7 @@ class ResourcesDAO:
         for row in available:
             if row["rname"] == name and row["rprice"] <= float(price):
                 result.append(row)
-        return result
+        return sorted(result, key=itemgetter('rname'))
 
     # Get available by name and quantity
     def getAvailableByNameQuantity(self, name, quantity):
@@ -238,7 +242,7 @@ class ResourcesDAO:
         for row in available:
             if row["rname"] == name and row["rquantity"] >= int(quantity):
                 result.append(row)
-        return result
+        return sorted(result, key=itemgetter('rname'))
 
     # Get available based on price
     def getAvailableByPrice(self, price):
@@ -253,7 +257,7 @@ class ResourcesDAO:
         for row in available:
             if row["rprice"] <= float(price):
                 result.append(row)
-        return result
+        return sorted(result, key=itemgetter('rname'))
 
     def getAvailableByQuantity(self, quantity):
         # cursor = self.conn.cursor()
@@ -267,7 +271,7 @@ class ResourcesDAO:
         for row in available:
             if row["rquantity"] >= int(quantity):
                 result.append(row)
-        return result
+        return sorted(result, key=itemgetter('rname'))
 
     def getUpdateAvailable(self, rid, resource):
         for res in available:
@@ -279,7 +283,12 @@ class ResourcesDAO:
         return
 
     def addAvailable(self, resource):
-        print(resource)
+        global index
+        global donations
+        global supplies
+        resource["rid"] = index
+        resource["added_date"] = "05/12/17"
+        index += 1
         if resource["rprice"] == 0:
             donations.append(resource)
         else:

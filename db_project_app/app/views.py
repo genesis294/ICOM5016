@@ -9,18 +9,17 @@ from handler.users import UsersHandler
 from dao.users import UsersDAO
 from dao.resources import ResourcesDAO
 
+
 # Route for home page
-from handler.transactions import TransactionsHandler
-
-
 @app.route('/')
 def home():
     return render_template('DisasterSite.html')
 
 
-#####################################
-# Routes to search for resources    #
-#####################################
+########################################
+#     Routes related to resources      #
+#  and general navigation of the site  #
+########################################
 
 # Route for rendering the available resources page.
 @app.route('/available')
@@ -70,11 +69,36 @@ def resource_profile():
     return render_template('resource_profile.html')
 
 
-# Route that renders the add resource HTML template
-@app.route('/add')
-def add_res():
-    return render_template('add_resources.html')
+# Renders purchase HTML template and accepts the amount bought
+@app.route('/purchase', methods=['GET', 'POST'])
+def purchase():
+    error = None
+    if request.method == 'POST':
+        print("Im here for some strange reason")
+        res = ResourcesDAO().getAvailableResourceById(int(request.form["rid"]))
+        if int(request.form['amount']) < 0 or int(request.form['amount']) > res["rquantity"]:
+            error = "Invalid amount"
+        else:
+            flash("Purchase completed")
+            res["rquantity"] = res["rquantity"] - int(request.form["amount"])
+            ResourcesHandler().update_available(request.form["rid"], res)
+            return render_template('purchase.html', error=error, complete="complete", amount=request.form["amount"])
+    return render_template("purchase.html", error=error, complete="pending")
 
+
+# Route that renders the add resource HTML template
+@app.route('/add',  methods=['GET', 'POST'])
+def add_res():
+    if request.method == 'POST':
+        resource = {"rname": request.form["product"], "rquantity": int(request.form["quantity"]), "rprice": float(request.form["price"])}
+        ResourcesHandler().add_available(resource)
+        return render_template('add_resources.html')
+    return render_template('add_resources.html', pending="pending")
+
+
+##################################
+#  Routes related to statistics  #
+##################################
 
 # Route that renders the daily statistics HTML template
 @app.route('/dailyStats')
@@ -112,6 +136,10 @@ def get_weekly_stats():
     return ResourcesHandler().get_weekly_stats()
 
 
+##################################
+#   Routes related to users      #
+##################################
+
 # Route that renders the sign up HTML template
 @app.route('/signup')
 def signup():
@@ -138,11 +166,18 @@ def login():
     return render_template('log_in.html', error=error)
 
 
+# Route that handles user log out
 @app.route("/logout")
 @login_required
 def logout():
     logout_user()
     return redirect(url_for("home"))
+
+
+# Route that renders the user profile HTML template
+@app.route("/user_profile")
+def user_profile():
+    return render_template("user_profile.html")
 
 
 # This callback is used to reload the user object from the user ID stored in the session.
@@ -154,26 +189,11 @@ def load_user(uid):
     return udao.getUsersById(uid)
 
 
-# Renders purchase HTML template and accepts the amount bought
-@app.route('/purchase', methods=['GET', 'POST'])
-def purchase():
-    error = None
-    if request.method == 'POST':
-        res = ResourcesDAO().getAvailableResourceById(int(request.form["rid"]))
-        if int(request.form['amount']) < 0 or int(request.form['amount']) > res["rquantity"]:
-            error = "Invalid amount"
-        else:
-            flash("Purchase completed")
-            res["rquantity"] = res["rquantity"] - int(request.form["amount"])
-            ResourcesHandler().update_available(request.form["rid"], res)
-            return render_template('purchase.html', error=error, complete="complete", amount=request.form["amount"])
-    return render_template("purchase.html", error=error, complete="pending")
-
-
 #####################################
 # Routes to search for transactions #
 #                                   #
 #####################################
+
 @app.route('/transactions')
 def getAllTransactions():
     if not request.args:
@@ -200,6 +220,7 @@ def getTransactionsByCartID(cid):
 ##############################
 # Routes to search for Users #
 ##############################
+
 @app.route('/users')
 def getAllUsers():
     if not request.args:
@@ -227,37 +248,7 @@ def getUsersBylName(lname):
 def getUsersByfNameAndlName(fname, lname):
     return UsersHandler().getUsersByfNameAndlName(fname,lname)
 
-@app.route('/users/admins')
-def getAllAdmins():
-    if not request.args:
-        return UsersHandler().getAllAdmins()
 
 @app.route('/users/admins/<int:aid>')
 def getAdminsById(aid):
     return UsersHandler().getAdminsById(aid)
-
-@app.route('/users/suppliers')
-def getAllSuppliers():
-    if not request.args:
-        return UsersHandler().getAllSuppliers()
-
-@app.route('/users/suppliers/<int:sid>')
-def getSuppliersBySID(sid):
-    return UsersHandler().getSuppliersBySID(sid)
-
-@app.route('/users/personinneed')
-def getAllPInNeed():
-    if not request.args:
-        return UsersHandler().getAllPInNeed()
-
-@app.route('/users/personinneed/<int:nid>')
-def getPInNeedByNID(nid):
-    return UsersHandler().getPInNeedByNID(nid)
-
-##############################
-# Routes to search for Business #
-##############################
-
-@app.route('/business/<string:TBusiness>')
-def getBusiness(TBusiness):
-    return UsersHandler().getBusiness(TBusiness)

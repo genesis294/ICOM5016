@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block pagestyle %}
-	<link href="{{url_for('static', filename='CSS/DS_Daily_Statistics.css')}}" rel="stylesheet">
+	<link href="{{url_for('static', filename='CSS/DS_Statistics.css')}}" rel="stylesheet">
 	<script src="{{url_for('static', filename='Javascript/node_modules/chart.js/dist/Chart.min.js')}}"></script>
 	<script src="{{url_for('static', filename='Javascript/node_modules/chart.js/dist/Chart.js')}}"></script>
 	<script src="{{url_for('static', filename='Javascript/stats_getter.js')}}"></script>
@@ -25,7 +25,7 @@
 				<p><span id="mat_num"></span> matches were found.</p>
 			</div>
 		</div>
-		<div id="charts">
+		<div class="charts">
 			<h1>Charts</h1>
 			<canvas id="submited_resources_pie_chart" width="500" height="500">
 			</canvas><canvas id="supplies_available_bar_chart" width="500" height="500">

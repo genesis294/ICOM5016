@@ -49,6 +49,7 @@ body{
 	font-family: 'Arial', Sans-Serif;
 	margin: 0;
   background-color: #edf4f7;
+  padding-bottom: 50px;
 
 }
 .toolbar{
@@ -75,8 +76,19 @@ body{
     padding: 14px 16px;
     text-decoration: none;
 }
-
-/* Change the link color to #111 (black) on hover */
 .toolbar li a:hover {
     background-color: #FE5A1D;
+}
+footer{
+  text-align: right;
+  font-size: small;
+  background-color:#89CFF0;
+	border-style: solid;
+	border-color:#89CFF0;
+	height: 50px;
+	width: 100%;
+	color: white;
+	margin: 0 auto;
+  clear: both;
+  bottom: 0;
 }
