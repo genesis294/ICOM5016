@@ -277,6 +277,14 @@ class ResourcesDAO:
                 res["rprice"] = resource["rprice"]
                 return
         return
+
+    def addAvailable(self, resource):
+        print(resource)
+        if resource["rprice"] == 0:
+            donations.append(resource)
+        else:
+            supplies.append(resource)
+        return
     ##################################################
     #           Statistics methods                   #
     ##################################################
@@ -320,6 +328,7 @@ class ResourcesDAO:
         results['humacao'] = [1, 1, 0]
         results['carolina'] = [1, 0, 0]
         return results
+
 
 
 
