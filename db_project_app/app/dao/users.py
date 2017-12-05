@@ -49,7 +49,7 @@ Users_List = [{'uid': 1, 'fname': 'Juan', 'lname': 'Ruiz', 'email': 'juanruiz3@g
               {'uid': 16, 'fname': 'Carlitos', 'lname': 'Cruz', 'email': 'cruzCarlitos@hotmail.com',
                    'phone': '939-666-8753','password': 'cruzcruz'}]
 
-#AdmiList = [{'uid': 1 ,'aid' : 1}]
+Admin_List = [{'uid': 1 ,'aid' : 1}]
 
 #Users_List.extend(AdmiList)
 
@@ -90,5 +90,11 @@ class UsersDAO:
     def getUserByEmail(self, email):
         for row in Users_List:
             if row["email"] == email:
+                return row
+        return None
+
+    def getAdminById(self, aid):
+        for row in Admin_List:
+            if row["aid"] == aid:
                 return row
         return None
