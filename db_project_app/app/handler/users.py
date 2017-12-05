@@ -13,6 +13,12 @@ class UsersHandler:
         result['password'] = row['password']
         return result
 
+    def build_admins_dict(self, row):
+        result = {}
+        result['aid'] = row['aid']
+        result['uid'] = row['uid']
+        return result
+
     def build_supplier_dict(self, row):
         result = {}
         result['location'] = row['location']
@@ -117,3 +123,12 @@ class UsersHandler:
         else:
             users = self.build_users_dict(row)
             return jsonify(Users = users)
+
+    def getAdminsById(self, aid):
+        dao = UsersDAO()
+        row = dao.getAdminById(aid)
+        if not row:
+            return jsonify(Error = "Admin Not Found"), 404
+        else:
+            Admins = self.build_admins_dict(row)
+            return jsonify(Admins = Admins)
