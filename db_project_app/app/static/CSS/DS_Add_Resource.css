@@ -65,10 +65,6 @@ button {
 #water_form {
 	display: block;
 }
-.success h1{
-  text-align: center;
-  color: #52BE80;
-}
 .success{
   margin-top: 170px;
   margin-left: auto;
@@ -77,7 +73,9 @@ button {
   border-style: solid;
   border-color: #808B96;
   border-width: 3px;
-  height: 60px;
+  height: 80px;
   background-color: #B4E8EA;
   margin-bottom: 200px;
+  text-align: center;
+  color: #1D8348;
 }
