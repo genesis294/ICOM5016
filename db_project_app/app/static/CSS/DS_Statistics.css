@@ -11,7 +11,7 @@ span{
 }
 .stats{
 	margin-left: 20px;
-	margin-top: 70px;
+	margin-top: 170px;
 }
 .numbers{
 	display: flex;
@@ -39,6 +39,7 @@ canvas{
 	border-bottom: 5px solid #808B96;
 	background-color: #D6EAF8;
 	vertical-align: top;
+	margin-bottom: 150px;
 
 }
 .charts{

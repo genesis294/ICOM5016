@@ -1,5 +1,5 @@
 #log_in {
-    padding-top: 40px;
+    margin-top: 170px;
 }
 h2{
   padding-left: 20px;
@@ -31,7 +31,6 @@ button {
     cursor: pointer;
     width: 50%;
     display: inline-block;
-
 }
 
 /* Extra styles for the cancel button */
@@ -42,8 +41,6 @@ button {
 /* Float cancel and signup buttons and add an equal width */
 .cancelbtn,.loginbtn {
     width: 50%;
-
-
 }
 
 /* Add padding to container elements */
@@ -52,6 +49,6 @@ button {
     text-align: left;
     margin: auto;
     width: 50%;
-
+    margin-bottom: 150px;
 
 }

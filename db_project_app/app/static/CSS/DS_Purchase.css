@@ -1,20 +1,21 @@
 .make_purchase{
 
-  margin-top: 70px;
+  margin-top: 170px;
   margin-left: 400px;
   border-top: 3px solid #808B96;
 	border-bottom: 3px solid #808B96;
   background-color: #E3F2FD;
   width: 30%;
+  margin-bottom: 150px;
 }
 .receipt{
-  margin-top: 70px;
+  margin-top: 170px;
   margin-left: 400px;
   border-top: 3px solid #808B96;
 	border-bottom: 3px solid #808B96;
   background-color: #B4E8EA;
   width: 30%;
-
+  margin-bottom: 150px;
 }
 
 h1{

@@ -7,7 +7,6 @@ header{
 	color: white;
 	text-align: left;
 	top: 0;
-	margin: 0 auto;
 	position: fixed;
 }
 
@@ -24,7 +23,7 @@ header h3{
     margin: 0;
     padding: 0;
     overflow: hidden;
-	position: fixed;
+	  position: fixed;
     width: 100%;
 
 }
@@ -49,11 +48,14 @@ body{
 	font-family: 'Arial', Sans-Serif;
 	margin: 0;
   background-color: #edf4f7;
-  padding-bottom: 50px;
+  height: 100%;
 
 }
 .toolbar{
-  padding-top: 105px;
+  margin-top: 60px;
+  width: 100%;
+  margin-left: -3px;
+
 }
 .toolbar ul {
     list-style-type: none;
@@ -80,15 +82,16 @@ body{
     background-color: #FE5A1D;
 }
 footer{
-  text-align: right;
-  font-size: small;
   background-color:#89CFF0;
 	border-style: solid;
 	border-color:#89CFF0;
 	height: 50px;
-	width: 100%;
-	color: white;
-	margin: 0 auto;
   clear: both;
   bottom: 0;
+}
+footer p{
+  text-align: right;
+  font-size: small;
+  color: white;
+  padding-right: 20px;
 }
