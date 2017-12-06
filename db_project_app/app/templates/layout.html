@@ -30,24 +30,25 @@
 				</ul>
 
 			</div>
-		</header>
-		<div class='toolbar'>
-			<ul>
-				<li><a href="{{url_for('home')}}">Home</a></li>
-				<li><a href="{{url_for('available_res')}}">Available Resources</a></li>
-				<li><a href="{{url_for('requested_res')}}">Requested Resources</a></li>
-				<li><a href="{{url_for('add_res')}}">Add/Request Resource</a></li>
-				<li><a href="{{url_for('daily_stats')}}">Daily Statistics</a></li>
-				<li><a href="{{url_for('weekly_stats')}}">Weekly Statistics</a></li>
-				<li><a href="{{url_for('region_stats')}}">Regional Statistics</a></li>
-			</ul>
 
-		</div>
+			<div class='toolbar'>
+				<ul>
+					<li><a href="{{url_for('home')}}">Home</a></li>
+					<li><a href="{{url_for('available_res')}}">Available Resources</a></li>
+					<li><a href="{{url_for('requested_res')}}">Requested Resources</a></li>
+					<li><a href="{{url_for('add_res')}}">Add/Request Resource</a></li>
+					<li><a href="{{url_for('daily_stats')}}">Daily Statistics</a></li>
+					<li><a href="{{url_for('weekly_stats')}}">Weekly Statistics</a></li>
+					<li><a href="{{url_for('region_stats')}}">Regional Statistics</a></li>
+				</ul>
+
+			</div>
+		</header>
         {% block content %}{% endblock %}
 
-
+		<footer>
+			<p>©2017 Copyright of ICOM5016. Questions? We don't have answers.</p>
+		</footer>
 	</body>
-	<!--<footer>
-		<p>©2017 Copyright of ICOM5016. Questions? We don't have answers.</p>
-	</footer>-->
+
 </html>
