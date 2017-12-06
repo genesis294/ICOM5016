@@ -37,43 +37,45 @@ function extractJSON(url){
           + "</div></a></div>" );
         });
         // JOin the pushed items from the list and add them to the resources div
-      $( resources.join( "" )).appendTo( ".resources" );
-      // Add CSS styling to the appended HTML
-      $(res).css({
-        "display": "inline-block",
-        "padding-left": "10px",
-        "width": "20%",
-        "height": "30%",
-        "background-color": "#F0F8FF",
-        "margin-left": "10px",
-        "margin-top" : "10px",
-        "border": "2px solid #89CFF0",
-        "padding-bottom": "20px",
-        "border-radius": "5px"        
-      });
-      // Place the name of the product in the middle
-      $(rname).css({
-        "text-align" : "center",
-        "margin-bottom": "30px"
-      });
-      $(rid,rquantity, rprice).css({
-        "text-align" : "left",
-        "margin-left": "35px"
-      });
-      $(rquantity).css({
-        "text-align" : "left",
-        "margin-left": "35px"
-      });
-      $(rprice).css({
-        "text-align" : "left",
-        "margin-left": "35px"
-      });
-      $(date_added).css({
-        "text-align" : "left",
-        "margin-left": "35px"
-      });
-    }
-  });
+        $( resources.join( "" )).appendTo( ".resources" );
+        // Add CSS styling to the appended HTML
+        $(res).css({
+          "display": "inline-block",
+          "paddingLeft": "10px",
+          "width": "20%",
+          "height": "30%",
+          "background-color": "#F0F8FF",
+          "marginLeft": "10px",
+          "marginTop" : "10px",
+          "border": "2px solid #808B96",
+          "paddingBottom": "20px",
+          "border-radius": "5px",
+          "marginBottom": "10px",
+          "background-color": "#D6EAF8"
+        });
+        // Place the name of the product in the middle
+        $(rname).css({
+          "text-align" : "center",
+          "marginBottom": "30px"
+        });
+        $(rid,rquantity, rprice).css({
+          "text-align" : "left",
+          "marginLeft": "35px"
+        });
+        $(rquantity).css({
+          "text-align" : "left",
+          "marginLeft": "35px"
+        });
+        $(rprice).css({
+          "text-align" : "left",
+          "marginLeft": "35px"
+        });
+        $(date_added).css({
+          "text-align" : "left",
+          "marginLeft": "35px"
+        });
+      }
+    });
   }).fail(function(){
     // If the JSON failed to appear then no resource was found
       $("<h1>No resource found.</h1>").appendTo(".resources");

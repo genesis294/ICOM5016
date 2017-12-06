@@ -1,6 +1,6 @@
 h1{
 	text-align: center;
-	padding-top: 40px;
+	font-size: 40px;
 }
 p{
 	font-size: 20px;;
@@ -11,7 +11,7 @@ span{
 }
 .stats{
 	margin-left: 20px;
-	margin-top: 10px;
+	margin-top: 170px;
 }
 .numbers{
 	display: flex;
@@ -39,7 +39,13 @@ canvas{
 	border-bottom: 5px solid #808B96;
 	background-color: #D6EAF8;
 	vertical-align: top;
+	margin-bottom: 150px;
 
+}
+.charts{
+	width: 100%;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 #submited_resources_pie_chart{
 	float: left;

@@ -1,6 +1,5 @@
 h1{
 	text-align: center;
-	padding-top: 40px;
 }
 p{
 	font-size: 20px;;
@@ -11,7 +10,7 @@ span{
 }
 .stats{
 	margin-left: 20px;
-	margin-top: 10px;
+	margin-top: 170px;
 }
 .numbers{
 	margin: auto 0;
@@ -40,6 +39,7 @@ canvas{
 	border-bottom: 5px solid #808B96;
 	background-color: #D6EAF8;
 	vertical-align: top;
+	margin-bottom: 150px;
 
 }
 

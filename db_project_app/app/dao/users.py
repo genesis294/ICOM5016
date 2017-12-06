@@ -69,7 +69,7 @@ Supplier_List = [{'uid': 4, 'sid':1, 'fname': 'Carlos', 'lname': 'Colon', 'email
                    'phone': '939-666-8753','location': '67,31', 'address': 'Arecibo', 'TBusiness': 'Pharmacy'},
 
                  {'uid': 11, 'sid':4, 'fname': 'Thalia', 'lname': 'Gonzalez', 'email': 'thalia34@gmail.com',
-                   'phone': '787-673-4932', 'location': '42,45', 'address': 'Humacao', 'TBusiness': 'HomeDepot'}]                 
+                   'phone': '787-673-4932', 'location': '42,45', 'address': 'Humacao', 'TBusiness': 'HomeDepot'}]
 
 P_In_Need_List = [{'uid':13, 'nid': 1, 'fname': 'Milagros', 'lname': 'Ruiz', 'email': 'milagrosrr@gmail.com',
                    'phone': '939-345-4567','location': '59,34', 'address': 'Rincon, Punta Del Monte'},

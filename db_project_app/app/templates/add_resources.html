@@ -16,7 +16,7 @@
 				<input type="text" placeholder="What product is it?" name="product" value="{{request.form.product}}" required>
 				<!--Ask what typeof resource it is-->
 				<label><b>What type of resource is it?</b></label>
-				<select name="category" id="product_type" value="{{request.form.category}}" onchange="showRestOfForm(this)">
+				<select name="category" id="product_type" onchange="showRestOfForm(this)">
 					<option value="water" selected>Water</option>
 					<option value="ice">Ice</option>
 					<option value="food">Food</option>
@@ -40,7 +40,7 @@
 					<div id="water_form">
 						<!-- It can be bottled water or a gallon-->
 						<label><b>What kind of water is it?</b></label>
-						<select name="water_type" value="{{request.form.water_type}}">
+						<select name="water_type" >
 							<option value="Water Bottles" selected>Water Bottles</option>
 							<option value="Water Gallon">Gallon</option>
 						</select>
@@ -58,7 +58,7 @@
 					<div id="food_form">
 						<!-- It can be dry, canned or baby food-->
 						<label><b>What type of food is it?</b></label>
-						<select name="food_type" value="{{request.form.food_type}}">
+						<select name="food_type">
 							<option value="Dry Food" selected>Dry Food</option>
 							<option value="Canned Food">Canned Food</option>
 							<option value="Baby Food">Baby Food</option>
@@ -78,7 +78,7 @@
 					<div id="medication_form">
 						<!-- What type of medication-->
 						<label><b>Medication Type</b></label>
-						<select name="med_type" value="{{request.form.med_type}}">
+						<select name="med_type" >
 							<option value="Pills" selected>Pills</option>
 							<option value="Capsules">Capsules</option>
 							<option value="Syrup">Syrup</option>
@@ -113,7 +113,7 @@
 					<div id="clothes_form">
 						<!-- For who is the clothes-->
 						<label><b>For who is the clothes for?</b></label>
-						<select name="clothes_type" value="{{request.form.clothes_type}}">
+						<select name="clothes_type" >
 							<option value="Male" selected>Male</option>
 							<option value="Female">Female</option>
 							<option value="Baby">Baby</option>
@@ -134,7 +134,7 @@
 					<div id="fuel_form">
 						<!-- What type of fuel is it-->
 						<label><b>Fuel type</b></label>
-						<select name="fuel_type" value="{{request.form.fuel_type}}">
+						<select name="fuel_type" >
 							<option value="Gasoline" selected>Gasoline</option>
 							<option value="Diesel">Diesel</option>
 							<option value="Gas">Gas</option>
@@ -150,7 +150,7 @@
 					<div id="power_generators_form">
 						<!-- What fuel does it use-->
 						<label><b>What type of fuel does it use?</b></label>
-						<select name="power_generators_fuel_type" value="{{request.form.power_generators_fuel_type}}">
+						<select name="power_generators_fuel_type" >
 							<option value="Gasoline" selected>Gasoline</option>
 							<option value="Diesel">Diesel</option>
 							<option value="Gas">Gas</option>
