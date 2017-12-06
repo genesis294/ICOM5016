@@ -15,12 +15,11 @@
       <h1 id="pname"></h1>
       <p id="pprice"><b>Price:</b> </p>
       <p id="pavailable"><b>Available amount:</b> </p>
-      <p id="pamount" for="amount">Amount to buy: </p>
-      <input type="number" name="rid" class="hidden" value="{{request.form.rid}}"></input>
+      <p id="pamount">Amount to buy: </p>
+      <input type="number" name="rid" class="hidden" value="{{request.form.rid}}">
       <input type="number" name="amount" class="amount" placeholder="0" min="0" value="{{request.form.amount}}" required>
-      </input>
-      <br>
-      <input type="submit" class="bttn" value="Buy"></input>
+      <br> 
+      <input type="submit" class="bttn" value="Buy">
   </form>
   </div>
   {% else %}
