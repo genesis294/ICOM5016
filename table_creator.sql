@@ -1,21 +1,29 @@
 ﻿------------------Creates tables for resource locator app------------------------------------------
 
-----Table related to users-------------------------
+----Tables related to cart
+--Cart table
+CREATE TABLE cart(cid serial primary key );
+--Cart item table
+CREATE TABLE cart_item(ciid serial primary key, ciamount integer, ciprice float);
+--has Cart Item table
+CREATE TABLE has_cart_item(cid integer references cart(cid), ciid integer references cart_item(ciid), primary key(cid, ciid));
+
+----Tables related to users-------------------------
 --Creates table for app users. General user table.
 CREATE TABLE appuser (uid serial primary key, firstname varchar(50), lastname varchar(50),
-email varchar(50), password varchar(50), cid references cart(cid));
+email varchar(50), password varchar(50), cid integer references cart(cid));
 --Table for user phone numbers
-CREATE TABLE phone(phone_id serial primary key, uid integer references user(uid), phone char(10));
+CREATE TABLE phone(phone_id serial primary key, uid integer references appuser(uid), phone char(10));
 
 ----Specialized user tables. They reference the user table.
 --Admin table
-CREATE TABLE appadmin (aid serial primary key, uid int references user(uid));
+CREATE TABLE appadmin (aid serial primary key, uid int references appuser(uid));
 --Supplier table
 CREATE TABLE supplier (sid serial primary key, saddress varchar(50), slocation varchar(50), sbusiness_type varchar(50) );
 --Person in need table
 CREATE TABLE person_in_need (nid serial primary key, naddress varchar(50), nlocation varchar(50) );
 
-----Table related to resources------------------------
+----Tables related to resources------------------------
 --Resource table. General resource table.
 CREATE TABLE resource(rid serial primary key, rname varchar(50), rquantity int, rdate_added date, rcategory varchar(15));
 
@@ -47,21 +55,15 @@ CREATE TABLE heavy_equipment(rid integer references resource(rid), hetype varcha
 heweight float, hemodel varchar(50));
 
 --Donations table
-CREATE TABLE donates(rid references resource(rid), sid references supplier(sid), primary key (rid,sid));
+CREATE TABLE donates(rid integer references resource(rid), sid integer references supplier(sid), primary key (rid,sid));
 --Supplies table
-CREATE TABLE supplies(rid references resource(rid), sid references supplier(sid), sprice float, primary key (rid,sid));
+CREATE TABLE supplies(rid integer references resource(rid), sid integer references supplier(sid), sprice float, primary key (rid,sid));
 --Donations table
-CREATE TABLE requests(rid references resource(rid), nid references person_in_need(nid), primary key (rid,nid));
+CREATE TABLE requests(rid integer references resource(rid), nid integer references person_in_need(nid), primary key (rid,nid));
 
-----Tables related to transactions and carts-----------------------
+----Tables related to transactions-----------------------
 --Transaction table.
 CREATE TABLE transactions(tid serial primary key, tpayment_method varchar(50), ttotal_cost float, tquantity integer,
-ttime time, tdate date, nid references person_in_need(nid));
---Cart table
-CREATE TABLE cart(cid serial primary key );
---Cart item table
-CREATE TABLE cart_item(ciid serial primary key, ciamount integer, ciprice float);
---has Cart Item table
-CREATE TABLE has_cart_item(cid references cart(cid), ciid references cart_item(ciid), primary key(cid, ciid));
+ttime time, tdate date, nid integer references person_in_need(nid));
 --Pays table
-CREATE TABLE pays(cid references cart(cid), tid references transactions(tid), primary key (cid,tid) );
+CREATE TABLE pays(cid integer references cart(cid), tid integer references transactions(tid), primary key (cid,tid) );
