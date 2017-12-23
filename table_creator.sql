@@ -3,21 +3,23 @@
 ----Tables related to users-------------------------
 --Creates table for app users. General user table.
 CREATE TABLE appuser (uid serial primary key, firstname varchar(50), lastname varchar(50),
-email varchar(50), upassword varchar(50), utype varchar(15));
+email varchar(50), upassword varchar(50));
 --Table for user phone numbers. Phone attribute for appuser.
 CREATE TABLE phone(phone_id serial primary key, uid integer references appuser(uid), phone char(10));
 --Table for user location. Location attribute for supplier and person in need.
 CREATE TABLE user_location(location_id serial primary key, uid integer references appuser(uid), latitude float, 
 longitud float);
+--Table for user address. Address attribute for supplier and person in need
+CREATE TABLE address(address_id serial primary key, uid integer references appuser(uid), line1 varchar(50),
+line2 varchar(50), city varchar(20), state varchar(2), zipcode varchar(10))
 
 ----Specialized user tables. They reference the user table.
 --Admin table
 CREATE TABLE appadmin (aid serial primary key, uid int references appuser(uid));
 --Supplier table
-CREATE TABLE supplier (sid serial primary key, uid int references appuser(uid), saddress varchar(50), 
-sbusiness_type varchar(50) );
+CREATE TABLE supplier (sid serial primary key, uid int references appuser(uid), sbusiness_type varchar(50));
 --Person in need table
-CREATE TABLE person_in_need (nid serial primary key, uid int references appuser(uid), naddress varchar(50));
+CREATE TABLE person_in_need (nid serial primary key, uid int references appuser(uid));
 
 ----Tables related to resources------------------------
 --resources table. General resources table.

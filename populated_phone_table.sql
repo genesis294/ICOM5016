@@ -1,0 +1,39 @@
+﻿INSERT INTO phone(uid, phone) VALUES (1,7877434439);
+
+INSERT INTO phone(uid, phone) VALUES (2,9392349832);
+
+INSERT INTO phone(uid, phone) VALUES (3,7870008192);
+
+INSERT INTO phone(uid, phone) VALUES (4,7876734834);
+
+INSERT INTO phone(uid, phone) VALUES (5,9394539876);
+
+INSERT INTO phone(uid, phone) VALUES (6,7879438010);
+
+INSERT INTO phone(uid, phone) VALUES (7,9397482013);
+
+INSERT INTO phone(uid, phone) VALUES (8,7870987548);
+
+INSERT INTO phone(uid, phone) VALUES (9,7870913572);
+
+INSERT INTO phone(uid, phone) VALUES (10,9394049988);
+
+INSERT INTO phone(uid, phone) VALUES (11,7876734932);
+
+INSERT INTO phone(uid, phone) VALUES (12,7874538362);
+
+INSERT INTO phone(uid, phone) VALUES (13,9393454567);
+
+INSERT INTO phone(uid, phone) VALUES (14,7874854543);
+
+INSERT INTO phone(uid, phone) VALUES (15,7879903456);
+
+INSERT INTO phone(uid, phone) VALUES (16,9396668753);
+
+INSERT INTO phone(uid, phone) VALUES (17,7874967589);
+
+INSERT INTO phone(uid, phone) VALUES (18,9396165588);
+
+INSERT INTO phone(uid, phone) VALUES (19,7873314896);
+
+INSERT INTO phone(uid, phone) VALUES (20,7872126993);
