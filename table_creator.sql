@@ -11,7 +11,7 @@ CREATE TABLE user_location(location_id serial primary key, uid integer reference
 longitud float);
 --Table for user address. Address attribute for supplier and person in need
 CREATE TABLE address(address_id serial primary key, uid integer references appuser(uid), line1 varchar(50),
-line2 varchar(50), city varchar(20), state varchar(2), zipcode varchar(10))
+line2 varchar(50), city varchar(20), state varchar(2), zipcode varchar(10));
 
 ----Specialized user tables. They reference the user table.
 --Admin table

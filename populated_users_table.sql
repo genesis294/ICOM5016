@@ -28,7 +28,7 @@ VALUES ('Anthony', 'Rivera', 'antrivera@gmail.com', '1234567');
 INSERT INTO appuser (firstname, lastname, email, upassword)
 VALUES ('Tito', 'Mendez', 'titomendez@gmail.com', 'titoelloquillo');
 
-INSERT INTO appuser (firstname, lastname, email, upassword, )
+INSERT INTO appuser (firstname, lastname, email, upassword)
 VALUES ('Thalia', 'Gonzalez', 'thalia34@gmail.com', 'thalialabest');
 
 INSERT INTO appuser (firstname, lastname, email, upassword)
