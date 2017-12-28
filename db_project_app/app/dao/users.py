@@ -1,156 +1,101 @@
-#from config.dbconfig import pg_config
-#import psycopg2
-
-Users_List = [{'uid': 1, 'fname': 'Juan', 'lname': 'Ruiz', 'email': 'juanruiz3@gmail.com',
-                   'phone': '7877434439','password': 'soyloco123'},
-
-              {'uid': 2, 'fname': 'Rosa', 'lname': 'Rivera', 'email': 'rrosa@gmail.com',
-                   'phone': '9392349832','password': 'redrose3'},
-
-              {'uid': 3, 'fname': 'Pedro', 'lname': 'De Las Piedras', 'email': 'pedrito94@gmail.com',
-                   'phone': '7870008192','password': 'pedrodelaspiedras'},
-
-              {'uid': 4, 'fname': 'Carlos', 'lname': 'Colon', 'email': 'carloscolon3rd@gmail.com',
-                   'phone': '7876734834','password': '3CColon12'},
-
-              {'uid': 5, 'fname': 'Tatiana', 'lname': 'Gomez', 'email': 'tatig@gmail.com',
-                   'phone': '9394539876','password': 'lababy83'},
-
-              {'uid': 6, 'fname': 'Jerry', 'lname': 'Torres', 'email': 'jerrytorres@hotmail.com',
-                   'phone': '7879438010','password': 'jerry123'},
-
-              {'uid': 7, 'fname': 'Pedro', 'lname': 'Lopez', 'email': 'pLopez@gmail.com',
-                   'phone': '9397482013','password': 'PlanetEarth'},
-
-              {'uid': 8, 'fname': 'Tito', 'lname': 'Rivera', 'email': 'titorivera@upr.edu',
-                   'phone': '7870987548','password': 'BB1439'},
-
-              {'uid': 9, 'fname': 'Anthony', 'lname': 'Rivera', 'email': 'antrivera@gmail.com',
-                   'phone': '7870913572','password': '1234567'},
-
-              {'uid': 10, 'fname': 'Tito', 'lname': 'Mendez', 'email': 'titomendez@gmail.com',
-                   'phone': '9394049988','password': 'titoelloquillo'},
-
-              {'uid': 11, 'fname': 'Thalia', 'lname': 'Gonzalez', 'email': 'thalia34@gmail.com',
-                   'phone': '7876734932','password': 'thalialabest'},
-
-              {'uid': 12, 'fname': 'Wilfredo', 'lname': 'Estevez', 'email': 'westevez@hotmail.com',
-                   'phone': '7874538362','password': 'gasstation'},
-
-              {'uid': 13, 'fname': 'Milagros', 'lname': 'Ruiz', 'email': 'milagrosrr@gmail.com',
-                   'phone': '9393454567','password': 'milagros123'},
-
-              {'uid': 14, 'fname': 'Bebo', 'lname': 'Cuevas', 'email': 'BeboCuevas45@outlook.com',
-                   'phone': '7874854543','password': 'MiCarro'},
-
-              {'uid': 15, 'fname': 'Marie', 'lname': 'Clark', 'email': 'marieck2@gmail.com',
-                   'phone': '7879903456','password': 'marie4ee'},
-
-              {'uid': 16, 'fname': 'Carlitos', 'lname': 'Cruz', 'email': 'cruzCarlitos@hotmail.com',
-                   'phone': '9396668753','password': 'cruzcruz'}]
-
-Admin_List = [{'uid': 1 ,'aid' : 1,'fname': 'Juan', 'lname': 'Ruiz', 'email': 'juanruiz3@gmail.com',
-                'phone': '787-743-4439' },
-
-              {'uid': 2, 'aid':2, 'fname': 'Rosa', 'lname': 'Rivera', 'email': 'rrosa@gmail.com',
-                   'phone': '939-234-9832'},
-
-              {'uid': 14, 'aid':3, 'fname': 'Bebo', 'lname': 'Cuevas', 'email': 'BeboCuevas45@outlook.com',
-                   'phone': '787-485-4543'}]
-
-Supplier_List = [{'uid': 4, 'sid':1, 'fname': 'Carlos', 'lname': 'Colon', 'email': 'carloscolon3rd@gmail.com',
-                  'phone': '787-673-4834', 'location': '3,4', 'address': 'Mayaguez, Trastalleres',
-                  'TBusiness': 'SuperMarket'},
-
-                 {'uid': 7, 'sid': 2, 'fname': 'Pedro', 'lname': 'Lopez', 'email': 'pLopez@gmail.com',
-                   'phone': '939-748-2013','location': '98,32', 'address': 'San Juan', 'TBusiness': 'Walmart'},
-
-                 {'uid': 16, 'sid': 3,'fname': 'Carlitos', 'lname': 'Cruz', 'email': 'cruzCarlitos@hotmail.com',
-                   'phone': '939-666-8753','location': '67,31', 'address': 'Arecibo', 'TBusiness': 'Pharmacy'},
-
-                 {'uid': 11, 'sid':4, 'fname': 'Thalia', 'lname': 'Gonzalez', 'email': 'thalia34@gmail.com',
-                   'phone': '787-673-4932', 'location': '42,45', 'address': 'Humacao', 'TBusiness': 'HomeDepot'}]
-
-P_In_Need_List = [{'uid':13, 'nid': 1, 'fname': 'Milagros', 'lname': 'Ruiz', 'email': 'milagrosrr@gmail.com',
-                   'phone': '939-345-4567','location': '59,34', 'address': 'Rincon, Punta Del Monte'},
-
-                  {'uid':15, 'nid': 2, 'fname': 'Marie', 'lname': 'Clark', 'email': 'marieck2@gmail.com',
-                   'phone': '787-990-3456', 'location': '23,45', 'address': 'San Sebastian, Colinas Verdes'},
-
-                  {'uid':9, 'nid': 3, 'fname': 'Anthony', 'lname': 'Rivera', 'email': 'antrivera@gmail.com',
-                   'phone': '787-091-3572', 'location': '45,21', 'address': 'Ponce, Playa'}
-                  ]
+from config.db_config import pg_config
+import psycopg2
 
 
 class UsersDAO:
 
+    def __init__(self):
+
+        connection_url = "dbname=%s user=%s password=%s" % (pg_config['dbname'],
+                                                            pg_config['user'],
+                                                            pg_config['passwd'])
+        self.conn = psycopg2._connect(connection_url)
+
+# Queries to get general users
     def getAllUsers(self):
-        return Users_List
+        cursor = self.conn.cursor()
+        query = "select * from appuser;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
 
     def getUsersById(self, uid):
-        for row in Users_List:
-            if row["uid"] == uid:
-                return row
-        return None
+        cursor = self.conn.cursor()
+        query = "select * from appuser where uid = %s"
+        cursor.execute(query, (uid,))
+        result = cursor.fetchone()
+        return result
 
+# TODO
     def getUsersByfNameAndlName(self, fname, lname):
-        users = []
-        for row in Users_List:
-            if row['fname'] == fname and row['lname'] == lname:
-                users.append(row)
-        return users
+        pass
 
+# TODO
     def getUsersByfName(self, fname):
-        users = []
-        for row in Users_List:
-            if row["fname"] == fname:
-                users.append(row)
-        return users
+        pass
 
+# TODO
     def getUsersBylName(self, lname):
-        users = []
-        for row in Users_List:
-            if row['lname'] == lname:
-                users.append(row)
-        return users
+        pass
 
-
-# Method to get a user by their email address. (Added by Genesis. Need it for login)
+# TODO
     def getUserByEmail(self, email):
-        for row in Users_List:
-            if row["email"] == email:
-                return row
-        return None
+        pass
 
+# Queries to get admins
     def getAllAdmins(self):
-        return Admin_List
+        cursor = self.conn.cursor()
+        query = "select * from appuser natural inner join appadmin;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
     def getAdminById(self, aid):
-        for row in Admin_List:
-            if row["aid"] == aid:
-                return row
-        return None
+        cursor = self.conn.cursor()
+        query = "select * from appuser natural inner join appadmin where aid = %s"
+        cursor.execute(query, (aid,))
+        result = cursor.fetchone()
+        return result
 
+# Queries to get suppliers
     def getAllSuppliers(self):
-        return Supplier_List
+        cursor = self.conn.cursor()
+        query = "select * from appuser natural inner join supplier;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
-    def getSuppliersBySID(self,sid):
-        for row in Supplier_List:
-            if row["sid"] == sid:
-                return row
-        return None
+    def getSuppliersBySID(self, sid):
+        cursor = self.conn.cursor()
+        query = "select * from appuser natural inner join supplier where sid = %s"
+        cursor.execute(query, (sid,))
+        result = cursor.fetchone()
+        return result
 
-    def getBusiness(self,TBusiness):
-        for row in Supplier_List:
-            if row["TBusiness"] == TBusiness:
-                return row
-        return None
+# TODO
+    def getBusiness(self, TBusiness):
+        pass
 
+# Queries to get persons in need
     def getAllPInNeed(self):
-        return P_In_Need_List
+        cursor = self.conn.cursor()
+        query = "select * from appuser natural inner join person_in_need;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
     def getPInNeedByNID(self,nid):
-        for row in P_In_Need_List:
-            if row["nid"] == nid:
-                return row
-        return None
+        cursor = self.conn.cursor()
+        query = "select * from appuser natural inner join person_in_need where nid = %s"
+        cursor.execute(query, (nid,))
+        result = cursor.fetchone()
+        return result

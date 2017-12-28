@@ -1,6 +1,6 @@
 from psycopg2._psycopg import AsIs
 
-from config.dbconfig import pg_config
+from config.db_config import pg_config
 from operator import itemgetter
 import datetime
 import psycopg2
