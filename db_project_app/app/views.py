@@ -1,4 +1,4 @@
-from flask import render_template, request, flash, redirect, url_for, json
+from flask import render_template, request, flash, redirect, url_for, json, jsonify
 from handler.resources import ResourcesHandler
 from flask_login import login_user, logout_user, login_required
 from login_form import LoginForm
@@ -21,19 +21,45 @@ def home():
 #  and general navigation of the site  #
 ########################################
 
+
+# ========= General Resources ======== #
+
+# Route for rendering all resources resources page.
+@app.route('/resources')
+def get_resources():
+    return ResourcesHandler().get_all_resources()
+
+
+# Route for getting a single resource by its id
+@app.route('/resources/<int:rid>')
+def get_resource_by_id(rid):
+    return ResourcesHandler().get_resource_by_id(rid)
+
+
+# ========= Available Resources ======== #
+
 # Route for rendering the available resources page.
-@app.route('/available')
+@app.route('/available/all')
 def available_res():
-    if not request.args:
-        return render_template('resource_list.html', resource_type="available")
-    else:
-        return ResourcesHandler().search_for_available(request.args)
+    return render_template('resource_list.html', resource_type="available")
 
 
 # Route for getting complete list of available resources
-@app.route('/available/all')
-def get_all_resources():
-    return ResourcesHandler().get_available_resources()
+@app.route('/available', methods=['POST', 'GET'])
+def handle_available_resources():
+    if request.method == 'GET':
+        if request.args:
+            return ResourcesHandler().search_for_available(request.args)
+        else:
+            return ResourcesHandler().get_available_resources()
+    elif request.method == 'POST':
+        try:
+            price = request.form['sprice']
+            return ResourcesHandler().insert_available_resource(request.form, price)
+        except KeyError:
+            return ResourcesHandler().insert_available_resource(request.form, 0)
+    else:
+        return jsonify(Error="Method Not Allowed"), 405
 
 
 # Route for getting a single resource by its id
@@ -42,19 +68,35 @@ def get_available_by_id(rid):
     return ResourcesHandler().get_available_by_id(rid)
 
 
-# Route that renders the requested resources
-@app.route('/requested')
-def requested_res():
+# Route that gets a supplied resource based on category
+@app.route('/available/<string:category>')
+def get_available_by_category(category):
     if not request.args:
-        return render_template('resource_list.html', resource_type="requested")
+        return ResourcesHandler().get_available_by_category(category)
     else:
-        return ResourcesHandler().search_for_request(request.args)
+        return ResourcesHandler().search_for_available_in_category(category, request.args)
+
+
+# ========= Requested Resources ======== #
+
+# Route that renders the requested resources
+@app.route('/requested/all')
+def requested_res():
+    return render_template('resource_list.html', resource_type="requested")
 
 
 # Route that gets all the requested resources
-@app.route('/requested/all')
-def get_all_req_resources():
-    return ResourcesHandler().get_requested_resources()
+@app.route('/requested', methods=['GET', 'POST'])
+def handle_requested_resources():
+    if request.method == 'GET':
+        if request.args:
+            return ResourcesHandler().search_for_request(request.args)
+        else:
+            return ResourcesHandler().get_requested_resources()
+    elif request.method == 'POST':
+        return ResourcesHandler().insert_requested_resource(request.form)
+    else:
+        return jsonify(Error="Method Not Allowed"), 405
 
 
 # Route that gets a single requested resource
@@ -63,18 +105,28 @@ def get_request_by_id(rid):
     return ResourcesHandler().get_request_by_id(rid)
 
 
+# Route that gets a single requested resource based on category
+@app.route('/requested/<string:category>')
+def get_request_by_id_category(category):
+    if request.args:
+        return ResourcesHandler().search_for_request_in_category(category, request.args)
+    else:
+        return ResourcesHandler().get_request_by_category(category)
+
+# ===========Resource Profile =============#
+
 # Route that renders the resource profile HTML template
 @app.route('/resource_profile')
 def resource_profile():
     return render_template('resource_profile.html')
 
 
+# =========Resource Purchase ========== #
 # Renders purchase HTML template and accepts the amount bought
 @app.route('/purchase', methods=['GET', 'POST'])
 def purchase():
     error = None
     if request.method == 'POST':
-        print("Im here for some strange reason")
         res = ResourcesDAO().getAvailableResourceById(int(request.form["rid"]))
         if int(request.form['amount']) < 0 or int(request.form['amount']) > res["rquantity"]:
             error = "Invalid amount"
@@ -86,6 +138,7 @@ def purchase():
     return render_template("purchase.html", error=error, complete="pending")
 
 
+# =============Add Resource Page ================ #
 # Route that renders the add resource HTML template
 @app.route('/add',  methods=['GET', 'POST'])
 def add_res():
