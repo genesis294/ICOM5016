@@ -23,7 +23,7 @@ CREATE TABLE person_in_need (nid serial primary key, uid int references appuser(
 
 ----Tables related to resources------------------------
 --resources table. General resources table.
-CREATE TABLE resources(rid serial primary key, rname varchar(50), rquantity int, rdate_added date, rcategory varchar(15));
+CREATE TABLE resources(rid serial primary key, rname varchar(50), rquantity int, rdate_added date, rcategory varchar(20));
 
 ----Specialized resources tables. They reference the resources table.
 --Water table
@@ -34,13 +34,13 @@ CREATE TABLE ice(iid serial primary key,rid integer references resources(rid), i
 CREATE TABLE food(fid serial primary key,rid integer references resources(rid), ftype varchar(50), 
 fbrand varchar(50), famount integer, fexp_date varchar(50));
 --Medication table
-CREATE TABLE medication(mid serial primary key,rid integer references resources(rid), mtype varchar(50), mamount integer,
-mdose float, mbrand varchar(50));
+CREATE TABLE medication(mid serial primary key,rid integer references resources(rid), mtype varchar(50), mamount varchar(20),
+mdose varchar(20), mbrand varchar(50));
 --Medical devices table
 CREATE TABLE medical_devices(mdid serial primary key,rid integer references resources(rid), mdtype varchar(50), 
 mdbrand varchar(50),mdpower_type varchar(50), mdprecision float);
 --Fuel clothes
-CREATE TABLE clothes(clid serial primary key,rid integer references resources(rid), ctype varchar(50), cbrand varchar(50), cgender varchar(10),
+CREATE TABLE clothes(clid serial primary key,rid integer references resources(rid), cgender varchar(10), cbrand varchar(50),
 cmaterial varchar(50));
 --Power Generators table
 CREATE TABLE power_generators(pgid serial primary key,rid integer references resources(rid), pgbrand varchar(50), 
@@ -48,11 +48,13 @@ pgwatts float, pggas varchar(10));
 --Batteries table
 CREATE TABLE batteries(bid serial primary key,rid integer references resources(rid), btype varchar(50), 
 bsize integer, bbrand varchar(50));
+--Fuel table
+CREATE TABLE fuel(flid serial primary key, rid integer references resources(rid), fltype varchar(50), floctane integer, flbrand varchar(50));
 --Tools table
 CREATE TABLE tools(tlid serial primary key,rid integer references resources(rid), ttype varchar(50), tbrand varchar(50));
 --Heavy Equipment table
 CREATE TABLE heavy_equipment(heid serial primary key, rid integer references resources(rid), hetype varchar(50), 
-hebrand varchar(50), hesize varchar(50), heweight float, hemodel varchar(50));
+hebrand varchar(50), hesize varchar(50), heweight varchar(50), hemodel varchar(50));
 
 --Donations table. Relates a supplier with resources in the case that the resources was free.
 CREATE TABLE donates(rid integer references resources(rid), sid integer references supplier(sid), primary key (rid,sid));
