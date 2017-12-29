@@ -1,13 +1,12 @@
 from psycopg2._psycopg import AsIs
 
-from config.db_config import pg_config
+from config.dbconfig import pg_config
 from operator import itemgetter
 import datetime
 import psycopg2
 
 
 class ResourcesDAO:
-
     def __init__(self):
 
         connection_url = "dbname=%s user=%s password=%s host=localhost port=5432" % \
@@ -191,7 +190,7 @@ class ResourcesDAO:
     # Get the resources available for buying
     def getAllAvailable(self):
         cursor = self.conn.cursor()
-        query = "with supplied as (select rid, sid, coalesce(sprice, 0) as sprice " \
+        query = "with supplied as (select rid, coalesce(sprice, 0) as sprice " \
                 "from donates natural full join supplies) " \
                 "select * from resources natural inner join supplied;"
         cursor.execute(query)
@@ -253,12 +252,26 @@ class ResourcesDAO:
             result.append(row)
         return sorted(result, key=itemgetter(1))
 
+    # Get available by name and price
+    def getAvailableByQuantityPrice(self, quantity, price):
+        cursor = self.conn.cursor()
+        query = "with supplied as (select rid, coalesce(sprice, 0) as sprice " \
+                "from donates natural full join supplies) " \
+                "select * from resources natural inner join supplied " \
+                "where rquantity >= %s and sprice<=%s;"
+        cursor.execute(query, (quantity, price))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return sorted(result, key=itemgetter(1))
+
     # Get available by name and quantity
     def getAvailableByNameQuantity(self, name, quantity):
         cursor = self.conn.cursor()
-        query = "select * from resources where rid in " \
-                "(select rid from donates natural full join supplies) " \
-                "and rname = %s and rquantity >= %s;"
+        query = "with supplied as (select rid, coalesce(sprice, 0) as sprice " \
+                "from donates natural full join supplies) " \
+                "select * from resources natural inner join supplied " \
+                "where rname = %s and rquantity >= %s;"
         cursor.execute(query, (name, quantity))
         result = []
         for row in cursor:
@@ -448,7 +461,11 @@ class ResourcesDAO:
     def getRequestedResourceById(self, rid):
         category = self.getResourceCategory(rid)
         cursor = self.conn.cursor()
-        query = "select * from resources natural inner join (requests natural inner join %s) where rid = %s;"
+        query = "with owner_info as (select nid, firstname, lastname from person_in_need " \
+                "natural inner join appuser) " \
+                "select * from resources natural inner join" \
+                "((requests natural inner join owner_info) natural inner join %s) " \
+                "where rid = %s;"
         cursor.execute(query, (AsIs(category), rid,))
         result = cursor.fetchone()
         return result
@@ -554,7 +571,6 @@ class ResourcesDAO:
 
     # Get stats of the day
     def getDailyStats(self):
-        result = []
         result_dict = {}
         # Gets current date
         now = datetime.datetime.now()
@@ -563,12 +579,10 @@ class ResourcesDAO:
         self.getDailyAvailable(result_dict, date_added)
         self.getDailyRequests(result_dict, date_added)
         self.getDailyCategoryCount(result_dict, date_added)
-        result.append(result_dict)
-        return result
+        return result_dict
 
     # Get stats of the week
     def getWeeklyStats(self):
-        result = []
         result_dict = {}
         # Gets current date
         today = datetime.datetime.now()
@@ -590,14 +604,26 @@ class ResourcesDAO:
         self.getWeeklyAvailable(result_dict, sunday, saturday)
         self.getWeeklyRequests(result_dict, sunday, saturday)
         self.getWeeklyCategoryCount(result_dict, sunday, saturday)
-        result.append(result_dict)
-        return result
+        return result_dict
 
     # Get stats of the regions
     # Eight senatorial districts:
     # San Juan, Bayamon, Arecibo, Mayaguez, Ponce, Guayama, Humacao, Carolina
     def getRegionalStats(self):
-        pass
+        results = []
+        sanjuan = {'district': 'San Juan'}
+        bayamon = {'district': 'Bayamon'}
+        arecibo = {'district': 'Arecibo'}
+        ponce = {'district': 'Ponce'}
+        guayama = {'district': 'Guayama'}
+        humacao = {'district': 'Humacao'}
+        carolina = {'district': 'Carolina'}
+        districts = [arecibo, bayamon, carolina, guayama, humacao, ponce, sanjuan]
+        results.extend(districts)
+        self.getRegionalAvailable(results)
+        self.getRegionalRequests(results)
+        self.getRegionalCategoryCount(results)
+        return results
 
     # Gets daily available resources count
     # Returns the amount of available resources and how many were donated
@@ -647,8 +673,8 @@ class ResourcesDAO:
         cursor.execute(query, (date_added,))
 
         for row in cursor:
-            stat_dict[row[0]+' request'] = row[1]
-            stat_dict[row[0]+' available'] = row[2]
+            stat_dict[row[0] + '_request'] = row[1]
+            stat_dict[row[0] + '_available'] = row[2]
 
         return
 
@@ -678,7 +704,7 @@ class ResourcesDAO:
         query = "select sum(rquantity) as requests " \
                 "from resources natural inner join requests " \
                 "where rdate_added >= %s and rdate_added <= %s"
-        cursor.execute(query, (sunday, saturday, ))
+        cursor.execute(query, (sunday, saturday,))
 
         stat_dict['requests'] = cursor.fetchone()[0]
 
@@ -697,13 +723,91 @@ class ResourcesDAO:
                 "where rdate_added >= %s and rdate_added <= %s " \
                 "group by rcategory " \
                 "order by rcategory;"
-        cursor.execute(query, (sunday, saturday, ))
+        cursor.execute(query, (sunday, saturday,))
 
         for row in cursor:
-            stat_dict[row[0]+' request'] = row[1]
-            stat_dict[row[0]+' available'] = row[2]
+            stat_dict[row[0] + '_request'] = row[1]
+            stat_dict[row[0] + '_available'] = row[2]
 
         return
 
+    # Gets Weekly available resources count
+    # Returns the amount of available resources and how many were donated
+    def getRegionalAvailable(self, stat_list):
+        cursor = self.conn.cursor()
 
+        query = "with supplied as (select sid, rid, coalesce(sprice, 0) as sprice " \
+                "from donates natural full join supplies), " \
+                "owner_info as (select uid, sid, city " \
+                "from supplier natural inner join (appuser natural inner join address)) " \
+                "select get_district(city) as district, coalesce(sum(rquantity), 0) as available, " \
+                "coalesce(sum(case when sprice = 0 then rquantity end), 0) as donations, " \
+                "coalesce(sum(case when sprice != 0 then rquantity end), 0) as supply " \
+                "from resources natural inner join (supplied natural inner join owner_info) " \
+                "group by district " \
+                "order by district;"
+        cursor.execute(query)
+        i = 0
+        for row in cursor:
+            if stat_list[i]['district'] == row[0]:
+                stat_list[i]['available'] = row[1]
+                stat_list[i]['donation'] = row[2]
+                stat_list[i]['supply'] = row[3]
+            else:
+                stat_list[i]['available'] = 0
+                stat_list[i]['donation'] = 0
+                stat_list[i]['supply'] = 0
+            i += 1
 
+        return
+
+    # Returns the amount of requested resources
+    def getRegionalRequests(self, stat_list):
+        cursor = self.conn.cursor()
+
+        query = "with owner_info as (select uid, sid, city from supplier " \
+                "natural inner join (appuser natural inner join address)) " \
+                "select get_district(city) as district, sum(rquantity) as requests " \
+                "from resources natural inner join (requests natural inner join owner_info) " \
+                "group by district " \
+                "order by district; "
+        cursor.execute(query)
+
+        i = 0
+        for row in cursor:
+            if stat_list[i]['district'] == row[0]:
+                stat_list[i]['requests'] = row[1]
+            else:
+                stat_list[i]['requests'] = 0
+            i += 1
+
+        return
+
+    # Get quantity of resources of each category
+    def getRegionalCategoryCount(self, stat_list):
+        cursor = self.conn.cursor()
+
+        query = "with supplied as (select sid, rid, coalesce(sprice, 0) as sprice " \
+                "from donates natural full join supplies), " \
+                "owner_info as (select uid, sid, city " \
+                "from supplier natural inner join (appuser natural inner join address)) " \
+                "select get_district(city) as district, rcategory, " \
+                "coalesce(sum(case when sprice is null then rquantity end),0) as request, " \
+                "coalesce(sum(case when sprice >=0 then rquantity end), 0) as available " \
+                "from resources natural inner join ((supplied  natural full join requests) " \
+                "natural inner join owner_info) " \
+                "group by district, rcategory " \
+                "order by district, rcategory; "
+        cursor.execute(query)
+
+        i = 0
+        for row in cursor:
+            if stat_list[i]['district'] == row[0]:
+                stat_list[i][row[1] + '_request'] = row[1]
+                stat_list[i][row[1] + '_available'] = row[2]
+            else:
+                i += 1
+                stat_list[i][row[1] + '_request'] = row[1]
+                stat_list[i][row[1] + '_available'] = row[2]
+
+        return
