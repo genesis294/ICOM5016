@@ -53,6 +53,6 @@ function search(resource_type)
     // Clear screen so we can display the new list with the results of the search
     $(".resources").empty();
     // Get and extract the JSON
-    extractJSON(resource_type+"?"+term);
+    extractJSON("/"+resource_type+"?"+term);
   }
 }

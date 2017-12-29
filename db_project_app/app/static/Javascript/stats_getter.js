@@ -15,7 +15,7 @@ function daily_stats(url) {
     $.each( data, function( key, val ) {
       $("#req_num").append(val.requests);
       $("#ava_num").append(val.available);
-      $("#don_num").append(val.donated);
+      $("#don_num").append(val.donations);
       $("#mat_num").append(val.matches);
       displayCharts(val);
     });
@@ -23,16 +23,20 @@ function daily_stats(url) {
 
 }
 function displayCharts(val) {
+  var onsale = val.available - val.donations;
+  var total = val.available + val.requests;
+  console.log(onsale);
+  console.log(total);
   new Chart(document.getElementById("submited_resources_pie_chart"), {
     type: 'doughnut',
     data: {
-      labels: ["Supplies ("+((val.supplies/val.all)*100).toFixed(2)+"%)",
-      "Requests ("+((val.requests/val.all)*100).toFixed(2)+"%)",
-      "Donations ("+((val.donated/val.all)*100).toFixed(2)+"%)"],
+      labels: ["On Sale ("+((onsale/total)*100).toFixed(2)+"%)",
+      "Requests ("+((val.requests/total)*100).toFixed(2)+"%)",
+      "Donations ("+((val.donations/total)*100).toFixed(2)+"%)"],
       datasets: [{
         label: "Resources",
         backgroundColor: ["#C0392B", "#58D68D","#2980B9"],
-        data: [val.supplies, val.requests, val.donated]
+        data: [onsale, val.requests, val.donations]
       }]
     },
     options: {
@@ -62,7 +66,7 @@ function displayCharts(val) {
         {
           label: "Resources",
           backgroundColor: ["#A569BD", "#F4D03F"],
-          data: [val.donated,val.supplies]
+          data: [val.donations,onsale]
         }
       ]
     },
@@ -108,11 +112,17 @@ function displayCharts(val) {
         {
           label: "Requests",
           backgroundColor: "#5D6D7E",
-          data: [1000,156,40,0,0,1,800,0,0,0,0]
+          data: [val.water_request,val.ice_request,val.food_request,
+            val.medication_request,val.medical_devices_request,val.clothes_request,
+            val.fuel_request,val.power_generators_request,val.batteries_request,
+            val.tools_request,val.heavy_equipment_request]
         }, {
           label: "Supplies Available",
           backgroundColor: "#5499C7",
-          data: [1939,200,658,0,0,223,1000,0,0,0,0]
+          data: [val.water_available,val.ice_available,val.food_available,
+            val.medication_available,val.medical_devices_available,val.clothes_available,
+            val.fuel_available,val.power_generators_available,val.batteries_available,
+            val.tools_available,val.heavy_equipment_available]
         }
       ]
     },
@@ -153,18 +163,16 @@ function regional_stats() {
   $.getJSON( "regionStats/get", function( data ) {
     $.each( data, function( key, val ) {
       // San Juan, Bayamon, Arecibo, Mayaguez, Ponce, Guayama, Humacao, Carolina
-      districts = ["San Juan", "Bayamon", "Arecibo", "Mayaguez", "Ponce", "Guayama",
-        "Humacao", "Carolina"];
-      for(i=0; i<8; i++)
-      {
-        district = districts[i].replace(" ","").toLowerCase();
-        $("#region_name_"+i).append(districts[i]);
-        $("#req_num_"+i).append(val[district][0]);
-        $("#ava_num_"+i).append(val[district][1]);
-        $("#don_num_"+i).append(val[district][2]);
-        $("#mat_num_"+i).append("12");
-      }
+      var i = 0;
+      $.each( val, function( index, val ) {
+        $("#region_name_"+i).append(val.district);
+        $("#req_num_"+i).append(val.requests);
+        $("#ava_num_"+i).append(val.available);
+        $("#don_num_"+i).append(val.donations);
+        $("#mat_num_"+i).append(0);
+        i++;
 
+      });
       displayRegionCharts(val, districts);
     });
   });

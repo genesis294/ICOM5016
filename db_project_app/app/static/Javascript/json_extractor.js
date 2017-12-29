@@ -18,10 +18,10 @@ function extractJSON(url){
         // Loop through each resource in the JSON
         $.each( val, function( index, val ) {
           // URL to go to if a resource is clicked on
-          var url="resource_profile";
+          var url="/resource_profile";
           // ID of the link clicked. Also the id of the resource.
           var link_id=val.rid;
-
+          var date = val.rdate_added.slice(0, val.rdate_added.length - 12)
           // Add to the resource list each item in the JSON as an HTML code
           resources.push( "<div id='res'>"
           + "<a id="+link_id+" style=" +style+" href="+url+" onclick='send_id("+link_id+")'>"
@@ -31,51 +31,51 @@ function extractJSON(url){
           + "</div> <div id='rquantity'>"
           + "<p><b>Quantity: </b>"+ val.rquantity + "</p>"
           + "</div><div id='rprice'>"
-          + checkPrice(val.rprice)
+          + checkPrice(val.sprice)
           + "</div><div id='date_added'>"
-          + "<p><b>Date Added: </b>"+ val.date_added + "</p>"
+          + "<p><b>Date Added: </b>"+ date + "</p>"
           + "</div></a></div>" );
         });
-        // JOin the pushed items from the list and add them to the resources div
-      $( resources.join( "" )).appendTo( ".resources" );
-      // Add CSS styling to the appended HTML
-      $(res).css({
-        "display": "inline-block",
-        "padding-left": "10px",
-        "width": "20%",
-        "height": "30%",
-        "background-color": "#F0F8FF",
-        "margin-left": "10px",
-        "margin-top" : "10px",
-        "border": "2px solid #808B96",
-        "padding-bottom": "20px",
-        "border-radius": "5px",
-        "margin-bottom": "10px",
-        "background-color": "#D6EAF8"
-      });
-      // Place the name of the product in the middle
-      $(rname).css({
-        "text-align" : "center",
-        "margin-bottom": "30px"
-      });
-      $(rid,rquantity, rprice).css({
-        "text-align" : "left",
-        "margin-left": "35px"
-      });
-      $(rquantity).css({
-        "text-align" : "left",
-        "margin-left": "35px"
-      });
-      $(rprice).css({
-        "text-align" : "left",
-        "margin-left": "35px"
-      });
-      $(date_added).css({
-        "text-align" : "left",
-        "margin-left": "35px"
-      });
-    }
-  });
+        // Join the pushed items from the list and add them to the resources div
+        $( resources.join( "" )).appendTo( ".resources" );
+        // Add CSS styling to the appended HTML
+        $(res).css({
+          "display": "inline-block",
+          "paddingLeft": "10px",
+          "width": "20%",
+          "height": "30%",
+          "background-color": "#F0F8FF",
+          "marginLeft": "10px",
+          "marginTop" : "10px",
+          "border": "2px solid #808B96",
+          "paddingBottom": "20px",
+          "border-radius": "5px",
+          "marginBottom": "10px",
+          "background-color": "#D6EAF8"
+        });
+        // Place the name of the product in the middle
+        $(rname).css({
+          "text-align" : "center",
+          "marginBottom": "30px"
+        });
+        $(rid,rquantity, rprice).css({
+          "text-align" : "left",
+          "marginLeft": "35px"
+        });
+        $(rquantity).css({
+          "text-align" : "left",
+          "marginLeft": "35px"
+        });
+        $(rprice).css({
+          "text-align" : "left",
+          "marginLeft": "35px"
+        });
+        $(date_added).css({
+          "text-align" : "left",
+          "marginLeft": "35px"
+        });
+      }
+    });
   }).fail(function(){
     // If the JSON failed to appear then no resource was found
       $("<h1>No resource found.</h1>").appendTo(".resources");
