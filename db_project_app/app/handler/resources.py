@@ -15,7 +15,7 @@ class ResourcesHandler:
         result['rdate_added'] = row[3]
         result['rcategory'] = row[4]
         if ava:
-            result['sprice'] = row[6]
+            result['sprice'] = row[5]
         return result
 
     # Build dictionary based on the category of the resource
@@ -185,6 +185,8 @@ class ResourcesHandler:
             return self.get_available_by_name_price(name, price)
         elif name and quantity:
             return self.get_available_by_name_quantity(name, quantity)
+        elif quantity and price:
+            return self.get_available_by_quantity_price(quantity, price)
         elif name:
             return self.get_available_by_name(name)
         elif price:
@@ -218,6 +220,16 @@ class ResourcesHandler:
     def get_available_by_name_quantity(self, name, quantity):
         dao = ResourcesDAO()
         resource_list = dao.getAvailableByNameQuantity(name, quantity)
+
+        if not resource_list:
+            return jsonify(Error="No such request found."), 404
+        else:
+            return self.json_builder(resource_list, 1)
+
+    # Get available list by name and quantity
+    def get_available_by_quantity_price(self, quantity, price):
+        dao = ResourcesDAO()
+        resource_list = dao.getAvailableByQuantityPrice(quantity, price)
 
         if not resource_list:
             return jsonify(Error="No such request found."), 404
