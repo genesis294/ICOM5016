@@ -53,7 +53,6 @@ class UsersHandler:
             result_list.append(result)
         return jsonify(Users=result_list)
 
-
     def getUsersById(self, uid):
         dao = UsersDAO()
         row = dao.getUsersById(uid)
@@ -63,11 +62,10 @@ class UsersHandler:
             users = self.build_users_dict(row)
         return jsonify(Users = users)
 
-
-# TODO
     def searchUsers(self, args):
         fname = args.get("fname")
         lname = args.get("lname")
+        email = args.get("email")
         dao = UsersDAO()
 
         if fname and lname:
@@ -76,6 +74,8 @@ class UsersHandler:
             users_list = dao.getUsersByfName(fname)
         elif lname:
             users_list = dao.getUsersBylName(lname)
+        elif email:
+            users_list = dao.getUserByEmail(email)
         else:
             return jsonify(Error = "Not found"), 404
 
@@ -87,7 +87,6 @@ class UsersHandler:
 
         return jsonify(Users=result_list)
 
-# TODO
     def getUsersByfName(self, fname):
         dao = UsersDAO()
         users_list = dao.getUsersByfName(fname)
@@ -102,7 +101,6 @@ class UsersHandler:
                 result_list.append(result)
             return jsonify(Users=result_list)
 
-# TODO
     def getUsersBylName(self, lname):
         dao = UsersDAO()
         users_list = dao.getUsersBylName(lname)
@@ -117,7 +115,6 @@ class UsersHandler:
                 result_list.append(result)
             return jsonify(Users=result_list)
 
-# TODO
     def getUsersByfNameAndlName(self, fname, lname):
         dao = UsersDAO()
         users_list = dao.getUsersByfNameAndlName(fname, lname)
@@ -132,7 +129,6 @@ class UsersHandler:
                 result_list.append(result)
             return jsonify(Users=result_list)
 
-# TODO
     def getUserByEmail(self, email):
         dao = UsersDAO()
         row = dao.getUsersByEmail(email)
@@ -181,8 +177,7 @@ class UsersHandler:
             suppliers = self.build_supplier_dict(row)
             return jsonify(Suppliers = suppliers)
 
-# TODO
-    def getBusiness(self,TBusiness):
+    def getBusiness(self, TBusiness):
         dao = UsersDAO()
         row = dao.getBusiness(TBusiness)
         if not row:

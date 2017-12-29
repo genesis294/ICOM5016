@@ -1,4 +1,4 @@
-from config.db_config import pg_config
+from config.dbconfig import pg_config
 import psycopg2
 
 
@@ -21,7 +21,6 @@ class UsersDAO:
             result.append(row)
         return result
 
-
     def getUsersById(self, uid):
         cursor = self.conn.cursor()
         query = "select * from appuser where uid = %s"
@@ -29,21 +28,39 @@ class UsersDAO:
         result = cursor.fetchone()
         return result
 
-# TODO
     def getUsersByfNameAndlName(self, fname, lname):
-        pass
+        cursor = self.conn.cursor()
+        query = "select * from appuser where firstname = %s and lastname = %s"
+        cursor.execute(query, (fname, lname))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
-# TODO
     def getUsersByfName(self, fname):
-        pass
+        cursor = self.conn.cursor()
+        query = "select * from appuser where firstname = %s"
+        cursor.execute(query, (fname,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
-# TODO
     def getUsersBylName(self, lname):
-        pass
+        cursor = self.conn.cursor()
+        query = "select * from appuser where lastname = %s"
+        cursor.execute(query, (lname,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
-# TODO
     def getUserByEmail(self, email):
-        pass
+        cursor = self.conn.cursor()
+        query = "select * from appuser where email = %s"
+        cursor.execute(query, (email,))
+        result = cursor.fetchone()
+        return result
 
 # Queries to get admins
     def getAllAdmins(self):
@@ -79,9 +96,12 @@ class UsersDAO:
         result = cursor.fetchone()
         return result
 
-# TODO
     def getBusiness(self, TBusiness):
-        pass
+        cursor = self.conn.cursor()
+        query = "select * from appuser natural inner join supplier where sbusiness_type = %s"
+        cursor.execute(query, (TBusiness,))
+        result = cursor.fetchone()
+        return result
 
 # Queries to get persons in need
     def getAllPInNeed(self):

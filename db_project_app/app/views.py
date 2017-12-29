@@ -273,7 +273,7 @@ def getTransactionsByCartID(cid):
 ##############################
 # Routes to search for Users #
 ##############################
-@app.route('/users')
+@app.route('/users', methods=['GET', 'POST'])
 def getAllUsers():
     if not request.args:
         return UsersHandler().getAllUsers()
@@ -285,20 +285,18 @@ def getAllUsers():
 def getUsersById(uid):
     return UsersHandler().getUsersById(uid)
 
-
-@app.route('/users/fname/<string:fname>')
-def getUsersByfName(fname):
-    return UsersHandler().getUsersByfName(fname)
-
-
-@app.route('/users/lname/<string:lname>')
-def getUsersBylName(lname):
-    return UsersHandler().getUsersBylName(lname)
-
-
-@app.route('/users/fname/<string:fname>/lname/<string:lname>')
-def getUsersByfNameAndlName(fname, lname):
-    return UsersHandler().getUsersByfNameAndlName(fname,lname)
+# DON'T THINK THESE ARE NEEDED  -Genesis
+# @app.route('/users/fname/<string:fname>')
+# def getUsersByfName(fname):
+#     return UsersHandler().getUsersByfName(fname)
+#
+# @app.route('/users/lname/<string:lname>')
+# def getUsersBylName(lname):
+#     return UsersHandler().getUsersBylName(lname)
+#
+# @app.route('/users/fname/<string:fname>/lname/<string:lname>')
+# def getUsersByfNameAndlName(fname, lname):
+#     return UsersHandler().getUsersByfNameAndlName(fname,lname)
 
 
 @app.route('/users/admins')
