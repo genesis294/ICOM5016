@@ -17,17 +17,23 @@
 					<p><span id="req_num_{{loop.index0}}"></span> requests were made.</p>
 					<h2>Available supplies:</h2>
 					<p><span id="ava_num_{{loop.index0}}"></span> supplies were added.</p>
-					<p><span id="don_num_{{loop.index0}}"></span> of them were donated.</p>
-					<h2>Matches:</h2>
-					<p><span id="mat_num_{{loop.index0}}"></span> matches were found.</p>
+					<p><span id="don_num_{{loop.index0}}"></span> of the supplies were donated.</p>
 				</div>
 			</div>
 
 			{% endfor %}
 		</div>
-		<div id="charts">
+		<div class="charts">
 			<h1>Charts</h1>
 			<canvas id="resources_by_region_bar_chart" width="500" height="500">
+			</canvas><canvas id="resources_by_category_in_region_bar_chart_0" width="500" height="500">
+			</canvas><canvas id="resources_by_category_in_region_bar_chart_1" width="500" height="500">
+			</canvas><canvas id="resources_by_category_in_region_bar_chart_2" width="500" height="500">
+			</canvas><canvas id="resources_by_category_in_region_bar_chart_3" width="500" height="500">
+			</canvas><canvas id="resources_by_category_in_region_bar_chart_4" width="500" height="500">
+			</canvas><canvas id="resources_by_category_in_region_bar_chart_5" width="500" height="500">
+			</canvas><canvas id="resources_by_category_in_region_bar_chart_6" width="500" height="500">
+			</canvas><canvas id="resources_by_category_in_region_bar_chart_7" width="500" height="500">
 			</canvas>
 		</div>
 	</div>

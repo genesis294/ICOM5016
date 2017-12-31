@@ -4,7 +4,8 @@
   <script src="{{url_for('static', filename='Javascript/json_extractor.js')}}"></script>
 	<script src="{{url_for('static', filename='Javascript/resource_setter.js')}}"></script>
 	<script src="{{url_for('static', filename='Javascript/search_resource.js')}}"></script>
-{% endblock %} 
+
+{% endblock %}
 {% block content %}
 
     <div class="search">
@@ -27,8 +28,20 @@
         </button>
 
     </div>
-    <div class='resources' id="{{resource_type}}">
-
-	</div>
-
+		<div class="sidebar">
+			<a onclick="getCategory('{{resource_type}}', 'all' )">All</a>
+			<a onclick="getCategory('{{resource_type}}', 'batteries')">Batteries</a>
+			<a onclick="getCategory('{{resource_type}}', 'clothes')">Clothes</a>
+			<a onclick="getCategory('{{resource_type}}', 'food')">Food</a>
+			<a onclick="getCategory('{{resource_type}}', 'fuel')">Fuel</a>
+			<a onclick="getCategory('{{resource_type}}', 'heavy_equipment')">Heavy Equipment</a>
+			<a onclick="getCategory('{{resource_type}}', 'ice')">Ice</a>
+			<a onclick="getCategory('{{resource_type}}', 'medical_devices')">Medical Devices</a>
+			<a onclick="getCategory('{{resource_type}}', 'medication')">Medication</a>
+			<a onclick="getCategory('{{resource_type}}', 'power_generators')">Power Generators</a>
+			<a onclick="getCategory('{{resource_type}}', 'tools')">Tools</a>
+			<a onclick="getCategory('{{resource_type}}', 'water')">Water</a>
+		</div>
+    <div class='resources' id="{{resource_type}}"></div>
+<script src="{{url_for('static', filename='Javascript/sidebar.js')}}"></script>
 {% endblock %}
