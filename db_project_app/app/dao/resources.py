@@ -42,6 +42,30 @@ class ResourcesDAO:
         self.conn.commit()
         return rid
 
+    # Deletes resource
+    def delete(self, rid):
+        cursor = self.conn.cursor()
+        query = "delete from resources where rid = %s;"
+
+        cursor.execute(query, (rid,))
+        self.conn.commit()
+        return rid
+
+    # Update resource info. Can only update name and quantity.
+    def update(self, rid, name, quantity):
+        cursor = self.conn.cursor()
+        query = "update resources set rname = %s, rquantity = %s where rid = %s;"
+        cursor.execute(query, (name, quantity, rid,))
+        self.conn.commit()
+        return rid
+
+    def updateQuantity(self, rid, quantity):
+        cursor = self.conn.cursor()
+        query = "update resources set rquantity = %s where rid = %s;"
+        cursor.execute(query, (quantity, rid,))
+        self.conn.commit()
+        return rid
+
     # Get general resource info by id
     def getResourceById(self, rid):
         cursor = self.conn.cursor()
@@ -158,13 +182,133 @@ class ResourcesDAO:
         self.conn.commit()
         return rid
 
+    # Update specific resource
+    def updateSpecificResource(self, rid, category, form):
+        # We can now update in resource specific table
+        # category will indicate in which table we can add the supply
+        cursor = self.conn.cursor()
+        # If resource is water
+        if category == "water":
+            wtype = form['wtype']
+            brand = form['wbrand']
+
+            query = "update water set wtype = %s, wbrand = %s where rid = %s;"
+            cursor.execute(query, (wtype, brand, rid, ))
+        # Ice
+        elif category == "ice":
+            size = form['isize']
+            query = "update ice set isize = %s where rid = %s;"
+            cursor.execute(query, (size, rid,))
+        # Food
+        elif category == "food":
+            ftype = form['ftype']
+            brand = form['fbrand']
+            amount = form['famount']
+            exp_date = form['fexp_date']
+            query = "update food set ftype = %s, fbrand = %s, " \
+                    "famount = %s, fexp_date = %s where rid = %s;"
+            cursor.execute(query, (ftype, brand, amount, exp_date, rid))
+        # Medication
+        elif category == "medication":
+            mtype = form['mtype']
+            amount = form['mamount']
+            dose = form['mdose']
+            brand = form['mbrand']
+
+            query = "update medication set mtype = %s, mamount = %s, " \
+                    "mdose = %s, mbrand = %s where rid = %s;"
+            cursor.execute(query, (mtype, amount, dose, brand, rid, ))
+        # Medical devices
+        elif category == "medical_devices":
+            mtype = form['mdtype']
+            brand = form['mdbrand']
+            power_type = form['mdpower_type']
+            precision = form['mdprecision']
+
+            query = "update medical_devices set mdtype = %s, mdbrand = %s, " \
+                    "mdpower_type = %s, mdprecision = %s where rid = %s;"
+            cursor.execute(query, (mtype, brand, power_type, precision, rid, ))
+        # Clothes
+        elif category == "clothes":
+            brand = form['cbrand']
+            gender = form['cgender']
+            material = form['cmaterial']
+
+            query = "update clothes set cbrand = %s, " \
+                    "cgender = %s, cmaterial = %s where rid = %s;"
+            cursor.execute(query, (gender, brand, material, rid,))
+        # Power Generators
+        elif category == "power_generators":
+            brand = form['pgbrand']
+            watts = form['pgwatts']
+            gas = form['pggas']
+
+            query = "update power_generators set pgbrand = %s, " \
+                    "pgwatts = %s, pggas = %s where rid = %s;"
+            cursor.execute(query, (brand, watts, gas, rid, ))
+        # Batteries
+        elif category == "batteries":
+            btype = form['btype']
+            size = form['bsize']
+            brand = form['bbrand']
+
+            query = "update batteries set btype = %s, bsize = %s, " \
+                    "bbrand = %s where rid = %s;"
+            cursor.execute(query, (btype, size, brand, rid,))
+        # Fuel
+        elif category == "fuel":
+            ftype = form['fltype']
+            octane = form['floctane']
+            brand = form['flbrand']
+
+            query = "update fuel set fltype = %s, floctane = %s, " \
+                    "flbrand = %s where rid = %s;"
+            cursor.execute(query, (ftype, octane, brand, rid,))
+        # Tools
+        elif category == "tools":
+            ttype = form['ttype']
+            brand = form['tbrand']
+
+            query = "update tools set ttype = %s, tbrand = %s " \
+                    "where rid = %s;"
+            cursor.execute(query, (ttype, brand, rid,))
+        # Heavy Equipment
+        elif category == "heavy_equipment":
+            htype = form['hetype']
+            brand = form['hebrand']
+            size = form['hesize']
+            weight = form['heweight']
+            model = form['hemodel']
+
+            query = "update heavy_equipment set hetype = %s, hebrand = %s, " \
+                    "hesize = %s, heweight = %s, hemodel = %s " \
+                    "where rid = %s;"
+            cursor.execute(query, (htype, brand, size, weight, model, rid, ))
+        else:
+            return -1
+        self.conn.commit()
+        return rid
+
     # Gets the resources category
     def getResourceCategory(self, rid):
         cursor = self.conn.cursor()
         query = "select rcategory from resources where rid = %s"
         cursor.execute(query, (rid,))
-        category = cursor.fetchone()[0]
+        data = cursor.fetchone()
+        if data:
+            category = data[0]
+        else:
+            category = None
         return category
+
+    # Deletes resource from a category
+    def deleteFromCategory(self, rid, category):
+        cursor = self.conn.cursor()
+        query = "delete from %s where rid = %s;"
+
+        cursor.execute(query, (AsIs(category), rid,))
+        self.conn.commit()
+        return rid
 
     ##################################################
     #           Available resources methods          #
@@ -187,6 +331,14 @@ class ResourcesDAO:
         self.conn.commit()
         return rid
 
+    # Update price of supply
+    def updateSupplies(self, rid, price):
+        cursor = self.conn.cursor()
+        query = "update supplies set sprice = %s where rid = %s;"
+        cursor.execute(query, (price, rid,))
+        self.conn.commit()
+        return rid
+
     # Get the resources available for buying
     def getAllAvailable(self):
         cursor = self.conn.cursor()
@@ -202,16 +354,19 @@ class ResourcesDAO:
     # Get available resources by id
     def getAvailableResourceById(self, rid):
         category = self.getResourceCategory(rid)
-        cursor = self.conn.cursor()
-        query = "with supplied as (select rid, sid, coalesce(sprice, 0) as sprice " \
-                "from donates natural full join supplies), " \
-                "owner_info as (select sid, firstname, lastname from supplier natural inner join appuser) " \
-                "select * from resources natural inner join" \
-                "((supplied natural inner join owner_info) natural inner join %s) " \
-                "where rid = %s;"
-        cursor.execute(query, (AsIs(category), rid,))
-        result = cursor.fetchone()
-        return result
+        if category:
+            cursor = self.conn.cursor()
+            query = "with supplied as (select rid, sid, coalesce(sprice, 0) as sprice " \
+                    "from donates natural full join supplies), " \
+                    "owner_info as (select sid, firstname, lastname from supplier natural inner join appuser) " \
+                    "select * from resources natural inner join" \
+                    "((supplied natural inner join owner_info) natural inner join %s) " \
+                    "where rid = %s;"
+            cursor.execute(query, (AsIs(category), rid,))
+            result = cursor.fetchone()
+            return result
+        else:
+            return None
 
     # Get available resources by name
     def getAvailableByName(self, name):
@@ -220,6 +375,7 @@ class ResourcesDAO:
                 "from donates natural full join supplies) " \
                 "select * from resources natural inner join supplied " \
                 "where rname = %s"
+                # "where rname ilike %s"
         cursor.execute(query, (name,))
         result = []
         for row in cursor:
@@ -435,6 +591,31 @@ class ResourcesDAO:
             return rqid
         return self.insertSpecificResource(rid, category, form)
 
+    # Deletes resource from available list
+    def deleteAvailable(self, rid):
+        cursor = self.conn.cursor()
+        query1 = "select exists( select * from donates where rid = %s)"
+        cursor.execute(query1, (rid,))
+        donates = cursor.fetchone()[0]
+        if donates:
+            query2 = "delete from donates where rid = %s;"
+        else:
+            query2 = "delete from supplies where rid = %s;"
+        cursor.execute(query2, (rid,))
+        self.conn.commit()
+        self.deleteFromCategory(rid, self.getResourceCategory(rid))
+        self.delete(rid)
+        return rid
+
+    # Update available resource
+    def updateAvailable(self, rid, name, quantity, price, form):
+        # Update general info
+        rid = self.update(rid, name, quantity)
+        # If price is 0 then resource is a donation
+        if price != 0:
+            self.updateSupplies(rid, price)
+        return self.updateSpecificResource(rid, self.getResourceCategory(rid), form)
+
     ##################################################
     #           Requested resources methods          #
     ##################################################
@@ -565,6 +746,22 @@ class ResourcesDAO:
         # Insert in specific resource
         return self.insertSpecificResource(rid, category, form)
 
+    # Deletes requested resource
+    def deleteRequest(self, rid):
+        cursor = self.conn.cursor()
+        query = "delete from requests where rid = %s;"
+        cursor.execute(query, (rid,))
+        self.conn.commit()
+        self.deleteFromCategory(rid, self.getResourceCategory(rid))
+        self.delete(rid)
+        return rid
+
+    # Update requested resource
+    def updateRequest(self, rid, name, quantity, form):
+        # Update general info
+        rid = self.update(rid, name, quantity)
+        return self.updateSpecificResource(rid, self.getResourceCategory(rid), form)
+
     ##################################################
     #           Statistics methods                   #
     ##################################################
@@ -610,16 +807,15 @@ class ResourcesDAO:
     # Eight senatorial districts:
     # San Juan, Bayamon, Arecibo, Mayaguez, Ponce, Guayama, Humacao, Carolina
     def getRegionalStats(self):
-        results = []
         sanjuan = {'district': 'San Juan'}
         bayamon = {'district': 'Bayamon'}
+        mayaguez = {'district': 'Mayaguez'}
         arecibo = {'district': 'Arecibo'}
         ponce = {'district': 'Ponce'}
         guayama = {'district': 'Guayama'}
         humacao = {'district': 'Humacao'}
         carolina = {'district': 'Carolina'}
-        districts = [arecibo, bayamon, carolina, guayama, humacao, ponce, sanjuan]
-        results.extend(districts)
+        results = [arecibo, bayamon, carolina, guayama, humacao, mayaguez, ponce, sanjuan]
         self.getRegionalAvailable(results)
         self.getRegionalRequests(results)
         self.getRegionalCategoryCount(results)
@@ -632,16 +828,22 @@ class ResourcesDAO:
 
         query = "with supplied as (select sid, rid, coalesce(sprice, 0) as sprice " \
                 "from donates natural full join supplies) " \
-                "select sum(rquantity) as available, sum(case when sprice = 0 then rquantity end) as donations, " \
+                "select coalesce(sum(rquantity), 0) as available, " \
+                "coalesce(sum(case when sprice = 0 then rquantity end), 0) as donations, " \
                 "sum(case when sprice != 0 then rquantity end) as supply " \
                 "from resources natural inner join supplied " \
                 "where rdate_added = %s"
         cursor.execute(query, (date_added,))
         data = cursor.fetchone()
 
-        stat_dict['available'] = data[0]
-        stat_dict['donations'] = data[1]
-        stat_dict['onSale'] = data[2]
+        if data[0]:
+            stat_dict['available'] = data[0]
+            stat_dict['donations'] = data[1]
+            stat_dict['onSale'] = data[2]
+        else:
+            stat_dict['available'] = 0
+            stat_dict['donations'] = 0
+            stat_dict['onSale'] = 0
         return
 
     # Returns the amount of requested resources
@@ -653,7 +855,11 @@ class ResourcesDAO:
                 "where rdate_added = %s"
         cursor.execute(query, (date_added,))
 
-        stat_dict['requests'] = cursor.fetchone()[0]
+        data = cursor.fetchone()[0]
+        if data:
+            stat_dict['requests'] = data
+        else:
+            stat_dict['requests'] = 0
 
         return
 
@@ -692,9 +898,14 @@ class ResourcesDAO:
         cursor.execute(query, (sunday, saturday,))
         data = cursor.fetchone()
 
-        stat_dict['available'] = data[0]
-        stat_dict['donations'] = data[1]
-        stat_dict['onSale'] = data[2]
+        if data[0]:
+            stat_dict['available'] = data[0]
+            stat_dict['donations'] = data[1]
+            stat_dict['onSale'] = data[2]
+        else:
+            stat_dict['available'] = 0
+            stat_dict['donations'] = 0
+            stat_dict['onSale'] = 0
         return
 
     # Returns the amount of requested resources
@@ -706,7 +917,11 @@ class ResourcesDAO:
                 "where rdate_added >= %s and rdate_added <= %s"
         cursor.execute(query, (sunday, saturday,))
 
-        stat_dict['requests'] = cursor.fetchone()[0]
+        data = cursor.fetchone()[0]
+        if data:
+            stat_dict['requests'] = data
+        else:
+            stat_dict['requests'] = 0
 
         return
 
@@ -749,16 +964,22 @@ class ResourcesDAO:
         cursor.execute(query)
         i = 0
         for row in cursor:
-            if stat_list[i]['district'] == row[0]:
-                stat_list[i]['available'] = row[1]
-                stat_list[i]['donation'] = row[2]
-                stat_list[i]['supply'] = row[3]
-            else:
+            # If district isn't the same as the district from the list then values are 0
+            while stat_list[i]['district'] != row[0]:
                 stat_list[i]['available'] = 0
                 stat_list[i]['donation'] = 0
                 stat_list[i]['supply'] = 0
-            i += 1
+                i += 1
 
+            stat_list[i]['available'] = row[1]
+            stat_list[i]['donation'] = row[2]
+            stat_list[i]['supply'] = row[3]
+            i += 1
+        while i < 8:
+            stat_list[i]['available'] = 0
+            stat_list[i]['donation'] = 0
+            stat_list[i]['supply'] = 0
+            i += 1
         return
 
     # Returns the amount of requested resources
@@ -773,14 +994,19 @@ class ResourcesDAO:
                 "order by district; "
         cursor.execute(query)
 
+        # Index for stat list
         i = 0
         for row in cursor:
-            if stat_list[i]['district'] == row[0]:
-                stat_list[i]['requests'] = row[1]
-            else:
+            # If the district in the row isn't the same as the list then the value is 0
+            while stat_list[i]['district'] != row[0]:
                 stat_list[i]['requests'] = 0
-            i += 1
+                i += 1
 
+            stat_list[i]['requests'] = row[1]
+            i += 1
+        while i < 8:
+            stat_list[i]['requests'] = 0
+            i += 1
         return
 
     # Get quantity of resources of each category
@@ -803,11 +1029,12 @@ class ResourcesDAO:
         i = 0
         for row in cursor:
             if stat_list[i]['district'] == row[0]:
-                stat_list[i][row[1] + '_request'] = row[1]
-                stat_list[i][row[1] + '_available'] = row[2]
+                stat_list[i][row[1] + '_request'] = row[2]
+                stat_list[i][row[1] + '_available'] = row[3]
             else:
-                i += 1
-                stat_list[i][row[1] + '_request'] = row[1]
-                stat_list[i][row[1] + '_available'] = row[2]
+                while stat_list[i]['district'] != row[0]:
+                    i += 1
+                stat_list[i][row[1] + '_request'] = row[2]
+                stat_list[i][row[1] + '_available'] = row[3]
 
         return
