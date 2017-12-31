@@ -22,14 +22,17 @@
 					<label><b>,</b></label>
         	<input type="text" class="searchTerm3" placeholder="Min quantity">
 				</div>
+				<div id="r_location">
+					<label><b>,</b></label>
+        	<input type="text" class="searchTerm4" placeholder="City">
+				</div>
         <button type="submit" class="searchButton" onclick="search('{{resource_type}}')">
 						<!--URL of the image http://www.pvhc.net/img147/knesrozwwcmfiqsgizyl.png-->
             <img src="{{url_for('static', filename='Images/search_glass.png')}}" width="28" height="28">
         </button>
-
     </div>
 		<div class="sidebar">
-			<a onclick="getCategory('{{resource_type}}', 'all' )">All</a>
+			<a onclick="getCategory('{{resource_type}}', 'all')">All</a>
 			<a onclick="getCategory('{{resource_type}}', 'batteries')">Batteries</a>
 			<a onclick="getCategory('{{resource_type}}', 'clothes')">Clothes</a>
 			<a onclick="getCategory('{{resource_type}}', 'food')">Food</a>
