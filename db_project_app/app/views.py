@@ -63,8 +63,16 @@ def handle_available_resources():
 
 
 # Route for getting a single resource by its id
-@app.route('/available/<int:rid>')
+@app.route('/available/<int:rid>', methods=['GET', 'PUT', 'DELETE'])
 def get_available_by_id(rid):
+    if request.method == 'PUT':
+        try:
+            price = request.form['sprice']
+            return ResourcesHandler().update_available_resource(rid, price, request.form)
+        except KeyError:
+            return ResourcesHandler().update_available_resource(rid, 0, request.form)
+    elif request.method == 'DELETE':
+        return ResourcesHandler().delete_available_resource(rid)
     return ResourcesHandler().get_available_by_id(rid)
 
 
@@ -100,8 +108,12 @@ def handle_requested_resources():
 
 
 # Route that gets a single requested resource
-@app.route('/requested/<int:rid>')
+@app.route('/requested/<int:rid>', methods=['GET', 'PUT', 'DELETE'])
 def get_request_by_id(rid):
+    if request.method == 'PUT':
+        return ResourcesHandler().update_requested_resource(rid, request.form)
+    elif request.method == 'DELETE':
+        return ResourcesHandler().delete_requested_resource(rid)
     return ResourcesHandler().get_request_by_id(rid)
 
 
@@ -115,6 +127,7 @@ def get_request_by_id_category(category):
 
 # ===========Resource Profile =============#
 
+
 # Route that renders the resource profile HTML template
 @app.route('/resource_profile')
 def resource_profile():
@@ -123,17 +136,17 @@ def resource_profile():
 
 # =========Resource Purchase ========== #
 # Renders purchase HTML template and accepts the amount bought
-@app.route('/purchase', methods=['GET', 'POST'])
+@app.route('/purchase', methods=['GET', 'PUT'])
 def purchase():
     error = None
-    if request.method == 'POST':
+    if request.method == 'PUT':
         res = ResourcesDAO().getAvailableResourceById(int(request.form["rid"]))
         if int(request.form['amount']) < 0 or int(request.form['amount']) > res["rquantity"]:
             error = "Invalid amount"
         else:
             flash("Purchase completed")
             res["rquantity"] = res["rquantity"] - int(request.form["amount"])
-            ResourcesHandler().update_available(request.form["rid"], res)
+            ResourcesHandler().update_available_quantity(request.form["rid"], res)
             return render_template('purchase.html', error=error, complete="complete", amount=request.form["amount"])
     return render_template("purchase.html", error=error, complete="pending")
 
@@ -143,8 +156,6 @@ def purchase():
 @app.route('/add',  methods=['GET', 'POST'])
 def add_res():
     if request.method == 'POST':
-        resource = {"rname": request.form["product"], "rquantity": int(request.form["quantity"]), "rprice": float(request.form["price"])}
-        ResourcesHandler().add_available(resource)
         return render_template('add_resources.html')
     return render_template('add_resources.html', pending="pending")
 
@@ -273,7 +284,7 @@ def getTransactionsByCartID(cid):
 ##############################
 # Routes to search for Users #
 ##############################
-@app.route('/users', methods=['GET', 'POST'])
+@app.route('/users')
 def getAllUsers():
     if not request.args:
         return UsersHandler().getAllUsers()
@@ -285,18 +296,20 @@ def getAllUsers():
 def getUsersById(uid):
     return UsersHandler().getUsersById(uid)
 
-# DON'T THINK THESE ARE NEEDED  -Genesis
-# @app.route('/users/fname/<string:fname>')
-# def getUsersByfName(fname):
-#     return UsersHandler().getUsersByfName(fname)
-#
-# @app.route('/users/lname/<string:lname>')
-# def getUsersBylName(lname):
-#     return UsersHandler().getUsersBylName(lname)
-#
-# @app.route('/users/fname/<string:fname>/lname/<string:lname>')
-# def getUsersByfNameAndlName(fname, lname):
-#     return UsersHandler().getUsersByfNameAndlName(fname,lname)
+
+@app.route('/users/fname/<string:fname>')
+def getUsersByfName(fname):
+    return UsersHandler().getUsersByfName(fname)
+
+
+@app.route('/users/lname/<string:lname>')
+def getUsersBylName(lname):
+    return UsersHandler().getUsersBylName(lname)
+
+
+@app.route('/users/fname/<string:fname>/lname/<string:lname>')
+def getUsersByfNameAndlName(fname, lname):
+    return UsersHandler().getUsersByfNameAndlName(fname,lname)
 
 
 @app.route('/users/admins')
