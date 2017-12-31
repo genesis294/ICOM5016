@@ -164,22 +164,28 @@ class ResourcesHandler:
             resource = self.build_resource_specific_dict(row, 1)
             return jsonify(Resource=resource)
 
-    # Get a list of the available resources with a given name
-    def get_available_by_name(self, name):
-        dao = ResourcesDAO()
-        resource_list = dao.getAvailableByName(name)
-        if not resource_list:
-            return jsonify(Error="No such request found."), 404
-        else:
-            return self.json_builder(resource_list, 1)
-
     # Searches for available resources that has the given parameters
     def search_for_available(self, args):
         name = args.get("name")
         quantity = args.get("quantity")
         price = args.get("price")
+        location = args.get("location")
 
-        if name and quantity and price:
+        if name and quantity and price and location:
+            return self.get_available_by_name_quantity_price_location(name, quantity, price, location)
+        elif name and price and location:
+            return self.get_available_by_name_price_location(name, price, location)
+        elif name and quantity and location:
+            return self.get_available_by_name_quantity_location(name, quantity, location)
+        elif quantity and price and location:
+            return self.get_available_by_quantity_price_location(quantity, price, location)
+        elif name and location:
+            return self.get_available_by_name_location(name, location)
+        elif price and location:
+            return self.get_available_by_price_location(price, location)
+        elif quantity and location:
+            return self.get_available_by_quantity_location(quantity, location)
+        elif name and quantity and price:
             return self.get_available_by_name_quantity_price(name, quantity, price)
         elif name and price:
             return self.get_available_by_name_price(name, price)
@@ -189,12 +195,83 @@ class ResourcesHandler:
             return self.get_available_by_quantity_price(quantity, price)
         elif name:
             return self.get_available_by_name(name)
+        elif location:
+            return self.get_available_by_location(location)
         elif price:
             return self.get_available_by_price(price)
         elif quantity:
             return self.get_available_by_quantity(quantity)
         else:
             return jsonify(Error="Bad request."), 400
+
+    # Get available list by name quantity, price and location
+    def get_available_by_name_quantity_price_location(self, name, quantity, price, location):
+        dao = ResourcesDAO()
+        resource_list = dao.getAvailableByNameQuantityPriceLocation(name, quantity, price, location)
+
+        if not resource_list:
+            return jsonify(Error="No such request found."), 404
+        else:
+            return self.json_builder(resource_list, 1)
+
+    # Get available list by name, price and location
+    def get_available_by_name_price_location(self, name, price, location):
+        dao = ResourcesDAO()
+        resource_list = dao.getAvailableByNamePriceLocation(name, price, location)
+
+        if not resource_list:
+            return jsonify(Error="No such request found."), 404
+        else:
+            return self.json_builder(resource_list, 1)
+
+    # Get available list by name, quantity and location
+    def get_available_by_name_quantity_location(self, name, quantity, location):
+        dao = ResourcesDAO()
+        resource_list = dao.getAvailableByNameQuantityLocation(name, quantity, location)
+
+        if not resource_list:
+            return jsonify(Error="No such request found."), 404
+        else:
+            return self.json_builder(resource_list, 1)
+
+    # Get available list by name, quantity and location
+    def get_available_by_quantity_price_location(self, quantity, price, location):
+        dao = ResourcesDAO()
+        resource_list = dao.getAvailableByQuantityPriceLocation(quantity, price, location)
+
+        if not resource_list:
+            return jsonify(Error="No such request found."), 404
+        else:
+            return self.json_builder(resource_list, 1)
+            # Get a list of the available resources with a given name
+
+    def get_available_by_name_location(self, name, location):
+        dao = ResourcesDAO()
+        resource_list = dao.getAvailableByNameLocation(name, location)
+        if not resource_list:
+            return jsonify(Error="No such request found."), 404
+        else:
+            return self.json_builder(resource_list, 1)
+
+    # Get list of products based on price and location
+    def get_available_by_price_location(self, price, location):
+        dao = ResourcesDAO()
+        resource_list = dao.getAvailableByPriceLocation(price, location)
+
+        if not resource_list:
+            return jsonify(Error="No such request found."), 404
+        else:
+            return self.json_builder(resource_list, 1)
+
+    # Get list of products based on quantity and location
+    def get_available_by_quantity_location(self, quantity, location):
+        dao = ResourcesDAO()
+        resource_list = dao.getAvailableByQuantityLocation(quantity, location)
+
+        if not resource_list:
+            return jsonify(Error="No such request found."), 404
+        else:
+            return self.json_builder(resource_list, 1)
 
     # Get available list by name quantity and price
     def get_available_by_name_quantity_price(self, name, quantity, price):
@@ -236,6 +313,15 @@ class ResourcesHandler:
         else:
             return self.json_builder(resource_list, 1)
 
+    # Get a list of the available resources with a given name
+    def get_available_by_name(self, name):
+        dao = ResourcesDAO()
+        resource_list = dao.getAvailableByName(name)
+        if not resource_list:
+            return jsonify(Error="No such request found."), 404
+        else:
+            return self.json_builder(resource_list, 1)
+
     # Get list of products based on price
     def get_available_by_price(self, price):
         dao = ResourcesDAO()
@@ -246,7 +332,7 @@ class ResourcesHandler:
         else:
             return self.json_builder(resource_list, 1)
 
-    # Get list of products based on price
+    # Get list of products based on quantity
     def get_available_by_quantity(self, quantity):
         dao = ResourcesDAO()
         resource_list = dao.getAvailableByQuantity(quantity)
@@ -351,6 +437,16 @@ class ResourcesHandler:
         else:
             return self.json_builder(resource_list, 1)
 
+    # Get list of products based on location
+    def get_available_by_location(self, location):
+        dao = ResourcesDAO()
+        resource_list = dao.getAvailableByLocation(location)
+
+        if not resource_list:
+            return jsonify(Error="No such request found."), 404
+        else:
+            return self.json_builder(resource_list, 1)
+
     # Insert available resource
     def insert_available_resource(self, form, price):
         # Get general resource info
@@ -436,11 +532,20 @@ class ResourcesHandler:
     def search_for_request(self, args):
         name = args.get("name")
         quantity = args.get("quantity")
+        location = args.get("location")
 
-        if name and quantity:
+        if name and quantity and location:
+            return self.get_request_by_name_quantity_location(name, quantity, location)
+        elif name and location:
+            return self.get_request_by_name_location(name, location)
+        elif quantity and location:
+            return self.get_request_by_quantity_location(quantity, location)
+        elif name and quantity:
             return self.get_request_by_name_quantity(name, quantity)
         elif name:
             return self.get_request_by_name(name)
+        elif location:
+            return self.get_request_by_location(location)
         elif quantity:
             return self.get_request_by_quantity(quantity)
         else:
@@ -573,6 +678,40 @@ class ResourcesHandler:
     def get_regional_stats(self):
         dao = ResourcesDAO()
         return jsonify(stats=dao.getRegionalStats())
+
+    def get_request_by_name_quantity_location(self, name, quantity, location):
+        dao = ResourcesDAO()
+        resource_list = dao.getRequestByNameQuantityLocation(name, quantity, location)
+        if not resource_list:
+            return jsonify(Error="No such request found."), 404
+        else:
+            return self.json_builder(resource_list, 0)
+
+    def get_request_by_name_location(self, name, location):
+        dao = ResourcesDAO()
+        resource_list = dao.getRequestByNameLocation(name, location)
+        if not resource_list:
+            return jsonify(Error="No such request found."), 404
+        else:
+            return self.json_builder(resource_list, 0)
+
+    def get_request_by_quantity_location(self, quantity, location):
+        dao = ResourcesDAO()
+        resource_list = dao.getRequestByQuantityLocation(quantity, location)
+        if not resource_list:
+            return jsonify(Error="No such request found."), 404
+        else:
+            return self.json_builder(resource_list, 0)
+
+    def get_request_by_location(self, location):
+        dao = ResourcesDAO()
+        resource_list = dao.getRequestByLocation(location)
+        if not resource_list:
+            return jsonify(Error="No such request found."), 404
+        else:
+            return self.json_builder(resource_list, 0)
+
+
 
 
 
