@@ -372,6 +372,38 @@ class ResourcesHandler:
             print("DIDN'T EVEN TRY TO INSERT")
             return jsonify(Error="Malformed post request"), 400
 
+    # Delete an available resource
+    def delete_available_resource(self, rid):
+        dao = ResourcesDAO()
+        dao.deleteAvailable(rid)
+        return jsonify(RID="Resource Deleted")
+
+    # Update resource request
+    def update_available_resource(self, rid, price, form):
+        name = form['rname']
+        quantity = form['rquantity']
+        # If all this info was provided
+        if name and quantity:
+            dao = ResourcesDAO()
+            # Update resource
+            dao.updateAvailable(rid, name, quantity, price, form)
+            result = dao.getRequestedResourceById(rid)
+            return jsonify(Resource=result), 200
+        return jsonify(Error="Malformed post request"), 400
+
+    # Update resource quantity
+    # This on is used when a purchase was made
+    def update_available_quantity(self, rid, quantity):
+        # Get general resource info
+        if quantity >= 0:
+            dao = ResourcesDAO()
+            # Update resource
+            dao.updateQuantity(rid, quantity)
+            result = dao.getRequestedResourceById(rid)
+            return jsonify(Resource=result), 200
+        else:
+            return jsonify(Error="Malformed post request"), 400
+
     ##################################################
     #           Requested resources methods          #
     ##################################################
@@ -490,8 +522,7 @@ class ResourcesHandler:
         name = form['rname']
         quantity = form['rquantity']
         category = form['rcategory']
-        category.rstrip()
-        category.replace(" ", "_", 1)
+        category = category.rstrip().lower().replace(" ", "_")
         # If all this info was provided
         if name and quantity and category:
             dao = ResourcesDAO()
@@ -500,6 +531,26 @@ class ResourcesHandler:
             # If -1 returned then the insert was not successful
             if rid == -1:
                 return jsonify(Error="Malformed post request"), 400
+            result = dao.getRequestedResourceById(rid)
+            return jsonify(Resource=result), 200
+        return jsonify(Error="Malformed post request"), 400
+
+    # Delete a resource
+    def delete_requested_resource(self, rid):
+        dao = ResourcesDAO()
+        dao.deleteRequest(rid)
+        return jsonify(RID="Resource Deleted")
+
+    # Update resource request
+    def update_requested_resource(self, rid, form):
+        # Get general resource info
+        name = form['rname']
+        quantity = form['rquantity']
+        # If all this info was provided
+        if name and quantity:
+            dao = ResourcesDAO()
+            # Update resource
+            dao.updateRequest(rid, name, quantity, form)
             result = dao.getRequestedResourceById(rid)
             return jsonify(Resource=result), 200
         return jsonify(Error="Malformed post request"), 400
@@ -522,18 +573,6 @@ class ResourcesHandler:
     def get_regional_stats(self):
         dao = ResourcesDAO()
         return jsonify(stats=dao.getRegionalStats())
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
