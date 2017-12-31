@@ -29,12 +29,11 @@ span{
 	padding-bottom: 5px;
 	margin: 10px 10px;
 }
-#charts{
-	clear: left;
+.charts{
+	margin-left: 100px;
+	margin-right: 0;
 }
 canvas{
-
-	text-align: justify;
 	border-top: 5px solid #808B96;
 	border-bottom: 5px solid #808B96;
 	background-color: #D6EAF8;
@@ -44,6 +43,29 @@ canvas{
 }
 
 #resources_by_region_bar_chart{
-	height:400px;
-	width: 400px;
+	float: left;
+}
+#resources_by_category_in_region_bar_chart_0{
+	float: left;
+}
+#resources_by_category_in_region_bar_chart_1{
+	float: left;
+}
+#resources_by_category_in_region_bar_chart_2{
+	float: left;
+}
+#resources_by_category_in_region_bar_chart_3{
+	float: left;
+}
+#resources_by_category_in_region_bar_chart_4{
+	float: left;
+}
+#resources_by_category_in_region_bar_chart_5{
+	float: left;
+}
+#resources_by_category_in_region_bar_chart_6{
+	float: left;
+}
+#resources_by_category_in_region_bar_chart_7{
+	float: left;
 }

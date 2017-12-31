@@ -31,6 +31,29 @@ input[type="text"] {
 		margin-left: 5px;
 		vertical-align: top;
 }
+.sidebar{
+	height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 160px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color:#B9DBEB;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 10px;
+	margin-top: 150px;
+}
+
+.sidebar a{
+	padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+  display: block;
+}
+.sidebar a:hover{
+	color: #B7B7B7;
+}
 
 #r_name{
 	display: inline-block;
@@ -48,8 +71,9 @@ h1{
 .resources{
 	padding-top: 60px;
 	margin: auto 0;
-	width: 100%;
+	width: 90%;
 	display: inline-block;
 	text-align: center;
 	margin-bottom: 150px;
+	margin-left: 100px;
 }

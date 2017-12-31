@@ -81,7 +81,7 @@
           // Power Generators
           else if (category == "power_generators"){
             $(".profile").append("<p><b>Brand: </b>" + val.pgbrand + "</p>");
-            $(".profile").append("<p><b>Wats: </b>" + val.pgwatts + "</p>");
+            $(".profile").append("<p><b>Watts: </b>" + val.pgwatts + "</p>");
             $(".profile").append("<p><b>Gas: </b>" + val.pggas + "</p>");
           }
           // Batteries

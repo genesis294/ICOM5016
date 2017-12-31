@@ -7,7 +7,7 @@ $(document).ready(function(){
         $("#pname").append(val.rname);
         $("#pprice").append(val.rprice);
         $("#rname").append(val.rname);
-        $("#rprice").append(val.rprice);
+        $("#rprice").append(val.sprice);
         $("#pavailable").append(val.rquantity);
         $(".hidden").val(val.rid);
     });
