@@ -1,11 +1,9 @@
 .search {
 		display: inline-block;
-		margin-left: auto;
-		margin-right: auto;
 		margin-top: 175px;
-    width: 80%;
+    width: 100%;
     position: static;
-		height: 36px;
+		height: 50px;
 		text-align: center;
 }
 input[type="text"] {
@@ -14,6 +12,7 @@ input[type="text"] {
     height: 20px;
     border-radius: 7px;
     outline: none;
+		display: inline-block;
 }
 
 
@@ -41,6 +40,7 @@ input[type="text"] {
   background-color:#B9DBEB;
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 10px;
+	padding-bottom: 10px;
 	margin-top: 150px;
 }
 
@@ -62,6 +62,9 @@ input[type="text"] {
 	display: inline-block;
 }
 #r_quantity{
+	display: inline-block;
+}
+#r_location{
 	display: inline-block;
 }
 h1{

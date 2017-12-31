@@ -14,6 +14,8 @@ function search(resource_type)
 
   // Will search for items with >= the quantity given
   s_quantity = $(".searchTerm3").val();
+  // Location to search for
+  s_location = $(".searchTerm4").val();
 
   //If a name was given add it to the search term
   if(s_name!="")
@@ -42,6 +44,18 @@ function search(resource_type)
     }
     else {
       term = term+"&quantity="+s_quantity;
+    }
+  }
+  //If location given add to term
+  if(s_location!="")
+  {
+    //If term empty this is the first parameter
+    if(term=="")
+    {
+      term = "location="+s_location;
+    }
+    else {
+      term = term+"&location="+s_location;
     }
   }
   //If term empty then nothing then search bars were empty

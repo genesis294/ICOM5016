@@ -7,7 +7,6 @@
     // If it's a request
     if(req==1)
     {
-      console.log(id)
       // Make the GET
       $.getJSON( "requested/"+id, function( data ) {
         $.each( data, function( key, val ) {
@@ -88,13 +87,13 @@
           else if (category == "batteries"){
             $(".profile").append("<p><b>Type: </b>" + val.btype + "</p>");
             $(".profile").append("<p><b>Brand: </b>" + val.bbrand + "</p>");
-            $(".profile").append("<p><b>Amount: </b>" + val.bsize + "</p>");
+            $(".profile").append("<p><b>Package size: </b>" + val.bsize + "</p>");
           }
           // Fuel
           else if (category == "fuel") {
             $(".profile").append("<p><b>Type: </b>" + val.fltype + "</p>");
             $(".profile").append("<p><b>Brand: </b>" + val.flbrand + "</p>");
-            $(".profile").append("<p><b>Amount: </b>" + val.floctane + "</p>");
+            $(".profile").append("<p><b>Octane: </b>" + val.floctane + "</p>");
           }
           // Tools
           else if (category == "tools"){
