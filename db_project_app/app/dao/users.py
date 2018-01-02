@@ -65,7 +65,7 @@ class UsersDAO:
 # Queries to get admins
     def getAllAdmins(self):
         cursor = self.conn.cursor()
-        query = "select * from appuser natural inner join appadmin;"
+        query = "select * from appuser natural inner join appadmin natural inner join phone;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -74,7 +74,8 @@ class UsersDAO:
 
     def getAdminById(self, aid):
         cursor = self.conn.cursor()
-        query = "select * from appuser natural inner join appadmin where aid = %s"
+        query = "select * from appuser natural inner join appadmin natural inner join " \
+                "phone where aid = %s"
         cursor.execute(query, (aid,))
         result = cursor.fetchone()
         return result
@@ -82,7 +83,9 @@ class UsersDAO:
 # Queries to get suppliers
     def getAllSuppliers(self):
         cursor = self.conn.cursor()
-        query = "select * from appuser natural inner join supplier;"
+        query = "select * " \
+                "from appuser natural inner join supplier natural inner join address " \
+                "natural inner join user_location natural inner join phone"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -91,14 +94,30 @@ class UsersDAO:
 
     def getSuppliersBySID(self, sid):
         cursor = self.conn.cursor()
-        query = "select * from appuser natural inner join supplier where sid = %s"
+        query = "select * from appuser natural inner join supplier " \
+                "natural inner join user_location natural inner join phone " \
+                "where sid = %s"
         cursor.execute(query, (sid,))
         result = cursor.fetchone()
         return result
 
+    #Get Suppliers by City Only
+    def getSuppliersByCity(self, city):
+        cursor = self.conn.cursor()
+        query = "select * from appuser natural inner join supplier " \
+                "natural inner join address natural inner join user_location natural inner join phone " \
+                "where city =%s"
+        cursor.execute(query, (city,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
     def getBusiness(self, TBusiness):
         cursor = self.conn.cursor()
-        query = "select * from appuser natural inner join supplier where sbusiness_type = %s"
+        query = "select * from appuser natural inner join supplier " \
+                "natural inner join address natural inner join user_location natural inner join phone " \
+                "where sbusiness_type = %s"
         cursor.execute(query, (TBusiness,))
         result = cursor.fetchone()
         return result
@@ -106,7 +125,9 @@ class UsersDAO:
 # Queries to get persons in need
     def getAllPInNeed(self):
         cursor = self.conn.cursor()
-        query = "select * from appuser natural inner join person_in_need;"
+        query = "select * " \
+                "from appuser natural inner join person_in_need natural inner join address " \
+                "natural inner join user_location natural inner join phone;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -115,7 +136,10 @@ class UsersDAO:
 
     def getPInNeedByNID(self,nid):
         cursor = self.conn.cursor()
-        query = "select * from appuser natural inner join person_in_need where nid = %s"
+        query = "select * " \
+                "from appuser natural inner join person_in_need natural inner join address " \
+                "natural inner join user_location natural inner join phone " \
+                "where nid = %s;"
         cursor.execute(query, (nid,))
         result = cursor.fetchone()
         return result
