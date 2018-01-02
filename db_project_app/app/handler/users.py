@@ -21,6 +21,8 @@ class UsersHandler:
         result['email'] = row[3]
         result['upassword'] = row[4]
         result['aid'] = row[5]
+        result['phone_id'] = row[6]
+        result['phone'] = row[7]
         return result
 
     def build_supplier_dict(self, row):
@@ -32,6 +34,22 @@ class UsersHandler:
         result['upassword'] = row[4]
         result['sid'] = row[5]
         result['sbusiness_type'] = row[6]
+        result['address_id'] = row[7]
+        result['line1'] = row[8]
+
+        result['line2'] = row[9]
+        line2 = row[9]
+        if not line2:
+            result['line2'] = "None"
+
+        result['city'] = row[10]
+        result['state'] = row[11]
+        result['zipcode'] = row[12]
+        result['location_id'] = row[13]
+        result['latitude'] = row[14]
+        result['longitud'] = row[15]
+        result['phone_id'] = row[16]
+        result['phone'] = row[17]
         return result
 
     def build_person_in_need_dict(self, row):
@@ -42,6 +60,22 @@ class UsersHandler:
         result['email'] = row[3]
         result['upassword'] = row[4]
         result['nid'] = row[5]
+        result['address_id'] = row[6]
+        result['line1'] = row[7]
+
+        result['line2'] = row[8]
+        line2 = row[8]
+        if not line2:
+            result['line2'] = "None"
+
+        result['city'] = row[9]
+        result['state'] = row[10]
+        result['zipcode'] = row[11]
+        result['location_id'] = row[12]
+        result['latitude'] = row[13]
+        result['longitud'] = row[14]
+        result['phone_id'] = row[15]
+        result['phone'] = row[16]
         return result
 
     def getAllUsers(self):
@@ -176,6 +210,21 @@ class UsersHandler:
         else:
             suppliers = self.build_supplier_dict(row)
             return jsonify(Suppliers = suppliers)
+
+    def searchSuppliers(self, args):
+        city = args.get("city")
+        dao = UsersDAO()
+        supplier_list = []
+        if city:
+            supplier_list = dao.getSuppliersByCity(city)
+        else:
+            return jsonify(Error = "Malformed search string."), 400
+
+        result_list = []
+        for row in supplier_list:
+            result = self.build_supplier_dict(row)
+            result_list.append(result)
+        return jsonify(Suppliers = result_list)
 
     def getBusiness(self, TBusiness):
         dao = UsersDAO()
