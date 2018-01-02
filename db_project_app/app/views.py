@@ -323,11 +323,15 @@ def getAdminsById(aid):
     return UsersHandler().getAdminsById(aid)
 
 
-@app.route('/users/suppliers')
+@app.route('/users/suppliers', methods = ['GET', 'POST'])
 def getAllSuppliers():
-    if not request.args:
-        return UsersHandler().getAllSuppliers()
-
+    if request.method == 'POST':
+        return UsersHandler().insertSuppliers(request.form)
+    else:
+        if not request.args:
+            return UsersHandler().getAllSuppliers()
+        else:
+            return UsersHandler().searchSuppliers(request.args)
 
 @app.route('/users/suppliers/<int:sid>')
 def getSuppliersBySID(sid):
@@ -345,9 +349,9 @@ def getPInNeedByNID(nid):
     return UsersHandler().getPInNeedByNID(nid)
 
 
-##############################
+#################################
 # Routes to search for Business #
-##############################
+#################################
 
 @app.route('/business/<string:TBusiness>')
 def getBusiness(TBusiness):
