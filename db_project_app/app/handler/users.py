@@ -288,7 +288,7 @@ class UsersHandler:
             person = self.build_person_in_need_dict(row)
         return jsonify(PersonInNeed = person)
 
-# Method needed for user_loader callback in views.py
+# Method needed for user_loader callback in views.py 
     def get_user(self, email):
         dao = UsersDAO()
         row = dao.getUserByEmail(email)

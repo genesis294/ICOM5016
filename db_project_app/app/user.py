@@ -84,9 +84,7 @@ class User:
         city = str(self.user_dict['city'])
         state = str(self.user_dict['state'])
         zipcode = str(self.user_dict['zipcode'])
-
         full_addr = line1 + ", " + line2 + ", " + city + ", " + state + ", " + zipcode
-
         return full_addr
 
     def business(self):

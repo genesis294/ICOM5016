@@ -9,16 +9,16 @@
     <h2 id="username"></h2>
 
       {% if current_user.is_admin() %}
-        <p><b>Logged in as:</b> Administrator</p>
+        <p><b>Logged in as: </b>Administrator</p>
       {% elif current_user.is_supplier() %}
-        <p><b>Logged in as:</b> Supplier</p>
-        <p id="business_type"><b>Business:</b> {{ current_user.business() }}</p>
+        <p><b>Logged in as: </b>Supplier</p>
+        <p id="business_type"><b>Business: </b>{{ current_user.business() }}</p>
       {% else %}
         <p><b>Logged in as:</b> Person In Need</p>
       {% endif %}
 
-		<p id="email"><b>Email:</b> {{ current_user.email() }}</p>
-		<p id="phone"><b>Phone:</b> {{ current_user.phone() }}</p>
+		<p id="email"><b>Email: </b>{{ current_user.email() }}</p>
+		<p id="phone"><b>Phone: </b>{{ current_user.phone() }}</p>
 
         {% if not current_user.is_admin() %}
 		    <p id="address"><b>Address:</b> {{ current_user.address() }}</p>

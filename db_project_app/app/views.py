@@ -246,7 +246,7 @@ def user_profile():
     return render_template("user_profile.html")
 
 
-# This callback is used to reload the user object from the user ID stored in the session.
+# Callback used to reload the user object from the user ID stored in the session.
 # It takes the unicode ID of a user, and returns the corresponding user object.
 # Returns None if the ID is not valid
 @lm.user_loader

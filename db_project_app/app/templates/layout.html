@@ -28,6 +28,7 @@
 					{% if current_user.is_authenticated %}
 					    <li><a href="{{url_for('logout')}}">Logout</a></li>
                         <li><a href="{{url_for('user_profile')}}">My Profile</a></li>
+
                     {% else %}
                         <li><a href="{{url_for('login')}}">Login</a></li>
 					    <li><a href="{{url_for('signup')}}">Sign up</a></li>

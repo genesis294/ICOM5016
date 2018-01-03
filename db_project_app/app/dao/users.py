@@ -178,7 +178,7 @@ class UsersDAO:
         result = cursor.fetchone()
         return result
 
-# Method used in User() class in user.py
+# Method used in User class in user.py
 # Needed for log in functionality
     def connect_to_db(self):
         cursor = self.conn.cursor()
