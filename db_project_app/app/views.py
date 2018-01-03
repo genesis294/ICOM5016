@@ -219,8 +219,9 @@ def login():
         email = request.form['email']
         password = request.form['password']
         form = LoginForm(email, password)
-        if form.validate_on_submit():       # returns: None if user does not exist; the user dictionary otherwise
-            user = User(form.validate_on_submit())
+        if form.validate_user():
+            user = User()
+            user.set_user(email)
             login_user(user)
             flash("LOGIN SUCCESSFUL")
             return render_template('user_profile.html')
@@ -240,6 +241,7 @@ def logout():
 
 # Route that renders the user profile HTML template
 @app.route("/user_profile")
+@login_required
 def user_profile():
     return render_template("user_profile.html")
 
@@ -248,9 +250,8 @@ def user_profile():
 # It takes the unicode ID of a user, and returns the corresponding user object.
 # Returns None if the ID is not valid
 @lm.user_loader
-def load_user(uid):
-    udao = UsersDAO()
-    return udao.getUsersById(uid)
+def load_user(session_id):
+    return User().get_user(session_id)
 
 
 #####################################
@@ -320,7 +321,7 @@ def getAllAdmins():
 
 @app.route('/users/admins/<int:aid>')
 def getAdminsById(aid):
-    return UsersHandler().getAdminsById(aid)
+    return UsersHandler().getAdminById(aid)
 
 
 @app.route('/users/suppliers', methods = ['GET', 'POST'])

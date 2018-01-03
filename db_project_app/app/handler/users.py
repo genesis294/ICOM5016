@@ -40,7 +40,7 @@ class UsersHandler:
         result['line2'] = row[9]
         line2 = row[9]
         if not line2:
-            result['line2'] = "None"
+            result['line2'] = ""
 
         result['city'] = row[10]
         result['state'] = row[11]
@@ -66,7 +66,7 @@ class UsersHandler:
         result['line2'] = row[8]
         line2 = row[8]
         if not line2:
-            result['line2'] = "None"
+            result['line2'] = ""
 
         result['city'] = row[9]
         result['state'] = row[10]
@@ -165,14 +165,21 @@ class UsersHandler:
 
     def getUserByEmail(self, email):
         dao = UsersDAO()
-        row = dao.getUsersByEmail(email)
+        row = dao.getUserByEmail(email)
         if not row:
             return jsonify(Error = "User Not Found"), 404
         else:
             users = self.build_users_dict(row)
             return jsonify(Users = users)
 
-
+    def getUserByEmailAndPassword(self, email, password):
+        dao = UsersDAO()
+        row = dao.getUserByEmailAndPassword(email, password)
+        if not row:
+            return jsonify(Error = "User Not Found"), 404
+        else:
+            users = self.build_users_dict(row)
+            return jsonify(Users = users)
 # ADMINS
     def getAllAdmins(self):
         dao = UsersDAO()
@@ -183,7 +190,7 @@ class UsersHandler:
             result_list.append(result)
         return jsonify(Admins = result_list)
 
-    def getAdminsById(self, aid):
+    def getAdminById(self, aid):
         dao = UsersDAO()
         row = dao.getAdminById(aid)
         if not row:
@@ -191,6 +198,15 @@ class UsersHandler:
         else:
             Admins = self.build_admins_dict(row)
         return jsonify(Admins = Admins)
+
+    def getAdminByEmail(self, email):
+        dao = UsersDAO()
+        row = dao.getAdminByEmail(email)
+        if not row:
+            return jsonify(Error = "User Not Found"), 404
+        else:
+            users = self.build_users_dict(row)
+            return jsonify(Users = users)
 
 # SUPPLIERS
     def getAllSuppliers(self):
@@ -205,6 +221,15 @@ class UsersHandler:
     def getSuppliersBySID(self, sid):
         dao = UsersDAO()
         row = dao.getSuppliersBySID(sid)
+        if not row:
+            return jsonify(Error = "Supplier Not Found"), 404
+        else:
+            suppliers = self.build_supplier_dict(row)
+            return jsonify(Suppliers = suppliers)
+
+    def getSupplierByEmail(self, email):
+        dao = UsersDAO()
+        row = dao.getSupplierByEmail(email)
         if not row:
             return jsonify(Error = "Supplier Not Found"), 404
         else:
@@ -253,3 +278,22 @@ class UsersHandler:
         else:
             person = self.build_person_in_need_dict(row)
         return jsonify(PersonInNeed = person)
+
+    def getPInNeedByEmail(self, email):
+        dao = UsersDAO()
+        row = dao.getPInNeedByNID(email)
+        if not row:
+            return jsonify(Error = "Person In Need Not Found"), 404
+        else:
+            person = self.build_person_in_need_dict(row)
+        return jsonify(PersonInNeed = person)
+
+# Method needed for user_loader callback in views.py
+    def get_user(self, email):
+        dao = UsersDAO()
+        row = dao.getUserByEmail(email)
+        if not row:
+            return None
+        else:
+            user = self.build_users_dict(row)
+            return user['email']

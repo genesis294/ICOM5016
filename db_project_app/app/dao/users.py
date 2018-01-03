@@ -62,6 +62,13 @@ class UsersDAO:
         result = cursor.fetchone()
         return result
 
+    def getUserByEmailAndPassword(self, email, password):
+        cursor = self.conn.cursor()
+        query = "select * from appuser where email = %s and upassword = %s"
+        cursor.execute(query, (email, password))
+        result = cursor.fetchone()
+        return result
+
 # Queries to get admins
     def getAllAdmins(self):
         cursor = self.conn.cursor()
@@ -80,6 +87,14 @@ class UsersDAO:
         result = cursor.fetchone()
         return result
 
+    def getAdminByEmail(self, email):
+        cursor = self.conn.cursor()
+        query = "select * from appuser natural inner join appadmin natural inner join " \
+                "phone where email = %s"
+        cursor.execute(query, (email,))
+        result = cursor.fetchone()
+        return result
+
 # Queries to get suppliers
     def getAllSuppliers(self):
         cursor = self.conn.cursor()
@@ -94,10 +109,19 @@ class UsersDAO:
 
     def getSuppliersBySID(self, sid):
         cursor = self.conn.cursor()
-        query = "select * from appuser natural inner join supplier " \
-                "natural inner join user_location natural inner join phone " \
+        query = "select * from appuser natural inner join supplier natural inner join address " \
+                "natural inner join user_location natural inner join phone "\
                 "where sid = %s"
         cursor.execute(query, (sid,))
+        result = cursor.fetchone()
+        return result
+
+    def getSupplierByEmail(self, email):
+        cursor = self.conn.cursor()
+        query = "select * from appuser natural inner join supplier natural inner join address " \
+                "natural inner join user_location natural inner join phone "\
+                "where email = %s"
+        cursor.execute(query, (email,))
         result = cursor.fetchone()
         return result
 
@@ -143,3 +167,19 @@ class UsersDAO:
         cursor.execute(query, (nid,))
         result = cursor.fetchone()
         return result
+
+    def getPInNeedByEmail(self, email):
+        cursor = self.conn.cursor()
+        query = "select * " \
+                "from appuser natural inner join person_in_need natural inner join address " \
+                "natural inner join user_location natural inner join phone " \
+                "where email = %s;"
+        cursor.execute(query, (email,))
+        result = cursor.fetchone()
+        return result
+
+# Method used in User() class in user.py
+# Needed for log in functionality
+    def connect_to_db(self):
+        cursor = self.conn.cursor()
+        return cursor
