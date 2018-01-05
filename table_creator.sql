@@ -32,7 +32,7 @@ CREATE TABLE water(wid serial primary key,rid integer references resources(rid),
 CREATE TABLE ice(iid serial primary key,rid integer references resources(rid), isize varchar(50));
 --Food table
 CREATE TABLE food(fid serial primary key,rid integer references resources(rid), ftype varchar(50), 
-fbrand varchar(50), famount integer, fexp_date varchar(50));
+fbrand varchar(50), famount varchar(15), fexp_date varchar(50));
 --Medication table
 CREATE TABLE medication(mid serial primary key,rid integer references resources(rid), mtype varchar(50), mamount varchar(20),
 mdose varchar(20), mbrand varchar(50));
