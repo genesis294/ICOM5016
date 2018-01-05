@@ -10,7 +10,7 @@ INSERT INTO resources (rname, rquantity, rdate_added, rcategory)
 VALUES ('Premium', 1050, '26-12-2017', 'fuel');
 --4
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Energizer C', 1050, '26-12-2017', 'batteries');
+VALUES ('Energizer C', 1000, '26-12-2017', 'batteries');
 --5
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
 VALUES ('Energizer batteries', 3500, '26-12-2017', 'batteries');
@@ -91,76 +91,76 @@ INSERT INTO resources (rname, rquantity, rdate_added, rcategory)
 VALUES ('Ice Man-Ice', 42000, '31-12-2017', 'ice');
 --31
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Glucose Meter', 500, '31-12-2017', 'medical_devices');
+VALUES ('Glucose Meter', 5, '31-12-2017', 'medical_devices');
 --32
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Honda Power Generators', 500, '31-12-2017', 'power_generators');
+VALUES ('Honda Power Generators', 2, '31-12-2017', 'power_generators');
 --33
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Glucose Meter', 1000, '31-12-2017', 'medical_devices');
+VALUES ('Glucose Meter', 1, '31-12-2017', 'medical_devices');
 --34
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Deluxe-Screwdriver', 500, '31-12-2017', 'tools');
+VALUES ('Deluxe-Screwdriver', 5, '31-12-2017', 'tools');
 --35
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Diesel Power Generator', 190, '31-12-2017', 'power_generators');
+VALUES ('Diesel Power Generator', 1, '31-12-2017', 'power_generators');
 --36
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Puma Gasoline', 1300, '31-12-2017', 'fuel');
+VALUES ('Puma Gasoline', 100, '31-12-2017', 'fuel');
 --37
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Spaghetti', 40300, '31-12-2017', 'food');
+VALUES ('Spaghetti', 4, '31-12-2017', 'food');
 --38
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Batteries', 300, '02-01-2018', 'batteries');
+VALUES ('Batteries', 3, '02-01-2018', 'batteries');
 --39
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Water', 1250, '02-01-2018', 'water');
+VALUES ('Water', 1, '02-01-2018', 'water');
 --40
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Nice Water', 3000, '02-01-2018', 'water');
+VALUES ('Nice Water', 3, '02-01-2018', 'water');
 --41
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Screwdriver', 2000, '02-01-2018', 'tools');
+VALUES ('Screwdriver', 25, '02-01-2018', 'tools');
 --42
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
 VALUES ('Diesel', 500, '02-01-2018', 'fuel');
 --43
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Duracel AA', 2000, '02-01-2018', 'batteries');
+VALUES ('Duracel AA', 100, '02-01-2018', 'batteries');
 --44
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Water', 4300, '02-01-2018', 'water');
+VALUES ('Water', 4, '02-01-2018', 'water');
 --45
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Syringe', 300, '02-01-2018', 'medical_devices');
+VALUES ('Syringe', 20, '02-01-2018', 'medical_devices');
 --46
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Gasoline', 2000, '02-01-2018', 'fuel');
+VALUES ('Gasoline', 100, '02-01-2018', 'fuel');
 --47
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('2100 Watt Power Generator', 150, '02-01-2018', 'power_generators');
+VALUES ('2100 Watt Power Generator', 2, '02-01-2018', 'power_generators');
 --48
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Baby clothes', 1300, '02-01-2018', 'clothes');
+VALUES ('Baby clothes', 24, '02-01-2018', 'clothes');
 --49
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Wrench', 1050, '02-01-2018', 'tools');
+VALUES ('Wrench', 10, '02-01-2018', 'tools');
 --50
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Glucose Meter', 250, '02-01-2018', 'medical_devices');
+VALUES ('Glucose Meter', 1, '02-01-2018', 'medical_devices');
 --51
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Advil Pain Killer', 2900, '02-01-2018', 'medication');
+VALUES ('Advil Pain Killer', 1, '02-01-2018', 'medication');
 --52
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Cold Ice', 3000, '03-01-2018', 'ice');
+VALUES ('Cold Ice', 3, '03-01-2018', 'ice');
 --53
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Jalapeno Steak-Military food', 3000, '03-01-2018', 'food');
+VALUES ('Jalapeno Steak-Military food', 2, '03-01-2018', 'food');
 --54
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Excavator (Digger)', 1050, '03-01-2018', 'heavy_equipment');
+VALUES ('Excavator (Digger)', 1, '03-01-2018', 'heavy_equipment');
 --55
 INSERT INTO resources (rname, rquantity, rdate_added, rcategory) 
-VALUES ('Aquafina Water', 2500, '03-01-2018', 'water');
+VALUES ('Aquafina Water', 2, '03-01-2018', 'water');
