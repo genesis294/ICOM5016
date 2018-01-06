@@ -106,6 +106,7 @@ function checkPrice(price)
   else if (price == null) {
     return "";
   }
-  return "<label><b>Price: </b>$ "+ price + "</label>";
+  return "<label><b>Price: </b>"+ price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+   + "</label>";
 
 }
