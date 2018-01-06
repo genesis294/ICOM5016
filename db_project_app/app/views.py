@@ -85,6 +85,12 @@ def get_available_by_category(category):
         return ResourcesHandler().search_for_available_in_category(category, request.args)
 
 
+# Route that gets users that supply a given resource type
+@app.route('/available/<string:category>/users')
+def get_users_by_available_category(category):
+    return ResourcesHandler().get_users_by_available_category(category)
+
+
 # ========= Requested Resources ======== #
 
 # Route that renders the requested resources
@@ -125,6 +131,13 @@ def get_request_by_id_category(category):
     else:
         return ResourcesHandler().get_request_by_category(category)
 
+
+# Route that gets users that request a given resource type
+@app.route('/requested/<string:category>/users')
+def get_users_by_requests_category(category):
+    return ResourcesHandler().get_users_by_request_category(category)
+
+
 # ===========Resource Profile =============#
 
 
@@ -136,18 +149,27 @@ def resource_profile():
 
 # =========Resource Purchase ========== #
 # Renders purchase HTML template and accepts the amount bought
-@app.route('/purchase', methods=['GET', 'PUT'])
+@app.route('/purchase', methods=['GET', 'POST'])
 def purchase():
     error = None
-    if request.method == 'PUT':
-        res = ResourcesDAO().getAvailableResourceById(int(request.form["rid"]))
-        if int(request.form['amount']) < 0 or int(request.form['amount']) > res["rquantity"]:
+    if request.method == 'POST':
+        res = ResourcesHandler().build_resource_specific_dict(
+            ResourcesDAO().getAvailableResourceById(request.form["rid"]), 1)
+        amount = request.form['amount']
+        if int(amount) < 0 or int(amount) > res["rquantity"]:
             error = "Invalid amount"
         else:
+            # if form['buyBttn'] == 'Reserve':
+            # Get Item and make transaction
+            # else:
+            # Save to cart
             flash("Purchase completed")
-            res["rquantity"] = res["rquantity"] - int(request.form["amount"])
-            ResourcesHandler().update_available_quantity(request.form["rid"], res)
-            return render_template('purchase.html', error=error, complete="complete", amount=request.form["amount"])
+            quantity = res["rquantity"] - int(amount)
+            ResourcesHandler().update_available_quantity(request.form["rid"], quantity)
+            price = int(amount) * float(res["sprice"])
+            sprice = '${:,.2f}'.format(price)
+            return render_template('purchase.html', error=error, complete="complete", price=sprice,
+                                   amount=request.form["amount"])
     return render_template("purchase.html", error=error, complete="pending")
 
 
@@ -156,6 +178,7 @@ def purchase():
 @app.route('/add',  methods=['GET', 'POST'])
 def add_res():
     if request.method == 'POST':
+        handle_available_resources()
         return render_template('add_resources.html')
     return render_template('add_resources.html', pending="pending")
 
@@ -324,7 +347,7 @@ def getAdminsById(aid):
     return UsersHandler().getAdminById(aid)
 
 
-@app.route('/users/suppliers', methods = ['GET', 'POST'])
+@app.route('/users/suppliers', methods=['GET', 'POST'])
 def getAllSuppliers():
     if request.method == 'POST':
         return UsersHandler().insertSuppliers(request.form)
