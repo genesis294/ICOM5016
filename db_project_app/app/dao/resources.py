@@ -721,7 +721,7 @@ class ResourcesDAO:
             print("FAILED FIRST INSERT")
             return rid
         # Supplier id
-        sid = form['sid']
+        sid = form['uid']
         # If price is 0 then resource is a donation
         if price == 0:
             rqid = self.insertDonations(rid, sid)
@@ -757,6 +757,23 @@ class ResourcesDAO:
         if price != 0:
             self.updateSupplies(rid, price)
         return self.updateSpecificResource(rid, self.getResourceCategory(rid), form)
+
+    # Get users that requested some resource of a given category
+    def getUsersByAvailableCategory(self, category):
+        cursor = self.conn.cursor()
+        query = "select * " \
+                "from appuser natural inner join supplier natural inner join address " \
+                "natural inner join user_location natural inner join phone " \
+                "where uid in (select uid " \
+                "from supplier natural inner join " \
+                "((supplies natural full join donates) " \
+                "natural inner join resources) " \
+                "where rcategory = %s);"
+        cursor.execute(query, (category,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
     ##################################################
     #           Requested resources methods          #
@@ -942,7 +959,7 @@ class ResourcesDAO:
         if rid == -1:
             return rid
         # Person in need id
-        nid = form['nid']
+        nid = form['uid']
         rqid = self.insertRequests(rid, nid)
         # If insert failed the get out
         if rqid == -1:
@@ -965,6 +982,22 @@ class ResourcesDAO:
         # Update general info
         rid = self.update(rid, name, quantity)
         return self.updateSpecificResource(rid, self.getResourceCategory(rid), form)
+
+    # Get users that requested some resource of a given category
+    def getUsersByRequestCategory(self, category):
+        cursor = self.conn.cursor()
+        query = "select * " \
+                "from appuser natural inner join person_in_need natural inner join address " \
+                "natural inner join user_location natural inner join phone " \
+                "where uid in (select uid " \
+                "from person_in_need natural inner join " \
+                "(requests natural inner join resources) " \
+                "where rcategory = %s);"
+        cursor.execute(query, (category, ))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
     ##################################################
     #           Statistics methods                   #
@@ -1242,6 +1275,8 @@ class ResourcesDAO:
                 stat_list[i][row[1] + '_available'] = row[3]
 
         return
+
+
 
 
 
