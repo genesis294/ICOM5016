@@ -1,6 +1,7 @@
 
 from flask import jsonify
 from dao.resources import ResourcesDAO
+from handler.users import UsersHandler
 
 
 class ResourcesHandler:
@@ -500,6 +501,19 @@ class ResourcesHandler:
         else:
             return jsonify(Error="Malformed post request"), 400
 
+    # Gets all the users that have make a request for a given category
+    def get_users_by_available_category(self, category):
+        dao = ResourcesDAO()
+        user_list = dao.getUsersByAvailableCategory(category)
+        if not user_list:
+            return jsonify(Error="No such request found."), 404
+        else:
+            result = []
+            for row in user_list:
+                user = UsersHandler().build_supplier_dict(row)
+                result.append(user)
+            return jsonify(Users=result), 200
+
     ##################################################
     #           Requested resources methods          #
     ##################################################
@@ -660,6 +674,19 @@ class ResourcesHandler:
             return jsonify(Resource=result), 200
         return jsonify(Error="Malformed post request"), 400
 
+    # Gets all the users that have make a request for a given category
+    def get_users_by_request_category(self, category):
+        dao = ResourcesDAO()
+        user_list = dao.getUsersByRequestCategory(category)
+        if not user_list:
+            return jsonify(Error="No such request found."), 404
+        else:
+            result = []
+            for row in user_list:
+                user = UsersHandler().build_person_in_need_dict(row)
+                result.append(user)
+            return jsonify(Users=result), 200
+
     ##################################################
     #           Statistic methods                    #
     ##################################################
@@ -710,11 +737,4 @@ class ResourcesHandler:
             return jsonify(Error="No such request found."), 404
         else:
             return self.json_builder(resource_list, 0)
-
-
-
-
-
-
-
 
