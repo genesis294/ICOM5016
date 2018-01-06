@@ -1,10 +1,12 @@
 {% extends "layout.html" %}
 {% block pagestyle %}
 		<link href="{{url_for('static', filename='CSS/DS_User_Profile.css')}}" rel="stylesheet">
+		<script src="{{url_for('static', filename='Javascript/set_current_userid.js')}}"></script>
+		<script src="{{url_for('static', filename='Javascript/user_profile.js')}}"></script>
 {% endblock %}
 {% block content %}
 {% if current_user.is_authenticated %}
-  <div class="profile">
+  <div class="profile" id={{current_user.uid()}}>
       <h3>Welcome, {{ current_user.name() }}!</h3>
     <h2 id="username"></h2>
 

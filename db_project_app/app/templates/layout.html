@@ -6,6 +6,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 		<link href="{{url_for('static', filename='CSS/DS_General_Layout.css')}}" rel="stylesheet">
 		<script src="{{url_for('static', filename='Javascript/jquery-3.2.1.min.js')}}"></script>
+		<script src="{{url_for('static', filename='Javascript/set_current_userid.js')}}"></script>
 
     {% block pagestyle %}{% endblock %}
 
@@ -25,14 +26,16 @@
 			<h3>Disaster Resource Locator Site</h3>
 			<div class='signup_bar'>
 				<ul>
+					<!-- If already logged in-->
 					{% if current_user.is_authenticated %}
-					    <li><a href="{{url_for('logout')}}">Logout</a></li>
-                        <li><a href="{{url_for('user_profile')}}">My Profile</a></li>
+					    <li><a href="{{url_for('logout')}}" onclick="setCurrentUserID(0)">Logout</a></li>
+              <li><a href="{{url_for('user_profile')}}">My Profile</a></li>
 
-                    {% else %}
-                        <li><a href="{{url_for('login')}}">Login</a></li>
+					<!-- If not logged in-->
+          {% else %}
+              <li><a href="{{url_for('login')}}">Login</a></li>
 					    <li><a href="{{url_for('signup')}}">Sign up</a></li>
-                    {% endif %}
+          {% endif %}
 				</ul>
 
 			</div>
@@ -53,7 +56,7 @@
         {% block content %}{% endblock %}
 
 		<footer>
-			<p>©2017 Copyright of ICOM5016. Questions? We don't have answers.</p>
+			<p>©2017-2018 Copyright of ICOM5016. Questions? We don't have answers.</p>
 		</footer>
 	</body>
 

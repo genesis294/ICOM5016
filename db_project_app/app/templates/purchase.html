@@ -11,7 +11,7 @@
   {% endif %}
   {% if complete == "pending" %}
   <div class="make_purchase">
-    <form name= "purchase_form"  method="put">
+    <form name= "purchase_form"  method="post">
       <h1 id="rname"></h1>
       <p id="sprice"><b>Price:</b> </p>
       <p id="ravailable"><b>Available amount:</b> </p>
@@ -19,14 +19,14 @@
       <input type="number" name="rid" class="hidden" value="{{request.form.rid}}">
       <input type="number" name="amount" class="amount" placeholder="0" min="0" value="{{request.form.amount}}" required>
       <br>
-      <input type="submit" class="bttn" value="Buy">
+      <input name='buyBttn' type="submit" class="bttn" value="Buy">
   </form>
   </div>
   {% else %}
     <div class="receipt">
       <h1>Purchase complete!</h1>
       <p id="rname"><b>Item purchased:</b> </p>
-      <p id="sprice"><b>Price:</b> </p>
+      <p id="sprice"><b>Price: {{price}}</b> </p>
       <p id="ramount"><b>Amount bought: {{amount}}</b> </p>
     </div>
   {% endif %}
