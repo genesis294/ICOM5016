@@ -6,9 +6,10 @@ class UsersDAO:
 
     def __init__(self):
 
-        connection_url = "dbname=%s user=%s password=%s" % (pg_config['dbname'],
-                                                            pg_config['user'],
-                                                            pg_config['passwd'])
+        connection_url = "dbname=%s user=%s password=%s host=localhost port=5432" % \
+                         (pg_config['dbname'],
+                          pg_config['user'],
+                          pg_config['passwd'])
         self.conn = psycopg2._connect(connection_url)
 
 # Queries to get general users
@@ -125,7 +126,7 @@ class UsersDAO:
         result = cursor.fetchone()
         return result
 
-    #Get Suppliers by City Only
+    # Get Suppliers by City Only
     def getSuppliersByCity(self, city):
         cursor = self.conn.cursor()
         query = "select * from appuser natural inner join supplier " \
@@ -144,6 +145,19 @@ class UsersDAO:
                 "where sbusiness_type = %s"
         cursor.execute(query, (TBusiness,))
         result = cursor.fetchone()
+        return result
+
+    # Get inventory of the supplier.
+    def getSuppliesBySupplier(self, sid):
+        cursor = self.conn.cursor()
+        query = "with supplied as (select rid, coalesce(sprice, 0) as sprice, sid " \
+                "from donates natural full join supplies) " \
+                "select * from resources natural inner join supplied " \
+                "where sid = %s;"
+        cursor.execute(query, (sid,))
+        result = []
+        for row in cursor:
+            result.append(row)
         return result
 
 # Queries to get persons in need
@@ -178,8 +192,21 @@ class UsersDAO:
         result = cursor.fetchone()
         return result
 
+    # Get requests by person in need.
+    def getRequestsByPInNeed(self, nid):
+        cursor = self.conn.cursor()
+        query = "select * from resources natural inner join requests " \
+                "where nid = %s;"
+        cursor.execute(query, (nid,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
 # Method used in User class in user.py
 # Needed for log in functionality
     def connect_to_db(self):
         cursor = self.conn.cursor()
         return cursor
+
+
