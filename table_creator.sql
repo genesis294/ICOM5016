@@ -69,20 +69,23 @@ primary key (rid,nid));
 --Cart table
 CREATE TABLE cart(cid serial primary key, nid integer references person_in_need(nid));
 --Cart item table
-CREATE TABLE cart_item(ciid serial primary key, ciamount integer, ciprice float, rid integer references resources(rid));
+CREATE TABLE cart_item(ciid serial primary key, ciamount integer, ciprice float, rid integer references resources(rid),
+sid integer references supplier(sid));
 --itemList table
 CREATE TABLE item_list(list_id serial primary key, cid integer references cart(cid), 
 ciid integer references cart_item(ciid));
---has Cart table. Relates the cart and person in need
-CREATE TABLE has_cart(cid integer references cart(cid), ciid integer references cart_item(ciid), primary key(cid,ciid));
+
+--has Cart table. REDUNDANT(Does same connections as item_list)
+--CREATE TABLE has_cart(cid integer references cart(cid), list_id integer references item_list(list_id), primary key(cid,list_id));
 
 ----Tables related to transactions-----------------------
 --Transaction table.
-CREATE TABLE transactions(tid serial primary key, ttotal_cost float, tquantity integer,ttime time, 
-tdate date, nid integer references person_in_need(nid));
+CREATE TABLE transactions(tid serial primary key, ttotal_cost float, nid integer references person_in_need(nid),
+tdate_time timestamp without time zone,);
 --Pays table. Relates transaction with cart. 
-CREATE TABLE pays(cid integer references cart(cid), tid integer references transactions(tid), primary key (cid,tid) );
+CREATE TABLE pays(card_id integer references credit_card(card_id), cid integer references cart(cid),
+tid integer references transactions(tid), primary key (cid,tid));
 --Payment Method table
-CREATE TABLE credit_card(card_id integer primary key, cardnumber integer, exp_date date, 
-nid integer references person_in_need(nid));
+CREATE TABLE credit_card(card_id serial primary key, cardnumber bigint, exp_date date, cvv integer, card_type varchar(20),
+cardholder varchar(50), nid integer references person_in_need(nid));
 

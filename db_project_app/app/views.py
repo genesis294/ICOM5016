@@ -305,6 +305,15 @@ def getTransactionsByCartID(cid):
     return TransactionsHandler().getTransactionsByCartID(cid)
 
 
+@app.route('/transactions/supplied')
+def getAllSuppliedTransactions():
+    return TransactionsHandler().getAllSuppliedTransactions()
+
+@app.route('/transactions/supplied/<int:sid>')
+def getTransactionsBySupplierID(sid):
+    return TransactionsHandler().getTransactionsBySupplierID(sid)
+
+
 ##############################
 # Routes to search for Users #
 ##############################
