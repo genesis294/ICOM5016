@@ -6,7 +6,6 @@ from user import User
 from app import app, lm
 from handler.transactions import TransactionsHandler
 from handler.users import UsersHandler
-from dao.users import UsersDAO
 from dao.resources import ResourcesDAO
 
 
@@ -366,9 +365,15 @@ def getAllSuppliers():
         else:
             return UsersHandler().searchSuppliers(request.args)
 
+
 @app.route('/users/suppliers/<int:sid>')
 def getSuppliersBySID(sid):
     return UsersHandler().getSuppliersBySID(sid)
+
+
+@app.route('/users/suppliers/<int:sid>/supplies')
+def getSuppliesBySupplier(sid):
+    return UsersHandler().getSuppliesBySupplier(sid)
 
 
 @app.route('/users/personinneed')
@@ -380,6 +385,11 @@ def getAllPInNeed():
 @app.route('/users/personinneed/<int:nid>')
 def getPInNeedByNID(nid):
     return UsersHandler().getPInNeedByNID(nid)
+
+
+@app.route('/users/personinneed/<int:nid>/requests')
+def getRequestsByPInNeed(nid):
+    return UsersHandler().getRequestsByPInNeed(nid)
 
 
 #################################
