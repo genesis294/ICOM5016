@@ -78,6 +78,20 @@ class UsersHandler:
         result['phone'] = row[16]
         return result
 
+    # Builds dictionary with the row given
+    # Ava indicates if its an available resource
+    # Ava = 1 means its an available resource
+    def build_resource_dict(self, row, ava):
+        result = {}
+        result['rid'] = row[0]
+        result['rname'] = row[1]
+        result['rquantity'] = row[2]
+        result['rdate_added'] = row[3]
+        result['rcategory'] = row[4]
+        if ava:
+            result['sprice'] = row[5]
+        return result
+
     def getAllUsers(self):
         dao = UsersDAO()
         users_list = dao.getAllUsers()
@@ -260,6 +274,18 @@ class UsersHandler:
             business = self.build_supplier_dict(row)
             return jsonify(Business = business)
 
+    def getSuppliesBySupplier(self, sid):
+        dao = UsersDAO()
+        supplies = dao.getSuppliesBySupplier(sid)
+        if not supplies:
+            return jsonify(Error="Supplies Not Found"), 404
+        else:
+            result_list = []
+            for row in supplies:
+                supply = self.build_resource_dict(row, 1)
+                result_list.append(supply)
+            return jsonify(Supplies=result_list)
+
 # PERSONS IN NEED
     def getAllPInNeed(self):
         dao = UsersDAO()
@@ -283,10 +309,22 @@ class UsersHandler:
         dao = UsersDAO()
         row = dao.getPInNeedByNID(email)
         if not row:
-            return jsonify(Error = "Person In Need Not Found"), 404
+            return jsonify(Error="Person In Need Not Found"), 404
         else:
             person = self.build_person_in_need_dict(row)
-        return jsonify(PersonInNeed = person)
+        return jsonify(PersonInNeed=person)
+
+    def getRequestsByPInNeed(self, nid):
+        dao = UsersDAO()
+        requests = dao.getRequestsByPInNeed(nid)
+        if not requests:
+            return jsonify(Error="Requests Not Found"), 404
+        else:
+            result_list = []
+            for row in requests:
+                request = self.build_resource_dict(row, 0)
+                result_list.append(request)
+            return jsonify(Requests=result_list)
 
 # Method needed for user_loader callback in views.py 
     def get_user(self, email):
@@ -297,3 +335,5 @@ class UsersHandler:
         else:
             user = self.build_users_dict(row)
             return user['email']
+
+
