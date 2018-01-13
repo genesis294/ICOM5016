@@ -81,11 +81,12 @@ ciid integer references cart_item(ciid));
 ----Tables related to transactions-----------------------
 --Transaction table.
 CREATE TABLE transactions(tid serial primary key, ttotal_cost float, nid integer references person_in_need(nid),
-tdate_time timestamp without time zone,);
---Pays table. Relates transaction with cart. 
-CREATE TABLE pays(card_id integer references credit_card(card_id), cid integer references cart(cid),
-tid integer references transactions(tid), primary key (cid,tid));
+tdate_time timestamp without time zone);
 --Payment Method table
 CREATE TABLE credit_card(card_id serial primary key, cardnumber bigint, exp_date date, cvv integer, card_type varchar(20),
 cardholder varchar(50), nid integer references person_in_need(nid));
+--Pays table. Relates transaction with cart. 
+CREATE TABLE pays(card_id integer references credit_card(card_id), cid integer references cart(cid),
+tid integer references transactions(tid), primary key (cid,tid));
+
 

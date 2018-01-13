@@ -23,7 +23,6 @@ drop table requests cascade ;
 drop table cart cascade ;
 drop table cart_item cascade ;
 drop table item_list cascade ;
-drop table has_cart cascade ;
 drop table transactions cascade ;
 drop table pays cascade ;
 drop table credit_card cascade ;
