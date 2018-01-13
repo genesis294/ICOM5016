@@ -370,16 +370,16 @@ class ResourcesDAO:
     # Get resources based on name, quantity, price and location
     def getAvailableByNameQuantityPriceLocation(self, name, quantity, price, location):
         cursor = self.conn.cursor()
-
+        rname = "%" + name + "%"
         query = "with supplied as (select sid, rid, coalesce(sprice, 0) as sprice " \
                 "from donates natural full join supplies), " \
                 "owner_info as (select uid, sid, city " \
                 "from supplier natural inner join (appuser natural inner join address)) " \
                 "select * " \
                 "from resources natural inner join (supplied natural inner join owner_info) " \
-                "where rname = %s and rquantity>= %s and sprice<=%s and city = %s " \
+                "where rname ilike %s and rquantity>= %s and sprice<=%s and city = %s " \
                 "order by rname"
-        cursor.execute(query, (name, quantity, price, location,))
+        cursor.execute(query, (rname, quantity, price, location,))
         result = []
         for row in cursor:
             result.append(row)
@@ -388,6 +388,7 @@ class ResourcesDAO:
     # Get resources based on name, price and location
     def getAvailableByNamePriceLocation(self, name, price, location):
         cursor = self.conn.cursor()
+        rname = "%" + name + "%"
 
         query = "with supplied as (select sid, rid, coalesce(sprice, 0) as sprice " \
                 "from donates natural full join supplies), " \
@@ -395,9 +396,9 @@ class ResourcesDAO:
                 "from supplier natural inner join (appuser natural inner join address)) " \
                 "select * " \
                 "from resources natural inner join (supplied natural inner join owner_info) " \
-                "where rname = %s and sprice<=%s and city = %s " \
+                "where rname ilike %s and sprice<=%s and city = %s " \
                 "order by rname"
-        cursor.execute(query, (name, price, location,))
+        cursor.execute(query, (rname, price, location,))
         result = []
         for row in cursor:
             result.append(row)
@@ -406,16 +407,16 @@ class ResourcesDAO:
     # Get resources based on name, quantity and location
     def getAvailableByNameQuantityLocation(self, name, quantity, location):
         cursor = self.conn.cursor()
-
+        rname = "%" + name + "%"
         query = "with supplied as (select sid, rid, coalesce(sprice, 0) as sprice " \
                 "from donates natural full join supplies), " \
                 "owner_info as (select uid, sid, city " \
                 "from supplier natural inner join (appuser natural inner join address)) " \
                 "select * " \
                 "from resources natural inner join (supplied natural inner join owner_info) " \
-                "where rname = %s and rquantity>= %s and city = %s " \
+                "where rname ilike %s and rquantity>= %s and city = %s " \
                 "order by rname"
-        cursor.execute(query, (name, quantity, location,))
+        cursor.execute(query, (rname, quantity, location,))
         result = []
         for row in cursor:
             result.append(row)
@@ -441,16 +442,16 @@ class ResourcesDAO:
     # Get resources based on name and location
     def getAvailableByNameLocation(self, name, location):
         cursor = self.conn.cursor()
-
+        rname = "%" + name + "%"
         query = "with supplied as (select sid, rid, coalesce(sprice, 0) as sprice " \
                 "from donates natural full join supplies), " \
                 "owner_info as (select uid, sid, city " \
                 "from supplier natural inner join (appuser natural inner join address)) " \
                 "select * " \
                 "from resources natural inner join (supplied natural inner join owner_info) " \
-                "where rname = %s and city = %s " \
+                "where rname ilike %s and city = %s " \
                 "order by rname"
-        cursor.execute(query, (name, location,))
+        cursor.execute(query, (rname, location,))
         result = []
         for row in cursor:
             result.append(row)
@@ -513,29 +514,32 @@ class ResourcesDAO:
     # Get available resources by name
     def getAvailableByName(self, name):
         cursor = self.conn.cursor()
+        rname = "%" + name + "%"
         query = "with supplied as (select rid, coalesce(sprice, 0) as sprice " \
                 "from donates natural full join supplies) " \
                 "select * from resources natural inner join supplied " \
-                "where rname = %s"
-                # "where rname ilike %s"
-        cursor.execute(query, (name,))
+                "where rname ilike %s " \
+                "order by rname"
+        cursor.execute(query, (rname,))
         result = []
         for row in cursor:
             result.append(row)
-        return sorted(result, key=itemgetter(1))
+        return result
 
     # Get available by name, quantity and price
     def getAvailableByNameQuantityPrice(self, name, quantity, price):
         cursor = self.conn.cursor()
+        rname = "%" + name + "%"
         query = "with supplied as (select rid, coalesce(sprice, 0) as sprice " \
                 "from donates natural full join supplies) " \
                 "select * from resources natural inner join supplied " \
-                "where rname = %s and rquantity>= %s and sprice<=%s;"
-        cursor.execute(query, (name, quantity, price))
+                "where rname ilike %s and rquantity>= %s and sprice<=%s " \
+                "order by rname;"
+        cursor.execute(query, (rname, quantity, price))
         result = []
         for row in cursor:
             result.append(row)
-        return sorted(result, key=itemgetter(1))
+        return result
 
     # Get available by name and price
     def getAvailableByNamePrice(self, name, price):
@@ -543,12 +547,13 @@ class ResourcesDAO:
         query = "with supplied as (select rid, coalesce(sprice, 0) as sprice " \
                 "from donates natural full join supplies) " \
                 "select * from resources natural inner join supplied " \
-                "where rname = %s and sprice<=%s;"
+                "where rname = %s and sprice<=%s " \
+                "order by rname;"
         cursor.execute(query, (name, price))
         result = []
         for row in cursor:
             result.append(row)
-        return sorted(result, key=itemgetter(1))
+        return result
 
     # Get available by name and price
     def getAvailableByQuantityPrice(self, quantity, price):
@@ -556,12 +561,13 @@ class ResourcesDAO:
         query = "with supplied as (select rid, coalesce(sprice, 0) as sprice " \
                 "from donates natural full join supplies) " \
                 "select * from resources natural inner join supplied " \
-                "where rquantity >= %s and sprice<=%s;"
+                "where rquantity >= %s and sprice<=%s " \
+                "order by rname;"
         cursor.execute(query, (quantity, price))
         result = []
         for row in cursor:
             result.append(row)
-        return sorted(result, key=itemgetter(1))
+        return result
 
     # Get available by name and quantity
     def getAvailableByNameQuantity(self, name, quantity):
@@ -569,12 +575,13 @@ class ResourcesDAO:
         query = "with supplied as (select rid, coalesce(sprice, 0) as sprice " \
                 "from donates natural full join supplies) " \
                 "select * from resources natural inner join supplied " \
-                "where rname = %s and rquantity >= %s;"
+                "where rname = %s and rquantity >= %s " \
+                "order by rname;"
         cursor.execute(query, (name, quantity))
         result = []
         for row in cursor:
             result.append(row)
-        return sorted(result, key=itemgetter(1))
+        return result
 
     # Get available based on price
     def getAvailableByPrice(self, price):
@@ -582,12 +589,13 @@ class ResourcesDAO:
         query = "with supplied as (select rid, coalesce(sprice, 0) as sprice " \
                 "from donates natural full join supplies) " \
                 "select * from resources natural inner join supplied " \
-                "where sprice <= %s;"
+                "where sprice <= %s " \
+                "order by rname;"
         cursor.execute(query, (price,))
         result = []
         for row in cursor:
             result.append(row)
-        return sorted(result, key=itemgetter(1))
+        return result
 
     # Get available based on quantity
     def getAvailableByQuantity(self, quantity):
@@ -595,12 +603,13 @@ class ResourcesDAO:
         query = "with supplied as (select rid, coalesce(sprice, 0) as sprice " \
                 "from donates natural full join supplies) " \
                 "select * from resources natural inner join supplied " \
-                "where rquantity>=%s;"
+                "where rquantity>=%s " \
+                "order by rname;"
         cursor.execute(query, (quantity,))
         result = []
         for row in cursor:
             result.append(row)
-        return sorted(result, key=itemgetter(1))
+        return result
 
     # Get resource list by category
     def getAvailableByCategory(self, category):
@@ -618,44 +627,199 @@ class ResourcesDAO:
     # Get resource by name, price and quantity within a category
     def getAvailableInCategoryByNameQuantityPrice(self, category, name, quantity, price):
         cursor = self.conn.cursor()
+        rname = "%" + name + "%"
         query = "with supplied as (select rid, coalesce(sprice, 0) as sprice " \
                 "from donates natural full join supplies) " \
                 "select * from resources natural inner join supplied " \
-                "where rcategory = %s and rname = %s and rquantity >= %s and sprice <= %s;"
-        cursor.execute(query, (category, name, quantity, price,))
+                "where rcategory = %s and rname ilike %s and rquantity >= %s and sprice <= %s " \
+                "order by rname;"
+        cursor.execute(query, (category, rname, quantity, price,))
 
         result = []
         for row in cursor:
             result.append(row)
-        return sorted(result, key=itemgetter(1))
+        return result
+
+    def getAvailableInCategoryByNameQuantityPriceLocation(self, category, name, quantity, price, location):
+        cursor = self.conn.cursor()
+        rname = "%" + name + "%"
+        query = "with supplied as (select sid, rid, coalesce(sprice, 0) as sprice " \
+                "from donates natural full join supplies), " \
+                "owner_info as (select uid, sid, city " \
+                "from supplier natural inner join (appuser natural inner join address)) " \
+                "select * " \
+                "from resources natural inner join (supplied natural inner join owner_info) " \
+                "where rcategory = %s and rname ilike %s and rquantity >= %s and sprice <= %s " \
+                "and city = %s " \
+                "order by rname"
+
+        cursor.execute(query, (category, rname, quantity, price, location,))
+
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getAvailableInCategoryByNamePriceLocation(self, category, name, price, location):
+        cursor = self.conn.cursor()
+        rname = "%" + name + "%"
+        query = "with supplied as (select sid, rid, coalesce(sprice, 0) as sprice " \
+                "from donates natural full join supplies), " \
+                "owner_info as (select uid, sid, city " \
+                "from supplier natural inner join (appuser natural inner join address)) " \
+                "select * " \
+                "from resources natural inner join (supplied natural inner join owner_info) " \
+                "where rcategory = %s and rname ilike %s and sprice <= %s " \
+                "and city = %s " \
+                "order by rname"
+
+        cursor.execute(query, (category, rname, price, location,))
+
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getAvailableInCategoryByNameQuantityLocation(self, category, name, quantity, location):
+        cursor = self.conn.cursor()
+        rname = "%" + name + "%"
+        query = "with supplied as (select sid, rid, coalesce(sprice, 0) as sprice " \
+                "from donates natural full join supplies), " \
+                "owner_info as (select uid, sid, city " \
+                "from supplier natural inner join (appuser natural inner join address)) " \
+                "select * " \
+                "from resources natural inner join (supplied natural inner join owner_info) " \
+                "where rcategory = %s and rname ilike %s and rquantity >= %s and city = %s " \
+                "order by rname"
+
+        cursor.execute(query, (category, rname, quantity, location,))
+
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getAvailableInCategoryByQuantityPriceLocation(self, category, quantity, price, location):
+        cursor = self.conn.cursor()
+        query = "with supplied as (select sid, rid, coalesce(sprice, 0) as sprice " \
+                "from donates natural full join supplies), " \
+                "owner_info as (select uid, sid, city " \
+                "from supplier natural inner join (appuser natural inner join address)) " \
+                "select * " \
+                "from resources natural inner join (supplied natural inner join owner_info) " \
+                "where rcategory = %s and rquantity >= %s and sprice <= %s and city = %s " \
+                "order by rname"
+
+        cursor.execute(query, (category, quantity, price, location,))
+
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getAvailableInCategoryByNameLocation(self, category, name, location):
+        cursor = self.conn.cursor()
+        rname = "%" + name + "%"
+        query = "with supplied as (select sid, rid, coalesce(sprice, 0) as sprice " \
+                "from donates natural full join supplies), " \
+                "owner_info as (select uid, sid, city " \
+                "from supplier natural inner join (appuser natural inner join address)) " \
+                "select * " \
+                "from resources natural inner join (supplied natural inner join owner_info) " \
+                "where rcategory = %s and rname ilike %s and city = %s " \
+                "order by rname"
+
+        cursor.execute(query, (category, rname, location,))
+
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getAvailableInCategoryByPriceLocation(self, category, price, location):
+        cursor = self.conn.cursor()
+        query = "with supplied as (select sid, rid, coalesce(sprice, 0) as sprice " \
+                "from donates natural full join supplies), " \
+                "owner_info as (select uid, sid, city " \
+                "from supplier natural inner join (appuser natural inner join address)) " \
+                "select * " \
+                "from resources natural inner join (supplied natural inner join owner_info) " \
+                "where rcategory = %s and sprice <= %s and city = %s " \
+                "order by rname"
+
+        cursor.execute(query, (category, price, location,))
+
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getAvailableInCategoryByQuantityLocation(self, category, quantity, location):
+        cursor = self.conn.cursor()
+        query = "with supplied as (select sid, rid, coalesce(sprice, 0) as sprice " \
+                "from donates natural full join supplies), " \
+                "owner_info as (select uid, sid, city " \
+                "from supplier natural inner join (appuser natural inner join address)) " \
+                "select * " \
+                "from resources natural inner join (supplied natural inner join owner_info) " \
+                "where rcategory = %s and rquantity >= %s and city = %s " \
+                "order by rname"
+
+        cursor.execute(query, (category, quantity, location,))
+
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getAvailableInCategoryByLocation(self, category, location):
+        cursor = self.conn.cursor()
+        query = "with supplied as (select sid, rid, coalesce(sprice, 0) as sprice " \
+                "from donates natural full join supplies), " \
+                "owner_info as (select uid, sid, city " \
+                "from supplier natural inner join (appuser natural inner join address)) " \
+                "select * " \
+                "from resources natural inner join (supplied natural inner join owner_info) " \
+                "where rcategory = %s and city = %s " \
+                "order by rname"
+
+        cursor.execute(query, (category, location,))
+
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
     # Get resource within a category by name and price
     def getAvailableInCategoryByNamePrice(self, category, name, price):
         cursor = self.conn.cursor()
+        rname = "%" + name + "%"
         query = "with supplied as (select rid, coalesce(sprice, 0) as sprice " \
                 "from donates natural full join supplies) " \
                 "select * from resources natural inner join supplied " \
-                "where rcategory = %s and rname = %s and sprice <= %s;"
-        cursor.execute(query, (category, name, price,))
+                "where rcategory = %s and rname ilike %s and sprice <= %s;"
+        cursor.execute(query, (category, rname, price,))
 
         result = []
         for row in cursor:
             result.append(row)
-        return sorted(result, key=itemgetter(1))
+        return result
 
     # Get resource within category by name and quantity
     def getAvailableInCategoryByNameQuantity(self, category, name, quantity):
         cursor = self.conn.cursor()
+        rname = "%" + name + "%"
         query = "with supplied as (select rid, coalesce(sprice, 0) as sprice " \
                 "from donates natural full join supplies) " \
                 "select * from resources natural inner join supplied " \
-                "where rcategory = %s and rname = %s and rquantity >= %s;"
-        cursor.execute(query, (category, name, quantity,))
+                "where rcategory = %s and rname ilike %s and rquantity >= %s " \
+                "order by rname;"
+        cursor.execute(query, (category, rname, quantity,))
 
         result = []
         for row in cursor:
             result.append(row)
-        return sorted(result, key=itemgetter(1))
+        return result
 
     # Get resource within category by price and quantity
     def getAvailableInCategoryByPriceQuantity(self, category, price, quantity):
@@ -663,13 +827,14 @@ class ResourcesDAO:
         query = "with supplied as (select rid, coalesce(sprice, 0) as sprice " \
                 "from donates natural full join supplies) " \
                 "select * from resources natural inner join supplied " \
-                "where rcategory = %s and sprice <= %s and rquantity >= %s;"
+                "where rcategory = %s and sprice <= %s and rquantity >= %s " \
+                "order by rname;"
         cursor.execute(query, (category, price, quantity,))
 
         result = []
         for row in cursor:
             result.append(row)
-        return sorted(result, key=itemgetter(1))
+        return result
 
     # Get resource within category by price and quantity
     def getAvailableInCategoryByName(self, category, name):
@@ -691,12 +856,13 @@ class ResourcesDAO:
         query = "with supplied as (select rid, coalesce(sprice, 0) as sprice " \
                 "from donates natural full join supplies) " \
                 "select * from resources natural inner join supplied " \
-                "where rcategory = %s and sprice <= %s;"
+                "where rcategory = %s and sprice <= %s " \
+                "order by rname;"
         cursor.execute(query, (category, price,))
         result = []
         for row in cursor:
             result.append(row)
-        return sorted(result, key=itemgetter(1))
+        return result
 
     # Get resource within category by quantity
     def getAvailableInCategoryByQuantity(self, category, quantity):
@@ -813,12 +979,13 @@ class ResourcesDAO:
     # Get request by name, quantity and location
     def getRequestByNameQuantityLocation(self, name, quantity, location):
         cursor = self.conn.cursor()
+        rname = "%" + name + "%"
         query = "with owner_info as (select * " \
                 "from person_in_need natural inner join (appuser natural inner join address) " \
                 "select * from resources natural inner join (requests natural inner join owner_info)" \
-                "where rname = %s and rquantity >= %s and city = %s" \
+                "where rname ilike %s and rquantity >= %s and city = %s" \
                 "order by rname;"
-        cursor.execute(query, (name, quantity, location,))
+        cursor.execute(query, (rname, quantity, location,))
         result = []
         for row in cursor:
             result.append(row)
@@ -827,12 +994,13 @@ class ResourcesDAO:
     # Get resource by name and location
     def getRequestByNameLocation(self, name, location):
         cursor = self.conn.cursor()
+        rname = "%" + name + "%"
         query = "with owner_info as (select * " \
                 "from person_in_need natural inner join (appuser natural inner join address) " \
                 "select * from resources natural inner join (requests natural inner join owner_info)" \
-                "where rname = %s and city = %s" \
+                "where rname ilike %s and city = %s" \
                 "order by rname;"
-        cursor.execute(query, (name, location,))
+        cursor.execute(query, (rname, location,))
         result = []
         for row in cursor:
             result.append(row)
@@ -869,9 +1037,10 @@ class ResourcesDAO:
     # Get request by name
     def getRequestByName(self, name):
         cursor = self.conn.cursor()
-        query = "select * from resources where rid in(select rid from requests where rname = %s) " \
+        rname = "%" + name + "%"
+        query = "select * from resources where rid in(select rid from requests where rname ilike %s) " \
                 "order by rname;"
-        cursor.execute(query, (name,))
+        cursor.execute(query, (rname,))
         result = []
         for row in cursor:
             result.append(row)
@@ -880,10 +1049,11 @@ class ResourcesDAO:
     # Get request by name and quantity
     def getRequestByNameQuantity(self, name, quantity):
         cursor = self.conn.cursor()
+        rname = "%" + name + "%"
         query = "select * from resources natural inner join requests " \
-                "where rname = %s and rquantity >= %s " \
+                "where rname ilike %s and rquantity >= %s " \
                 "order by rname;"
-        cursor.execute(query, (name, quantity,))
+        cursor.execute(query, (rname, quantity,))
         result = []
         for row in cursor:
             result.append(row)
@@ -912,13 +1082,72 @@ class ResourcesDAO:
             result.append(row)
         return result
 
+    def getRequestInCategoryByNameQuantityLocation(self, category, name, quantity, location):
+        cursor = self.conn.cursor()
+        rname = "%" + name + "%"
+        query = "with owner_info as (select * " \
+                "from person_in_need natural inner join (appuser natural inner join address) " \
+                "select * from resources natural inner join (requests natural inner join owner_info)" \
+                "where rcategory = %s and rname ilike %s and rquantity >= %s and city = %s" \
+                "order by rname;"
+        cursor.execute(query, (category, rname, quantity, location))
+
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getRequestInCategoryByNameLocation(self, category, name, location):
+        cursor = self.conn.cursor()
+        rname = "%" + name + "%"
+        query = "with owner_info as (select * " \
+                "from person_in_need natural inner join (appuser natural inner join address) " \
+                "select * from resources natural inner join (requests natural inner join owner_info)" \
+                "where rcategory = %s and rname ilike %s and city = %s" \
+                "order by rname;"
+        cursor.execute(query, (category, rname, location))
+
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getRequestInCategoryByQuantityLocation(self, category, quantity, location):
+        cursor = self.conn.cursor()
+        query = "with owner_info as (select * " \
+                "from person_in_need natural inner join (appuser natural inner join address) " \
+                "select * from resources natural inner join (requests natural inner join owner_info)" \
+                "where rcategory = %s and rquantity >= %s and city = %s" \
+                "order by rname;"
+        cursor.execute(query, (category, quantity, location))
+
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getRequestInCategoryByLocation(self, category, location):
+        cursor = self.conn.cursor()
+        query = "with owner_info as (select * " \
+                "from person_in_need natural inner join (appuser natural inner join address) " \
+                "select * from resources natural inner join (requests natural inner join owner_info)" \
+                "where rcategory = %s and city = %s" \
+                "order by rname;"
+        cursor.execute(query, (category, location))
+
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
     # Get resource within category by name and quantity
     def getRequestInCategoryByNameQuantity(self, category, name, quantity):
         cursor = self.conn.cursor()
+        rname = "%" + name + "%"
         query = "select * from resources where rid in (select rid from requests) " \
-                "and rcategory = %s and rname = %s and rquantity >= %s" \
+                "and rcategory = %s and rname ilike %s and rquantity >= %s" \
                 "order by rname;"
-        cursor.execute(query, (category, name, quantity,))
+        cursor.execute(query, (category, rname, quantity,))
 
         result = []
         for row in cursor:
@@ -928,10 +1157,11 @@ class ResourcesDAO:
     # Get resource within category by price and quantity
     def getRequestInCategoryByName(self, category, name):
         cursor = self.conn.cursor()
+        rname = "%" + name + "%"
         query = "select * from resources where rid in (select rid from requests) " \
-                "and rcategory = %s and rname = %s" \
+                "and rcategory = %s and rname ilike %s" \
                 "order by rname;"
-        cursor.execute(query, (category, name,))
+        cursor.execute(query, (category, rname,))
 
         result = []
         for row in cursor:

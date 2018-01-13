@@ -8,7 +8,10 @@ class TransactionsDAO:
 
     # Initialization method
     def __init__(self):
-        connection_url = "dbname=%s user=%s password=%s" % (pg_config['dbname'], pg_config['user'], pg_config['passwd'])
+        connection_url = "dbname=%s user=%s password=%s host=localhost port=5432" % \
+                         (pg_config['dbname'],
+                          pg_config['user'],
+                          pg_config['passwd'])
         self.conn = psycopg2._connect(connection_url)
 
     # Returns a list of all transactions made by all users.
@@ -45,7 +48,9 @@ class TransactionsDAO:
                 "natural inner join appuser natural inner join pays natural inner join credit_card " \
                 "where uid = %s;"
         cursor.execute(query, (uid,))
-        result = cursor.fetchone()
+        result = []
+        for row in cursor:
+            result.append(row)
         return result
 
     # Get transactions by their Cart ID.
