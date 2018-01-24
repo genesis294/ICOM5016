@@ -7,19 +7,23 @@
     <div id="sign_up">
 		<h2>Signup Form</h2>
 
-		<form name= "signUp_form" style="border:1px solid #ccc">
+		{% if error %}
+			<p class=error><strong>Error:</strong> {{ error }}</p>
+		{% endif %}
+
+		<form name= "signUp_form" style="border:1px solid #ccc" method="post">
 		  <div class="container">
 				<!-- Ask for user's name-->
-				<label><b>First Name</b></label>
+				<label><b>First Name:</b></label>
 				<input type="text" placeholder="Enter Name" name="first_name" required>
 					<!-- Ask for user's last name-->
-					<label><b>Last Name</b></label>
+					<label><b>Last Name:</b></label>
 				<input type="text" placeholder="Enter Last Name" name="last_name" required>
 					<!-- Ask for user's email -->
-				<label><b>Email</b></label>
+				<label><b>Email:</b></label>
 				<input type="text" placeholder="Enter Email" name="email" required>
 					<!-- Ask for a password-->
-				<label><b>Password</b></label>
+				<label><b>Password:</b></label>
 				<input type="password" id="psw" placeholder="Enter Password" name="psw" required>
 				<div id="psw_toggle">
 					<input type="checkbox" id="toggle_checkbox" onclick="passwordToggle()">
@@ -29,24 +33,41 @@
 
 			  	<!-- Confirm the password-->
 			  	<div id="re_psw">
-					<label><b>Re-enter Password</b></label>
+					<label><b>Re-enter Password:</b></label>
 					<input type="password" placeholder="Re-enter Password" name="psw-repeat" required>
 				</div>
 				<!-- Ask for user's phone number-->
-				<label><b>Phone Number</b></label>
-				<input type="tel" placeholder="Phone Number" name="phone" required>
+				<label><b>Phone Number:</b></label>
+				<input type="tel" placeholder="Phone Number" name="phone" maxlength="10" required>
 					<!-- Ask what type of user they are-->
 					<label><b>Why do you want to sign up?</b></label>
 					<select name="user_type" id="user_type" onchange="showAddress(this)">
 						<option value="0" selected>Person in Need</option>
 						<option value="1">Supplier</option>
-						<option value="2">Administrator</option>
+						<!--<option value="2">Administrator</option>-->
 					</select>
-					<!--Not necesary if user is an administrator-->
-					<div id="location_info">
+			  		<!--Not necessary if user is an administrator or person in need-->
+					<div id="location_info" style="display:none">
+						<!-- Ask for supplier's business name-->
+						<label><b>Business Name:</b></label>
+						<input type="text" placeholder="Name of your business" name="sbusiness_type" >
+					</div>
+					<!--Not necessary if user is an administrator-->
+					<div id="business_info">
 						<!-- Ask for user's address-->
-						<label><b>Address</b></label>
-					<input type="text" placeholder="Enter Address" name="address" required>
+						<fieldset>
+							<legend><b>Address:</b></legend>
+							<label><b>Line 1</b></label>
+							<input type="text" placeholder="Enter address line 1" name="line1" required>
+							<label><b>Line 2</b></label>
+							<input type="text" placeholder="Enter address line 2" name="line2">
+							<label><b>City</b></label>
+							<input type="text" placeholder="Enter city" name="city" required>
+							<label><b>State</b></label>
+							<input type="text" placeholder="Enter state" name="state" maxlength="2" required>
+							<label><b>Zip Code</b></label>
+							<input type="text" placeholder="Enter zip code" name="zipcode" maxlength="10" required>
+						</fieldset>
 					</div>
 				<div>
 				  <button type="button" class="cancelbtn">Cancel</button>

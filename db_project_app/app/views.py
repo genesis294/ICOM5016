@@ -1,7 +1,7 @@
 from flask import render_template, request, flash, redirect, url_for, json, jsonify
 from handler.resources import ResourcesHandler
 from flask_login import login_user, logout_user, login_required
-from login_form import LoginForm
+from login_signup_forms import LoginForm, SignUpForm
 from user import User
 from app import app, lm
 from handler.transactions import TransactionsHandler
@@ -227,9 +227,40 @@ def get_weekly_stats():
 ##################################
 
 # Route that renders the sign up HTML template
-@app.route('/signup')
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    return render_template('sign_up.html')
+    error = None
+    signup_parameters = {}
+
+    if request.method == 'POST':
+        signup_parameters['first_name'] = request.form['first_name']
+        signup_parameters['last_name'] = request.form['last_name']
+        signup_parameters['email'] = request.form['email']
+        signup_parameters['psw'] = request.form['psw']
+        signup_parameters['psw-repeat'] = request.form['psw-repeat']
+        signup_parameters['phone'] = request.form['phone']
+        signup_parameters['sbusiness_type'] = request.form['sbusiness_type']
+        signup_parameters['user_type'] = request.form['user_type']
+        signup_parameters['line1'] = request.form['line1']
+        signup_parameters['line2'] = request.form['line2']
+        signup_parameters['city'] = request.form['city']
+        signup_parameters['state'] = request.form['state']
+        signup_parameters['zipcode'] = request.form['zipcode']
+
+        signup_form = SignUpForm(signup_parameters)
+
+        if signup_form.is_existing_user():
+            error = "User already exists! Please go to login page."
+        elif not signup_form.passwords_match():
+            error = "Passwords provided do not match! Please try again."
+        else:
+            user = User()
+            user.create_user(signup_parameters)
+            user.set_new_user(signup_parameters)
+            login_user(user)
+            return render_template('user_profile.html')
+
+    return render_template('sign_up.html', error=error)
 
 
 # Route to handle user login

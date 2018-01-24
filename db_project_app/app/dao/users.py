@@ -203,10 +203,12 @@ class UsersDAO:
             result.append(row)
         return result
 
-# Method used in User class in user.py
-# Needed for log in functionality
+# Methods used in User class in user.py needed for sign up and log in functionality:
     def connect_to_db(self):
         cursor = self.conn.cursor()
         return cursor
+
+    def commit_query(self):
+        self.conn.commit()
 
 
